@@ -4,6 +4,7 @@ import React from 'react';
 import { Button, Input, Select, Checkbox, StatBlock, SectionHeading, Accordion, Badge } from '../ds/index.js';
 import { DATA as D } from '../../lib/data.js';
 import { Container } from '../common/Container.jsx';
+import { cx } from '../../lib/cx.js';
 
 const SEDES = [
   { city: "Sabadell (Barcelona)", addr: "C. Moratín, 100 · 08206 Sabadell", tel: "935 646 346", telHref: "+34935646346",
@@ -29,16 +30,16 @@ const FAQ = [
 
 function ChannelRow({ icon, label, value, href }) {
   const inner = (
-    <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-      <span aria-hidden="true" style={{ flex: "0 0 auto", width: "42px", height: "42px", borderRadius: "var(--radius-full)", background: "rgba(227,6,19,0.16)", color: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "20px" }}>{icon}</span>
+    <div className="flex items-center gap-[14px]">
+      <span aria-hidden="true" className="flex-[0_0_auto] w-[42px] h-[42px] rounded-full bg-[rgba(227,6,19,0.16)] text-brand flex items-center justify-center text-[20px]">{icon}</span>
       <div>
-        <div style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "rgba(255,255,255,0.55)" }}>{label}</div>
-        <div style={{ fontSize: "var(--text-lg)", fontWeight: "var(--weight-semibold)", color: "#fff" }}>{value}</div>
+        <div className="font-mono text-xs uppercase tracking-eyebrow text-white/[0.55]">{label}</div>
+        <div className="text-lg font-semibold text-white">{value}</div>
       </div>
     </div>
   );
   return href
-    ? <a href={href} style={{ textDecoration: "none", display: "block" }}>{inner}</a>
+    ? <a href={href} className="no-underline block">{inner}</a>
     : inner;
 }
 
@@ -49,29 +50,29 @@ function ContactScreen() {
   return (
     <div>
       {/* ---- Split hero: value prop + qué recibirás + canales · formulario ---- */}
-      <section style={{ background: "var(--surface-card)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface py-section">
         <Container>
-          <div style={{ borderRadius: "var(--radius-xl)", overflow: "hidden", display: "grid", gridTemplateColumns: "1fr 1.05fr", boxShadow: "var(--shadow-lg)" }}>
+          <div className="rounded-xl overflow-hidden grid grid-cols-[1fr_1.05fr] shadow-lg">
             {/* Left — persuasión */}
-            <div style={{ position: "relative", background: "var(--color-dark)", color: "#fff", padding: "var(--space-16)", overflow: "hidden", display: "flex", flexDirection: "column", justifyContent: "flex-start" }}>
-              <img src={D.hero} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.28 }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(15,15,15,0.72), rgba(15,15,15,0.94))" }} />
-              <div style={{ position: "relative" }}>
-                <h1 style={{ margin: "0 0 16px", fontFamily: "var(--font-display)", fontSize: "clamp(2rem,3.6vw,3rem)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-tight)" }}>Hablemos de tu formación<span style={{ color: "var(--color-brand)" }}>.</span></h1>
-                <p style={{ margin: "0 0 26px", fontSize: "var(--text-lg)", lineHeight: "var(--leading-normal)", color: "rgba(255,255,255,0.82)", maxWidth: "440px" }}>Cuéntanos qué necesitas y un asesor te responde en menos de 24&nbsp;h. Sin compromiso.</p>
+            <div className="relative bg-dark text-white p-16 overflow-hidden flex flex-col justify-start">
+              <img src={D.hero} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.28]" />
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,15,15,0.72),rgba(15,15,15,0.94))]" />
+              <div className="relative">
+                <h1 className="mb-[16px] font-display text-[clamp(2rem,3.6vw,3rem)] font-extrabold tracking-display leading-tight">Hablemos de tu formación<span className="text-brand">.</span></h1>
+                <p className="mb-[26px] text-lg leading-normal text-white/[0.82] max-w-[440px]">Cuéntanos qué necesitas y un asesor te responde en menos de 24&nbsp;h. Sin compromiso.</p>
 
                 {/* Qué recibirás — reduce la incertidumbre de rellenar el formulario */}
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "rgba(255,255,255,0.55)", marginBottom: "12px" }}>Qué recibirás</div>
-                <ul style={{ listStyle: "none", margin: "0 0 30px", padding: 0, display: "flex", flexDirection: "column", gap: "10px" }}>
+                <div className="font-mono text-xs uppercase tracking-eyebrow text-white/[0.55] mb-[12px]">Qué recibirás</div>
+                <ul className="list-none mb-[30px] p-0 flex flex-col gap-[10px]">
                   {RECIBES.map((t) => (
-                    <li key={t} style={{ display: "flex", gap: "12px", alignItems: "flex-start", fontSize: "var(--text-base)", color: "rgba(255,255,255,0.9)", lineHeight: "var(--leading-normal)" }}>
-                      <span aria-hidden="true" style={{ flex: "0 0 auto", color: "var(--color-brand)", fontWeight: "var(--weight-bold)", marginTop: "1px" }}>✓</span>
+                    <li key={t} className="flex gap-[12px] items-start text-base text-white/90 leading-normal">
+                      <span aria-hidden="true" className="flex-[0_0_auto] text-brand font-bold mt-px">✓</span>
                       <span>{t}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div style={{ display: "flex", gap: "var(--space-10)", flexWrap: "wrap" }}>
+                <div className="flex gap-10 flex-wrap">
                   <StatBlock value="24 h" label="Respuesta media" onDark />
                   <StatBlock value="ISPC" label="Centro homologado" onDark />
                   <StatBlock value="+15" label="Años formando" onDark />
@@ -81,19 +82,19 @@ function ContactScreen() {
             </div>
 
             {/* Right — formulario */}
-            <div style={{ background: "var(--color-dark-soft)", color: "#fff", padding: "var(--space-16)" }}>
+            <div className="bg-dark-soft text-white p-16">
               {sent ? (
-                <div style={{ textAlign: "center", padding: "var(--space-16) 0" }}>
-                  <div style={{ fontSize: "44px", marginBottom: "12px", color: "var(--color-success)" }}>✓</div>
-                  <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-bold)" }}>¡Gracias por tu mensaje!</h3>
-                  <p style={{ margin: 0, color: "var(--text-on-dark-muted)" }}>Lo hemos recibido correctamente. Un asesor te responderá en menos de 24&nbsp;h con propuesta, fechas y presupuesto.</p>
+                <div className="text-center py-16">
+                  <div className="text-[44px] mb-[12px] text-success">✓</div>
+                  <h3 className="mb-[8px] font-display text-2xl font-bold">¡Gracias por tu mensaje!</h3>
+                  <p className="m-0 text-on-dark-muted">Lo hemos recibido correctamente. Un asesor te responderá en menos de 24&nbsp;h con propuesta, fechas y presupuesto.</p>
                 </div>
               ) : (
                 <React.Fragment>
-                  <h2 style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-bold)" }}>Solicita información</h2>
-                  <p style={{ margin: "0 0 var(--space-6)", fontSize: "var(--text-base)", color: "var(--text-on-dark-muted)" }}>Te preparamos una propuesta a medida en menos de 24&nbsp;h.</p>
-                  <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }} style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-4)" }}>
+                  <h2 className="mb-[6px] font-display text-2xl font-bold">Solicita información</h2>
+                  <p className="mb-6 text-base text-on-dark-muted">Te preparamos una propuesta a medida en menos de 24&nbsp;h.</p>
+                  <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }} className="flex flex-col gap-5">
+                    <div className="grid grid-cols-[1fr_1fr] gap-4">
                       <Input theme="dark" label="Nombre *" placeholder="Tu nombre" />
                       <Input theme="dark" label="Empresa" placeholder="Razón social" />
                       <Input theme="dark" label="Email *" type="email" placeholder="tu@empresa.com" />
@@ -102,9 +103,9 @@ function ContactScreen() {
                     <Select theme="dark" label="Solicitas información como…" placeholder="Elige una opción" options={["Individual / Autónomo / Particular", "Empresa (menos de 5 personas)", "Empresa / Grupos / Formación adaptada"]} />
                     <Select theme="dark" label="Ubicación de la formación" placeholder="Elige una opción" options={["Sabadell", "Madrid", "Resto Península (Sólo empresas)"]} />
                     <Input theme="dark" label="Observaciones (opcional)" placeholder="Cuéntanos qué necesitas" />
-                    <Checkbox theme="dark" checked={accept} onChange={(e) => setAccept(e.target.checked)} label={<span>He leído y acepto la <a href="#" style={{ color: "#fff", textDecoration: "underline" }}>Política de Privacidad</a> y el <a href="#" style={{ color: "#fff", textDecoration: "underline" }}>Aviso Legal</a>.</span>} />
+                    <Checkbox theme="dark" checked={accept} onChange={(e) => setAccept(e.target.checked)} label={<span>He leído y acepto la <a href="#" className="text-white underline">Política de Privacidad</a> y el <a href="#" className="text-white underline">Aviso Legal</a>.</span>} />
                     <Button type="submit" variant="primary" size="lg" uppercase disabled={!accept} iconRight={<span>→</span>}>Enviar solicitud</Button>
-                    <p style={{ margin: 0, textAlign: "center", fontSize: "var(--text-sm)", color: "var(--text-on-dark-muted)" }}>Respuesta en menos de 24&nbsp;h · Gratis y sin compromiso</p>
+                    <p className="m-0 text-center text-sm text-on-dark-muted">Respuesta en menos de 24&nbsp;h · Gratis y sin compromiso</p>
                   </form>
                 </React.Fragment>
               )}
@@ -114,14 +115,14 @@ function ContactScreen() {
       </section>
 
       {/* ---- Por qué contactarnos — refuerza la decisión ---- */}
-      <section style={{ background: "var(--surface-sunken)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface-muted py-section">
         <Container>
           <SectionHeading eyebrow="Por qué GEPCO" title="Formación real, avalada y sin letra pequeña" align="center" />
-          <div style={{ marginTop: "var(--space-12)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))", gap: "var(--space-6)" }}>
+          <div className="mt-12 grid grid-cols-[repeat(auto-fit,minmax(230px,1fr))] gap-6">
             {D.diff.map((d) => (
-              <div key={d.l} style={{ background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", padding: "var(--space-8)" }}>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-extrabold)", color: "var(--color-brand)", letterSpacing: "var(--tracking-display)", marginBottom: "10px" }}>{d.v}</div>
-                <div style={{ fontSize: "var(--text-base)", color: "var(--text-body)", lineHeight: "var(--leading-normal)" }}>{d.l}</div>
+              <div key={d.l} className="bg-surface border border-border rounded-lg p-8">
+                <div className="font-display text-2xl font-extrabold text-brand tracking-display mb-[10px]">{d.v}</div>
+                <div className="text-base text-body leading-normal">{d.l}</div>
               </div>
             ))}
           </div>
@@ -129,18 +130,18 @@ function ContactScreen() {
       </section>
 
       {/* ---- Canales directos por sede — para quien no quiere esperar ---- */}
-      <section style={{ background: "var(--surface-card)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface py-section">
         <Container>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-16)", alignItems: "stretch" }}>
+          <div className="grid grid-cols-[1fr_1fr] gap-16 items-stretch">
             <div>
               <SectionHeading eyebrow="Prefieres hablar" title="Llámanos ahora mismo" />
-              <p style={{ margin: "16px 0 var(--space-10)", fontSize: "var(--text-lg)", color: "var(--text-body)", lineHeight: "var(--leading-normal)", maxWidth: "460px" }}>Si tienes prisa o prefieres el trato directo, marca la sede más cercana. Horario de atención de lunes a viernes, 8:00–16:00.</p>
-              <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+              <p className="mt-[16px] mb-10 text-lg text-body leading-normal max-w-[460px]">Si tienes prisa o prefieres el trato directo, marca la sede más cercana. Horario de atención de lunes a viernes, 8:00–16:00.</p>
+              <div className="flex flex-col gap-6">
                 {SEDES.map((s) => (
-                  <div key={s.city} style={{ background: "var(--surface-sunken)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", padding: "var(--space-8)" }}>
-                    <div style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)", marginBottom: "8px" }}>{s.city}</div>
-                    <div style={{ fontSize: "var(--text-base)", color: "var(--text-body)", lineHeight: "var(--leading-normal)", marginBottom: "16px" }}>{s.addr}</div>
-                    <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+                  <div key={s.city} className="bg-surface-muted border border-border rounded-lg p-8">
+                    <div className="font-mono text-xs uppercase tracking-eyebrow text-brand mb-[8px]">{s.city}</div>
+                    <div className="text-base text-body leading-normal mb-[16px]">{s.addr}</div>
+                    <div className="flex gap-[10px] flex-wrap">
                       <Button variant="primary" size="sm" onClick={() => { window.location.href = "tel:" + s.telHref; }} iconLeft={<span aria-hidden="true">☎</span>}>{s.tel}</Button>
                       <Button variant="outline" size="sm" onClick={() => window.open(s.maps, "_blank", "noopener")}>Cómo llegar</Button>
                     </div>
@@ -150,20 +151,20 @@ function ContactScreen() {
             </div>
 
             {/* Otros canales sobre panel oscuro */}
-            <div style={{ position: "relative", background: "var(--color-dark)", color: "#fff", borderRadius: "var(--radius-xl)", overflow: "hidden", padding: "var(--space-16)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
-              <img src={D.heroQuote} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.22 }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(160deg, rgba(15,15,15,0.86), rgba(15,15,15,0.96))" }} />
-              <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "var(--space-8)" }}>
+            <div className="relative bg-dark text-white rounded-xl overflow-hidden p-16 flex flex-col justify-center">
+              <img src={D.heroQuote} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.22]" />
+              <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(15,15,15,0.86),rgba(15,15,15,0.96))]" />
+              <div className="relative flex flex-col gap-8">
                 <div>
                   <Badge tone="soft">Atención directa</Badge>
-                  <h3 style={{ margin: "16px 0 0", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-bold)", lineHeight: "var(--leading-snug)" }}>Escríbenos por el canal que prefieras</h3>
+                  <h3 className="mt-[16px] font-display text-2xl font-bold leading-snug">Escríbenos por el canal que prefieras</h3>
                 </div>
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+                <div className="flex flex-col gap-6">
                   <ChannelRow icon="✉" label="Email" value="info@gepcoformacion.es" href="mailto:info@gepcoformacion.es" />
                   <ChannelRow icon="✆" label="WhatsApp" value="Escríbenos por WhatsApp" href="https://wa.me/34935646346" />
                   <ChannelRow icon="⚲" label="Formación in company" value="Te visitamos en tus instalaciones" />
                 </div>
-                <div style={{ borderTop: "1px solid rgba(255,255,255,0.12)", paddingTop: "var(--space-6)", fontSize: "var(--text-sm)", color: "rgba(255,255,255,0.6)", lineHeight: "var(--leading-normal)" }}>Cobertura en toda la península para empresas y grupos. Formamos a autónomos, particulares y equipos de empresa.</div>
+                <div className="border-t border-t-white/[0.12] pt-6 text-sm text-white/60 leading-normal">Cobertura en toda la península para empresas y grupos. Formamos a autónomos, particulares y equipos de empresa.</div>
               </div>
             </div>
           </div>
@@ -171,10 +172,10 @@ function ContactScreen() {
       </section>
 
       {/* ---- FAQ — resuelve objeciones antes de que frenen la conversión ---- */}
-      <section style={{ background: "var(--surface-sunken)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface-muted py-section">
         <Container style={{ maxWidth: "820px" }}>
           <SectionHeading eyebrow="Preguntas frecuentes" title="Resolvemos tus dudas antes de empezar" align="center" />
-          <div style={{ marginTop: "var(--space-12)" }}>
+          <div className="mt-12">
             <Accordion defaultOpen={[0]} items={FAQ} />
           </div>
         </Container>

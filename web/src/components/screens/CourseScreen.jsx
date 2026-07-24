@@ -85,7 +85,7 @@ function CourseScreen() {
     <div>
       {/* Hero B2B */}
       <section className="bg-dark text-white">
-        <Container className="py-section grid grid-cols-[1.05fr_0.95fr] gap-16 items-center">
+        <Container className="p-[var(--section-y)_var(--container-padding)] grid grid-cols-[1.05fr_0.95fr] gap-16 items-center">
           <div>
             <button onClick={() => onNav("catalog", course.cat)} className="bg-transparent border-none text-brand cursor-pointer font-mono text-sm p-0 mb-[20px]">← {catName(course.cat)}</button>
             <div className="flex gap-[8px] mb-[20px] flex-wrap">
@@ -106,7 +106,7 @@ function CourseScreen() {
         </Container>
       </section>
 
-      <Container className="py-section grid grid-cols-[1.6fr_1fr] gap-16 items-start">
+      <Container className="p-[var(--section-y)_var(--container-padding)] grid grid-cols-[1.6fr_1fr] gap-16 items-start">
         {/* Main */}
         <div className="flex flex-col gap-12">
           <div>
@@ -119,7 +119,7 @@ function CourseScreen() {
                 { k: "Modalidad", v: "In company · teórico-práctica" },
                 { k: "Detalle", v: course.bullets[0], span: true },
               ].map((f) => (
-                <div key={f.k} className={cx("bg-surface py-5 px-6", f.span && "col-span-full")}>
+                <div key={f.k} className={cx("bg-surface p-[var(--space-5)_var(--space-6)]", f.span && "col-span-full")}>
                   <dt className="text-xs uppercase tracking-eyebrow text-subtle mb-[6px]">{f.k}</dt>
                   <dd className="m-0 text-base font-semibold text-strong leading-snug">{f.v}</dd>
                 </div>
@@ -181,7 +181,7 @@ function CourseScreen() {
         <aside ref={leadRef} className="sticky top-[120px] flex flex-col gap-4">
           <div className="bg-surface border border-border rounded-xl shadow-md p-8">
             {sent ? (
-              <div className="text-center py-8">
+              <div className="text-center p-[var(--space-8)_0]">
                 <div className="w-[56px] h-[56px] m-[0_auto_var(--space-4)] rounded-full bg-brand-soft text-brand flex items-center justify-center text-[30px]">✓</div>
                 <h3 className="m-[0_0_8px] font-display text-xl font-bold text-strong">Solicitud enviada</h3>
                 <p className="m-0 text-base text-body leading-normal">Un asesor preparará tu propuesta a medida y te contactará en menos de 24&nbsp;h.</p>
@@ -224,9 +224,9 @@ function CourseScreen() {
               <span aria-hidden="true" className="flex-none text-brand text-[24px] leading-none transition-transform duration-base ease-standard" style={{ transform: openInd ? "rotate(45deg)" : "none" }}>+</span>
             </button>
             {openInd && (
-              <div className="pt-0 px-6 pb-6 flex flex-col gap-4">
+              <div className="p-[0_var(--space-6)_var(--space-6)] flex flex-col gap-4">
                 {typeof course.price === "number" ? (
-                  <div className="flex items-baseline gap-[8px] border-t border-border mt-2 pt-5 pb-4">
+                  <div className="flex items-baseline gap-[8px] border-t border-border mt-2 p-[var(--space-5)_0_var(--space-4)]">
                     <span className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-extrabold text-strong leading-none">{fmtEUR(course.price)}</span>
                     <span className="text-sm text-subtle">/ alumno</span>
                   </div>
@@ -239,7 +239,7 @@ function CourseScreen() {
                   <label htmlFor="alumnos" className="text-xs font-semibold tracking-eyebrow uppercase text-subtle">Nº de plazas</label>
                   <div className="flex items-center border border-border rounded-md overflow-hidden bg-surface">
                     <button type="button" aria-label="Restar plaza" onClick={() => setAlumnos((a) => Math.max(1, a - 1))} className={stepBtn}>−</button>
-                    <input id="alumnos" type="number" min="1" value={alumnos} onChange={(e) => setAlumnos(Math.max(1, parseInt(e.target.value, 10) || 1))} aria-label="Número de plazas" className="flex-1 min-w-0 text-center border-x border-y-0 border-border py-[10px] px-[8px] font-mono text-base font-bold text-strong [outline:none] bg-transparent" />
+                    <input id="alumnos" type="number" min="1" value={alumnos} onChange={(e) => setAlumnos(Math.max(1, parseInt(e.target.value, 10) || 1))} aria-label="Número de plazas" className="flex-1 min-w-0 text-center border-x border-y-0 border-border p-[10px_8px] font-mono text-base font-bold text-strong [outline:none] bg-transparent" />
                     <button type="button" aria-label="Sumar plaza" onClick={() => setAlumnos((a) => a + 1)} className={stepBtn}>+</button>
                   </div>
                 </div>
@@ -252,7 +252,7 @@ function CourseScreen() {
       </Container>
 
       {/* Por qué formar a tu equipo con GEPCO */}
-      <section className="bg-surface border-b border-border py-section">
+      <section className="bg-surface border-b border-border p-[var(--section-y)_0]">
         <Container>
           <span className="block mb-[12px] text-sm font-bold tracking-eyebrow uppercase text-brand">Formación para empresas</span>
           <h2 className="m-[0_0_var(--space-10)] font-display text-3xl font-extrabold tracking-display text-strong max-w-[760px] leading-snug">La forma más rentable de formar a todo tu equipo, a la vez<span className="text-brand">.</span></h2>
@@ -273,7 +273,7 @@ function CourseScreen() {
       </section>
 
       {/* Opiniones — Google My Business [PENDIENTE: reseñas reales] */}
-      <section className="bg-surface-muted border-t border-border py-section">
+      <section className="bg-surface-muted border-t border-border p-[var(--section-y)_0]">
         <Container>
           <span className="block mb-[12px] text-sm font-bold tracking-eyebrow uppercase text-brand">Valoraciones en Google</span>
           <div className="flex items-end justify-between gap-6 flex-wrap mb-10">
@@ -302,7 +302,7 @@ function CourseScreen() {
       </section>
 
       {/* CTA final empresa */}
-      <section className="bg-dark text-white py-section">
+      <section className="bg-dark text-white p-[var(--section-y)_0]">
         <Container className="text-center">
           <h2 className="m-[0_auto_var(--space-4)] font-display text-3xl font-extrabold tracking-display max-w-[720px] leading-snug">¿Formamos a tu equipo?<span className="text-brand">.</span></h2>
           <p className="m-[0_auto_var(--space-8)] text-lg text-white/[0.8] max-w-[560px] leading-normal">Cuéntanos vuestras necesidades y preparamos una propuesta a medida, bonificable FUNDAE, en menos de 24&nbsp;h.</p>
@@ -315,7 +315,7 @@ function CourseScreen() {
 
       {/* Formaciones relacionadas */}
       {related.length > 0 && (
-        <section className="bg-surface-muted py-section">
+        <section className="bg-surface-muted p-[var(--section-y)_0]">
           <Container>
             <h2 className="m-[0_0_var(--space-10)] font-display text-2xl font-bold tracking-heading text-strong">Formaciones relacionadas<span className="text-brand">.</span></h2>
             <HScroll itemWidth="300px">

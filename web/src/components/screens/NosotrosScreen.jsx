@@ -12,14 +12,14 @@ function NosotrosScreen() {
       <section className="relative bg-dark text-white overflow-hidden">
         <img src={D.heroQuote} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.4]" />
         <div className="absolute inset-0 bg-[linear-gradient(100deg,_rgba(15,15,15,0.94),_rgba(15,15,15,0.5))]" />
-        <Container className="relative py-section">
+        <Container className="relative p-[var(--section-y)_var(--container-padding)]">
           <span className="font-mono text-sm uppercase tracking-eyebrow text-brand">Nosotros</span>
           <h1 className="m-[14px_0_20px] font-display text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-display leading-tight max-w-[820px]">Más de 15 años formando a quienes protegen<span className="text-brand">.</span></h1>
           <p className="m-0 text-xl text-white/[0.82] max-w-[620px] leading-normal">Somos una escuela de emergencias y PRL homologada por el ISPC. Formamos a profesionales y empresas con un enfoque práctico, instructores en activo y aforo reducido.</p>
         </Container>
       </section>
 
-      <section className="bg-surface py-section">
+      <section className="bg-surface p-[var(--section-y)_0]">
         <Container className="grid grid-cols-[1fr_1fr] gap-16 items-center">
           <div>
             <h2 className="m-[0_0_18px] font-display text-3xl font-extrabold tracking-display text-strong">Nuestra misión<span className="text-brand">.</span></h2>
@@ -35,7 +35,7 @@ function NosotrosScreen() {
         </Container>
       </section>
 
-      <section className="bg-surface-muted py-section">
+      <section className="bg-surface-muted p-[var(--section-y)_0]">
         <Container>
           <span className="block mb-[12px] text-sm font-bold tracking-eyebrow uppercase text-brand">Dónde estamos</span>
           <h2 className="m-[0_0_var(--space-12)] font-display text-3xl font-extrabold tracking-display text-strong">Dos sedes, cobertura en toda la península<span className="text-brand">.</span></h2>
