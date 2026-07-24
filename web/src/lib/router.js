@@ -1,16 +1,34 @@
-// Router por ficheros adaptado a Astro. onNav(screen, param) navega a la ruta correspondiente.
+// Enrutado por slug (SEO). onNav(screen, param) navega a la URL canónica.
+// Páginas fijas:
 const PAGES = {
-  home: "/", catalog: "/catalogo", course: "/curso", nosotros: "/nosotros",
-  contact: "/contacto", checkout: "/checkout", blog: "/blog", post: "/blog-post",
-  abiertas: "/abiertas", trabaja: "/trabaja",
+  home: "/",
+  catalog: "/catalogo/",
+  nosotros: "/nosotros/",
+  contact: "/contacto/",
+  checkout: "/checkout/",
+  blog: "/blog/",
+  abiertas: "/abiertas/",
+  trabaja: "/trabaja/",
 };
-const KEY = { catalog: "cat", course: "curso", post: "post" };
+
+// Pantallas de detalle: una URL única por elemento.
+function detailUrl(screen, param) {
+  const slug = encodeURIComponent(param);
+  if (screen === "course") return `/formacion/${slug}/`;
+  if (screen === "post") return `/blog/${slug}/`;
+  if (screen === "catalog") return `/catalogo/${slug}/`;
+  return null;
+}
 
 export function onNav(screen, param) {
   if (typeof window === "undefined") return;
-  const page = PAGES[screen] || "/";
-  const key = KEY[screen];
-  window.location.href = page + (param && key ? "?" + key + "=" + encodeURIComponent(param) : "");
+  let url;
+  if (param && (screen === "course" || screen === "post" || screen === "catalog")) {
+    url = detailUrl(screen, param);
+  } else {
+    url = PAGES[screen] || "/";
+  }
+  window.location.href = url;
 }
 
 export function getParam(k) {

@@ -1,0 +1,32 @@
+# El proyecto Astro no está en la raíz del repo, sino en web/.
+# Con `base = "web"` Netlify entra en web/ antes de instalar y construir,
+# y `publish` se resuelve relativo a esa base (web/dist).
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 4 requiere Node >=18.20.8 (usamos 20 LTS).
+  NODE_VERSION = "20"
+
+# --- Redirecciones ---
+# URLs interinas por query-param → esquema por slug.
+[[redirects]]
+  from = "/curso"
+  to = "/catalogo/"
+  status = 301
+[[redirects]]
+  from = "/blog-post"
+  to = "/blog/"
+  status = 301
+
+# [PENDIENTE] 301 desde la web WordPress actual (gepcoformacion.es).
+# Al migrar el dominio, mapear cada URL antigua a su nueva ruta por slug para no
+# perder posicionamiento. Necesita el listado de URLs del WP (sitemap.xml). Ej.:
+# [[redirects]]
+#   from = "/formacion/curso-de-bombero-de-empresa/"
+#   to = "/formacion/bombero-empresa/"
+#   status = 301
+# Nota: conviene alinear los slugs nuevos con los del WP donde sea posible para
+# reducir el número de 301 necesarios.

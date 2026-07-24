@@ -55,8 +55,8 @@ function buildVentajas(course) {
   ];
 }
 
-function CourseScreen() {
-  const courseId = getParam("curso");
+function CourseScreen({ courseId: courseIdProp }) {
+  const courseId = courseIdProp || getParam("curso");
   const course = D.courses.find((c) => c.id === courseId) || D.courses[0];
   const ventajas = buildVentajas(course);
   const catName = (slug) => (D.categories.find((c) => c.slug === slug) || {}).name || "";

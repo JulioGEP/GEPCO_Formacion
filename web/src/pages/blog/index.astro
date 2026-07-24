@@ -1,0 +1,7 @@
+---
+import Base from '../../layouts/Base.astro';
+import { BlogList } from '../../components/screens/BlogScreen.jsx';
+---
+<Base title="Blog — GEPCO Formación" description="Guías prácticas sobre emergencias, extinción de incendios, primeros auxilios y prevención de riesgos laborales." path="/blog/">
+  <BlogList client:load />
+</Base>

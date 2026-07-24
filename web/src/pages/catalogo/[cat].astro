@@ -1,0 +1,21 @@
+---
+import Base from '../../layouts/Base.astro';
+import CatalogScreen from '../../components/screens/CatalogScreen.jsx';
+import { DATA } from '../../lib/data.js';
+
+// Una página estática por categoría: /catalogo/<slug>/
+export function getStaticPaths() {
+  return DATA.categories.map((cat) => ({
+    params: { cat: cat.slug },
+    props: { cat },
+  }));
+}
+
+const { cat } = Astro.props;
+const path = `/catalogo/${cat.slug}/`;
+const title = `${cat.name} — Formación — GEPCO Formación`;
+const description = cat.blurb || `Cursos de ${cat.name} con certificación oficial en GEPCO Formación.`;
+---
+<Base title={title} description={description} path={path}>
+  <CatalogScreen initialCat={cat.slug} client:load />
+</Base>
