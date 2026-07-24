@@ -1,0 +1,31 @@
+/* Reglas globales del sitio (no expresables inline): resets, tipografía de enlaces,
+   foco, scrollbar del carrusel, marquee de logos y layout del blog. */
+*{box-sizing:border-box}
+/* Compat Tailwind sin preflight: resetea el ancho de borde a 0 y fija el estilo
+   a solid (igual que hace el preflight), para que las utilidades `border`/`border-x`
+   funcionen sin que aparezcan bordes por defecto (border-width inicial = medium). */
+*,::before,::after{border-width:0;border-style:solid}
+html,body{margin:0;background:var(--surface-page);font-family:var(--font-body);color:var(--text-strong)}
+body{min-height:100vh;display:flex;flex-direction:column}
+main{flex:1}
+a{color:var(--color-brand)}
+a:hover{color:var(--color-brand-strong)}
+:focus-visible{outline:3px solid var(--color-brand);outline-offset:2px;border-radius:2px}
+.gepco-hscroll{scrollbar-width:thin;scrollbar-color:var(--border-hover) transparent}
+.gepco-hscroll::-webkit-scrollbar{height:8px}
+.gepco-hscroll::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:99px}
+.gepco-hscroll::-webkit-scrollbar-track{background:transparent}
+@keyframes gepco-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.gepco-marquee-mask{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.gepco-marquee-track{display:flex;width:max-content;animation:gepco-marquee 48s linear infinite}
+.gepco-marquee-mask:hover .gepco-marquee-track{animation-play-state:paused}
+.blog-grid{display:grid;grid-template-columns:minmax(0,1fr) 350px;gap:var(--space-12);align-items:start}
+.blog-side{position:sticky;top:88px}
+.blog-mobilecta{display:none}
+@media (max-width:960px){
+  .blog-grid{grid-template-columns:1fr;gap:var(--space-10)}
+  .blog-side{position:static;top:auto}
+  .blog-dualrec{grid-template-columns:1fr!important}
+  .blog-mobilecta{display:flex}
+}
+@media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms!important;transition-duration:0.001ms!important;scroll-behavior:auto!important}}

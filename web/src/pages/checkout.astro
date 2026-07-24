@@ -1,0 +1,7 @@
+---
+import Base from '../layouts/Base.astro';
+import CheckoutScreen from '../components/screens/CheckoutScreen.jsx';
+---
+<Base title="Tramitar reserva — GEPCO Formación" description="Completa los datos de facturación y de los alumnos para tramitar tu reserva de formación." path="/checkout">
+  <CheckoutScreen client:only="react" />
+</Base>
