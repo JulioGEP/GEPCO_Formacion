@@ -1,0 +1,32 @@
+---
+import Base from '../../layouts/Base.astro';
+import { BlogPost } from '../../components/screens/BlogScreen.jsx';
+import { DATA } from '../../lib/data.js';
+
+// Una página estática por artículo: /blog/<id>/
+export function getStaticPaths() {
+  return DATA.blog.map((post) => ({
+    params: { post: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const path = `/blog/${post.id}/`;
+const title = `${post.title} — Blog GEPCO Formación`;
+const description = post.excerpt || `${post.title}. Guía práctica de GEPCO Formación sobre emergencias, extinción, primeros auxilios y PRL.`;
+
+const jsonld = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: post.title,
+  description,
+  image: post.img,
+  author: { '@type': 'Organization', name: 'GEPCO Formación' },
+  publisher: { '@type': 'Organization', name: 'GEPCO Formación' },
+  mainEntityOfPage: { '@type': 'WebPage', '@id': `https://gepcoformacion.es${path}` },
+};
+---
+<Base title={title} description={description} path={path} image={post.img} jsonld={jsonld}>
+  <BlogPost postId={post.id} client:load />
+</Base>

@@ -6,8 +6,8 @@ import { DATA as D } from '../../lib/data.js';
 import { Container } from '../common/Container.jsx';
 import { cx } from '../../lib/cx.js';
 
-function CatalogScreen() {
-  const filter = getParam("cat");
+function CatalogScreen({ initialCat }) {
+  const filter = initialCat || getParam("cat");
   const [active, setActive] = React.useState(filter || "all");
   React.useEffect(() => { setActive(filter || "all"); }, [filter]);
   const cats = [{ slug: "all", name: "Todas" }, ...D.categories];

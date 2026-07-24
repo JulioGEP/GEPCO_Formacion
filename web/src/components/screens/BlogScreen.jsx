@@ -172,8 +172,8 @@ function ConversionCard({ course, onNav, compact }) {
   );
 }
 
-function BlogPost() {
-  const postId = getParam("post");
+function BlogPost({ postId: postIdProp }) {
+  const postId = postIdProp || getParam("post");
   const post = D.blog.find((p) => p.id === postId) || D.blog[0];
   const meta = POSTMETA[post.id] || { cat: "extincion", primary: "bombero-empresa", author: "Equipo técnico GEPCO", updated: "" };
   const primary = D.courses.find((c) => c.id === meta.primary) || D.courses[0];
