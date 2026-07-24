@@ -52,9 +52,9 @@ function ContactScreen() {
       {/* ---- Split hero: value prop + qué recibirás + canales · formulario ---- */}
       <section className="bg-surface py-section">
         <Container>
-          <div className="rounded-xl overflow-hidden grid grid-cols-[1fr_1.05fr] shadow-lg">
+          <div className="rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-[1fr_1.05fr] shadow-lg">
             {/* Left — persuasión */}
-            <div className="relative bg-dark text-white p-16 overflow-hidden flex flex-col justify-start">
+            <div className="relative bg-dark text-white p-8 sm:p-16 overflow-hidden flex flex-col justify-start">
               <img src={D.hero} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.28]" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,15,15,0.72),rgba(15,15,15,0.94))]" />
               <div className="relative">
@@ -82,7 +82,7 @@ function ContactScreen() {
             </div>
 
             {/* Right — formulario */}
-            <div className="bg-dark-soft text-white p-16">
+            <div className="bg-dark-soft text-white p-8 sm:p-16">
               {sent ? (
                 <div className="text-center py-16">
                   <div className="text-[44px] mb-[12px] text-success">✓</div>
@@ -94,7 +94,7 @@ function ContactScreen() {
                   <h2 className="m-[0_0_6px] font-display text-2xl font-bold">Solicita información</h2>
                   <p className="m-[0_0_var(--space-6)] text-base text-on-dark-muted">Te preparamos una propuesta a medida en menos de 24&nbsp;h.</p>
                   <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }} className="flex flex-col gap-5">
-                    <div className="grid grid-cols-[1fr_1fr] gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <Input theme="dark" label="Nombre *" placeholder="Tu nombre" />
                       <Input theme="dark" label="Empresa" placeholder="Razón social" />
                       <Input theme="dark" label="Email *" type="email" placeholder="tu@empresa.com" />
@@ -132,7 +132,7 @@ function ContactScreen() {
       {/* ---- Canales directos por sede — para quien no quiere esperar ---- */}
       <section className="bg-surface py-section">
         <Container>
-          <div className="grid grid-cols-[1fr_1fr] gap-16 items-stretch">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-stretch">
             <div>
               <SectionHeading eyebrow="Prefieres hablar" title="Llámanos ahora mismo" />
               <p className="m-[16px_0_var(--space-10)] text-lg text-body leading-normal max-w-[460px]">Si tienes prisa o prefieres el trato directo, marca la sede más cercana. Horario de atención de lunes a viernes, 8:00–16:00.</p>
@@ -151,7 +151,7 @@ function ContactScreen() {
             </div>
 
             {/* Otros canales sobre panel oscuro */}
-            <div className="relative bg-dark text-white rounded-xl overflow-hidden p-16 flex flex-col justify-center">
+            <div className="relative bg-dark text-white rounded-xl overflow-hidden p-8 sm:p-16 flex flex-col justify-center">
               <img src={D.heroQuote} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.22]" />
               <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(15,15,15,0.86),rgba(15,15,15,0.96))]" />
               <div className="relative flex flex-col gap-8">

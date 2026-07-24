@@ -85,7 +85,7 @@ function CourseScreen({ courseId: courseIdProp }) {
     <div>
       {/* Hero B2B */}
       <section className="bg-dark text-white">
-        <Container className="p-[var(--section-y)_var(--container-padding)] grid grid-cols-[1.05fr_0.95fr] gap-16 items-center">
+        <Container className="p-[var(--section-y)_var(--container-padding)] grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-10 lg:gap-16 items-center">
           <div>
             <button onClick={() => onNav("catalog", course.cat)} className="bg-transparent border-none text-brand cursor-pointer font-mono text-sm p-0 mb-[20px]">← {catName(course.cat)}</button>
             <div className="flex gap-[8px] mb-[20px] flex-wrap">
@@ -96,22 +96,22 @@ function CourseScreen({ courseId: courseIdProp }) {
             <span className="block font-mono text-sm uppercase tracking-eyebrow text-white/[0.6] mb-[12px]">Forma a tu equipo</span>
             <h1 className="m-[0_0_18px] font-display text-[clamp(2.2rem,4.4vw,3.4rem)] font-extrabold leading-tight tracking-display">{course.title}<span className="text-brand">.</span></h1>
             <p className="m-[0_0_var(--space-8)] text-lg leading-normal text-white/[0.82] max-w-[520px]">{course.soloSede ? "Diseñamos esta formación a la medida de tu empresa, impartida en nuestras instalaciones especializadas, con contenido y fechas adaptados a tu equipo. Certificación oficial y bonificable a través de FUNDAE." : "Diseñamos esta formación a la medida de tu empresa: en vuestras instalaciones o en las nuestras, con contenido y fechas adaptados a tu equipo. Certificación oficial y bonificable a través de FUNDAE."}</p>
-            <div className="flex gap-[12px] flex-wrap">
-              <Button variant="primary" size="lg" uppercase iconRight={<span>→</span>} onClick={scrollToLead}>Solicita propuesta para tu empresa</Button>
-              <Button variant="onDark" size="lg" onClick={() => onNav("contact")}>Hablar con un asesor</Button>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-[12px]">
+              <Button variant="primary" size="lg" uppercase className="max-sm:whitespace-normal text-center" iconRight={<span>→</span>} onClick={scrollToLead}>Solicita propuesta para tu empresa</Button>
+              <Button variant="onDark" size="lg" className="max-sm:whitespace-normal text-center" onClick={() => onNav("contact")}>Hablar con un asesor</Button>
             </div>
             <p className="m-[16px_0_0] text-sm text-white/[0.6]">Respuesta en menos de 24&nbsp;h · Sin compromiso</p>
           </div>
-          <img src={course.img} alt={course.title} className="w-full h-[420px] object-cover rounded-xl shadow-lg" />
+          <img src={course.img} alt={course.title} className="w-full h-[260px] sm:h-[420px] object-cover rounded-xl shadow-lg" />
         </Container>
       </section>
 
-      <Container className="p-[var(--section-y)_var(--container-padding)] grid grid-cols-[1.6fr_1fr] gap-16 items-start">
+      <Container className="p-[var(--section-y)_var(--container-padding)] grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-10 lg:gap-16 items-start">
         {/* Main */}
         <div className="flex flex-col gap-12">
           <div>
             <h2 className={h2}>Información básica<span className="text-brand">.</span></h2>
-            <dl className="m-0 grid grid-cols-[1fr_1fr] gap-[1px] bg-border border border-border rounded-lg overflow-hidden">
+            <dl className="m-0 grid grid-cols-1 sm:grid-cols-2 gap-[1px] bg-border border border-border rounded-lg overflow-hidden">
               {[
                 { k: "Certificación", v: course.norm },
                 { k: "Horas de formación", v: course.hours || "A medida según programa" },
@@ -178,7 +178,7 @@ function CourseScreen({ courseId: courseIdProp }) {
         </div>
 
         {/* Sticky — captación de lead B2B */}
-        <aside ref={leadRef} className="sticky top-[120px] flex flex-col gap-4">
+        <aside ref={leadRef} className="lg:sticky lg:top-[120px] flex flex-col gap-4">
           <div className="bg-surface border border-border rounded-xl shadow-md p-8">
             {sent ? (
               <div className="text-center p-[var(--space-8)_0]">
@@ -278,9 +278,9 @@ function CourseScreen({ courseId: courseIdProp }) {
           <span className="block mb-[12px] text-sm font-bold tracking-eyebrow uppercase text-brand">Valoraciones en Google</span>
           <div className="flex items-end justify-between gap-6 flex-wrap mb-10">
             <h2 className="m-0 font-display text-3xl font-extrabold tracking-display text-strong">Opiniones<span className="text-brand">.</span></h2>
-            <div className="flex items-center gap-[14px]">
+            <div className="flex items-center gap-[14px] flex-wrap min-w-0">
               <span className="font-display text-3xl font-extrabold text-strong leading-none">{D.reviews.rating != null ? String(D.reviews.rating).replace(".", ",") : "[PENDIENTE]"}</span>
-              <div>
+              <div className="min-w-0">
                 <Stars n={5} />
                 <div className="text-sm text-subtle">{D.reviews.count != null ? D.reviews.count + " reseñas en Google" : "[PENDIENTE: nº de reseñas] en Google"}</div>
               </div>

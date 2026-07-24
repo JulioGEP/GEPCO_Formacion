@@ -249,20 +249,107 @@ function CartDrawer({ open, onClose, onNav }) {
   );
 }
 
+// --- Menú móvil (drawer lateral, mismo patrón que el carrito) ---
+function Hamburger({ open, onClick }) {
+  return (
+    <button type="button" onClick={onClick} aria-expanded={open} aria-label={open ? "Cerrar menú" : "Abrir menú"}
+      className="lg:hidden w-[46px] h-[46px] rounded-full border-none bg-transparent cursor-pointer text-strong flex items-center justify-center">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        {open ? <><path d="M18 6 6 18" /><path d="m6 6 12 12" /></> : <><path d="M3 6h18" /><path d="M3 12h18" /><path d="M3 18h18" /></>}
+      </svg>
+    </button>
+  );
+}
+
+function MobileSearch() {
+  return (
+    <div className="flex items-center gap-2 h-[48px] bg-surface-muted rounded-full px-[18px] border border-border">
+      <span className="flex-none text-subtle" aria-hidden="true">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.2-3.2" /></svg>
+      </span>
+      <input type="text" placeholder="Buscar formación, certificación…" aria-label="Buscar" className="flex-1 min-w-0 border-none [outline:none] bg-transparent font-body text-base text-strong" />
+    </div>
+  );
+}
+
+function MobileMenu({ open, onClose, onNav }) {
+  const [cursosOpen, setCursosOpen] = React.useState(false);
+  React.useEffect(() => {
+    const onKey = (e) => { if (e.key === "Escape") onClose(); };
+    if (open) window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, onClose]);
+  const go = (screen, param) => { onClose(); onNav(screen, param); };
+  const specialties = [...CURSOS.left.items, ...CURSOS.right.items];
+  const Row = ({ label, onClick }) => (
+    <button type="button" onClick={onClick}
+      className="w-full text-left py-3.5 bg-transparent border-none cursor-pointer font-body text-lg font-semibold text-strong border-t border-border">
+      {label}
+    </button>
+  );
+  return (
+    <div aria-hidden={!open} className={cx("lg:hidden fixed inset-0 z-[200]", open ? "pointer-events-auto" : "pointer-events-none")}>
+      <div onClick={onClose} className="absolute inset-0 bg-[rgba(15,15,15,0.5)] transition-opacity duration-base ease-standard" style={{ opacity: open ? 1 : 0 }} />
+      <aside role="dialog" aria-modal="true" aria-label="Menú de navegación"
+        className="absolute top-0 left-0 h-full w-[min(360px,88vw)] bg-page shadow-lg transition-transform duration-base ease-standard flex flex-col font-body"
+        style={{ transform: open ? "translateX(0)" : "translateX(-100%)" }}>
+        <header className="flex items-center justify-between p-5 border-b border-border bg-surface">
+          <img src={D.logoDark} alt="GEPCO Formación" className="h-[52px] object-contain" />
+          <button type="button" onClick={onClose} aria-label="Cerrar menú" className="border-none bg-transparent text-[30px] leading-none cursor-pointer text-subtle">×</button>
+        </header>
+        <div className="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
+          <MobileSearch />
+          <nav className="flex flex-col">
+            <div className="border-t border-border">
+              <button type="button" onClick={() => setCursosOpen((o) => !o)} aria-expanded={cursosOpen}
+                className="w-full flex items-center justify-between py-3.5 bg-transparent border-none cursor-pointer font-body text-lg font-semibold text-strong">
+                Cursos
+                <span aria-hidden="true" className="text-[13px] text-subtle transition-transform duration-fast ease-standard" style={{ transform: cursosOpen ? "rotate(180deg)" : "none" }}>▾</span>
+              </button>
+              {cursosOpen && (
+                <div className="flex flex-col pb-3 pl-1">
+                  {specialties.map((it) => (
+                    <a key={it.name} href="#" onClick={(e) => { e.preventDefault(); go("catalog", it.cat); }}
+                      className="flex items-center gap-2 py-2 text-base text-body no-underline hover:text-brand">
+                      <span aria-hidden="true" className="text-brand font-bold text-sm">›</span>{it.name}
+                    </a>
+                  ))}
+                  <a href="#" onClick={(e) => { e.preventDefault(); go("catalog"); }} className="mt-1 py-2 text-base font-bold text-brand no-underline">Ver todo el catálogo →</a>
+                </div>
+              )}
+            </div>
+            <Row label="Nosotros" onClick={() => go("nosotros")} />
+            <Row label="Convocatorias abiertas" onClick={() => go("abiertas")} />
+            <Row label="Blog" onClick={() => go("blog")} />
+            <Row label="Contacto" onClick={() => go("contact")} />
+            <Row label="Trabaja con nosotros" onClick={() => go("trabaja")} />
+          </nav>
+        </div>
+        <div className="p-5 border-t border-border bg-surface">
+          <a href="#" onClick={(e) => e.preventDefault()} className="flex items-center gap-3 no-underline">
+            <span className="w-[38px] h-[38px] rounded-full bg-brand text-white flex items-center justify-center" aria-hidden="true">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></svg>
+            </span>
+            <span className="text-base text-body">Hola, <strong className="text-strong font-semibold">alumno/a</strong></span>
+          </a>
+        </div>
+      </aside>
+    </div>
+  );
+}
+
 function Navbar() {
-  const [open, setOpen] = React.useState(null); // 'cursos' | 'nosotros' | null
+  const [open, setOpen] = React.useState(null); // 'cursos' | 'nosotros' | null (mega-menú desktop)
   const [cartOpen, setCartOpen] = React.useState(false);
-  const [w, setW] = React.useState(typeof window !== "undefined" ? window.innerWidth : 1280);
-  React.useEffect(() => { const on = () => setW(window.innerWidth); window.addEventListener("resize", on); return () => window.removeEventListener("resize", on); }, []);
-  const narrow = w < 1060;
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   return (
     <header onMouseLeave={() => setOpen(null)}
       className="sticky top-0 z-50 bg-surface border-b border-border font-body">
-      <div className="max-w-container mx-auto py-[14px] px-container flex items-center gap-[28px]">
+      <div className="max-w-container mx-auto py-[14px] px-container flex items-center gap-4 lg:gap-[28px]">
         <a href="#" onClick={(e) => { e.preventDefault(); onNav("home"); }} className="flex-none flex items-center">
-          <img src={D.logoDark} alt="GEPCO Formación" className="h-[72px] object-contain scale-[1.2] origin-left ml-[-7px]" />
+          <img src={D.logoDark} alt="GEPCO Formación" className="h-[52px] lg:h-[72px] object-contain lg:scale-[1.2] lg:origin-left lg:ml-[-7px]" />
         </a>
-        <nav className={cx("flex items-center gap-[6px] min-w-0", narrow ? "ml-3" : "ml-[28px]")}>
+        <nav className="hidden lg:flex items-center gap-[6px] min-w-0 lg:ml-6">
           <div onMouseEnter={() => setOpen("cursos")}>
             <NavTrigger label="Cursos" open={open === "cursos"} onEnter={() => setOpen("cursos")} onClick={() => onNav("catalog")} />
           </div>
@@ -272,20 +359,21 @@ function Navbar() {
           <div onMouseEnter={() => setOpen(null)}><NavLink label="Blog" onClick={(e) => { e.preventDefault(); onNav("blog"); }} /></div>
           <div onMouseEnter={() => setOpen(null)}><NavLink label="Contacto" onClick={(e) => { e.preventDefault(); onNav("contact"); }} /></div>
         </nav>
-        <div className="ml-auto flex items-center gap-4" onMouseEnter={() => setOpen(null)}>
-          <CollapsibleSearch />
+        <div className="ml-auto flex items-center gap-2 lg:gap-4" onMouseEnter={() => setOpen(null)}>
+          <div className="hidden lg:block"><CollapsibleSearch /></div>
           <CartButton onClick={() => setCartOpen(true)} />
-          <span className="w-px h-[30px] bg-border" />
-          <a href="#" onClick={(e) => e.preventDefault()} className="flex items-center gap-[10px] no-underline">
+          <span className="hidden lg:block w-px h-[30px] bg-border" />
+          <a href="#" onClick={(e) => e.preventDefault()} className="hidden lg:flex items-center gap-[10px] no-underline">
             <span className="w-[38px] h-[38px] rounded-full bg-brand text-white flex items-center justify-center" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></svg>
             </span>
-            <span className={cx("text-base text-body whitespace-nowrap", narrow ? "hidden" : "inline")}>Hola, <strong className="text-strong font-semibold">alumno/a</strong></span>
+            <span className="hidden xl:inline text-base text-body whitespace-nowrap">Hola, <strong className="text-strong font-semibold">alumno/a</strong></span>
           </a>
+          <Hamburger open={mobileOpen} onClick={() => setMobileOpen((o) => !o)} />
         </div>
       </div>
       {open && (
-        <div className="absolute left-0 right-0 top-full">
+        <div className="hidden lg:block absolute left-0 right-0 top-full">
           <div className="max-w-container mx-auto py-0 px-container flex justify-start">
             <div>
               {open === "cursos" ? <CursosMenu onNav={onNav} /> : <NosotrosMenu onNav={onNav} />}
@@ -294,6 +382,7 @@ function Navbar() {
         </div>
       )}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} onNav={onNav} />
+      <MobileMenu open={mobileOpen} onClose={() => setMobileOpen(false)} onNav={onNav} />
     </header>
   );
 }
@@ -325,8 +414,8 @@ function Footer() {
   const colLabel = "font-body text-xs uppercase tracking-eyebrow text-brand font-bold mb-5";
   return (
     <footer className="bg-[#e8e6e2] text-strong border-t border-border font-body">
-      <div className="max-w-container mx-auto pt-8 px-container pb-5 grid grid-cols-[1.7fr_1fr_1fr_1fr] gap-10">
-        <div className="max-w-[320px]">
+      <div className="max-w-container mx-auto pt-8 px-container pb-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.7fr_1fr_1fr_1fr] gap-10">
+        <div className="max-w-[320px] sm:col-span-2 lg:col-span-1">
           <img src={D.logoDark} alt="GEPCO Formación" className="h-[72px] object-contain mb-[18px] scale-[1.2] origin-left ml-[-7px]" />
           <p className="mt-0 mx-0 mb-5 text-sm leading-normal text-body">Escuela de Emergencias y PRL. Centro homologado por el ISPC. Más de 15 años formando profesionales.</p>
           <button type="button" onClick={() => nav("contact")} className="inline-flex items-center gap-[10px] bg-brand text-white border-none rounded-md py-3 px-5 font-body text-sm font-semibold tracking-[0.04em] cursor-pointer">Solicita información <span aria-hidden="true">→</span></button>

@@ -199,7 +199,7 @@ function CheckoutScreen() {
             <p className="m-[10px_0_0] text-lg text-body max-w-[620px] leading-normal">Completa los datos de facturación y de los alumnos.</p>
           </div>
           <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }}
-            className="grid grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] gap-10 items-start">
+            className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] gap-10 items-start">
 
             {/* ---- Columna izquierda: pasos ---- */}
             <div className="flex flex-col gap-6">
@@ -207,7 +207,7 @@ function CheckoutScreen() {
               {/* 1. Comprador */}
               <div className={card}>
                 <StepHead n="1" title="Datos de quien realiza la reserva" desc="Persona de contacto para la gestión de la reserva." />
-                <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <Input label="Nombre *" placeholder="Nombre" />
                   <Input label="Apellidos *" placeholder="Apellidos" />
                   <Input label="Email *" type="email" placeholder="tu@empresa.com" />
@@ -224,7 +224,7 @@ function CheckoutScreen() {
                       className={cx("cursor-pointer border-none rounded-sm p-[9px_18px] font-body text-sm font-semibold transition-[background] duration-base ease-standard", tipo === id ? "bg-brand text-white" : "bg-transparent text-body")}>{lbl}</button>
                   ))}
                 </div>
-                <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {tipo === "empresa" ? (
                     <React.Fragment>
                       <div className="col-span-full"><Input label="Razón social *" placeholder="Empresa, S.L." /></div>
@@ -259,7 +259,7 @@ function CheckoutScreen() {
                         {Array.from({ length: it.qty }).map((_, i) => (
                           <div key={i}>
                             <div className="font-mono text-xs uppercase tracking-eyebrow text-subtle mb-2.5">Alumno {i + 1}</div>
-                            <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-4">
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                               <Input label="Nombre *" placeholder="Nombre" />
                               <Input label="Apellidos *" placeholder="Apellidos" />
                               <Input label="DNI *" placeholder="12345678A" />
@@ -284,7 +284,7 @@ function CheckoutScreen() {
             </div>
 
             {/* ---- Columna derecha: resumen sticky ---- */}
-            <aside className="sticky top-6 flex flex-col gap-4">
+            <aside className="lg:sticky lg:top-6 flex flex-col gap-4">
               <div className={card}>
                 <h2 className="m-[0_0_var(--space-6)] font-display text-xl font-bold text-strong">Resumen de la reserva</h2>
                 <div className="flex flex-col gap-4 mb-6">
