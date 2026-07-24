@@ -1,9 +1,10 @@
 /* Reglas globales del sitio (no expresables inline): resets, tipografía de enlaces,
    foco, scrollbar del carrusel, marquee de logos y layout del blog. */
 *{box-sizing:border-box}
-/* Compat Tailwind sin preflight: fija border-style para que las utilidades
-   `border`/`border-x` funcionen (el ancho por defecto sigue siendo 0). */
-*,::before,::after{border-style:solid}
+/* Compat Tailwind sin preflight: resetea el ancho de borde a 0 y fija el estilo
+   a solid (igual que hace el preflight), para que las utilidades `border`/`border-x`
+   funcionen sin que aparezcan bordes por defecto (border-width inicial = medium). */
+*,::before,::after{border-width:0;border-style:solid}
 html,body{margin:0;background:var(--surface-page);font-family:var(--font-body);color:var(--text-strong)}
 body{min-height:100vh;display:flex;flex-direction:column}
 main{flex:1}
