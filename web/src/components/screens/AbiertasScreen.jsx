@@ -217,7 +217,7 @@ function AbiertasScreen() {
       {/* AGENDA de convocatorias */}
       <Container className="py-section">
         <div className="flex items-baseline justify-between gap-6 flex-wrap mb-6">
-          <h2 className="m-0 font-display text-3xl font-extrabold tracking-display text-strong">Próximas convocatorias<span className="text-accent">.</span></h2>
+          <h2 className="m-0 font-display text-2xl sm:text-3xl font-extrabold tracking-display text-strong">Próximas convocatorias<span className="text-accent">.</span></h2>
           <div className="inline-flex bg-surface-muted border border-border rounded-full p-[4px]">
             {[["list", "Lista"], ["calendar", "Calendario"]].map(([v, l]) => (
               <button key={v} onClick={() => setView(v)} className={cx(

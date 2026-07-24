@@ -436,7 +436,7 @@ function Footer() {
 
       <div className="border-t border-border">
         <div className="max-w-container mx-auto py-4 px-container flex items-center gap-6 flex-wrap justify-center">
-          <span className="font-body text-xs uppercase tracking-eyebrow text-subtle flex-none">Certificaciones y acreditaciones oficiales</span>
+          <span className="font-body text-xs uppercase tracking-eyebrow text-subtle text-center max-w-full">Certificaciones y acreditaciones oficiales</span>
           <img src="/assets/logos-acreditacion-gris-g.png" alt="Acreditaciones: Gobierno de España, Policía Nacional, IRATA International, SEMICYUC, ISO 9001, DGT e Irudek" loading="lazy" className="flex-[0_1_520px] min-w-0 h-auto object-contain opacity-[0.85]" />
         </div>
       </div>

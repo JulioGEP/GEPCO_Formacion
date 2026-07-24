@@ -20,7 +20,7 @@ function useCartItems() {
 }
 
 const eyebrow = { fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)" };
-const card = "bg-surface border border-border rounded-lg p-8";
+const card = "bg-surface border border-border rounded-lg p-6 sm:p-8";
 
 // Sedes físicas → dirección + Google Maps. La formación in company no tiene sede fija.
 const SEDES_INFO = {
@@ -61,11 +61,11 @@ function StepHead({ n, title, desc }) {
 function PayOption({ id, active, onSelect, title, desc, tag }) {
   return (
     <button type="button" onClick={() => onSelect(id)} aria-pressed={active}
-      className={cx("text-left cursor-pointer flex items-center gap-3.5 p-[var(--space-5)_var(--space-6)] rounded-md bg-surface w-full border-2 transition-[border-color,box-shadow] duration-base ease-standard", active ? "border-brand shadow-focus" : "border-border shadow-none")}>
+      className={cx("text-left cursor-pointer flex items-center gap-3.5 flex-wrap p-[var(--space-5)_var(--space-6)] rounded-md bg-surface w-full border-2 transition-[border-color,box-shadow] duration-base ease-standard", active ? "border-brand shadow-focus" : "border-border shadow-none")}>
       <span aria-hidden="true" className={cx("flex-none w-5 h-5 rounded-full border-2 flex items-center justify-center", active ? "border-brand" : "border-border-strong")}>
         {active && <span className="w-2.5 h-2.5 rounded-full bg-brand" />}
       </span>
-      <span className="flex-1">
+      <span className="flex-1 min-w-0">
         <span className="block font-display text-base font-semibold text-strong">{title}</span>
         <span className="block text-sm text-subtle mt-0.5">{desc}</span>
       </span>

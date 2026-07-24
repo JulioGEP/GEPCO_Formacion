@@ -35,7 +35,10 @@ function Button({
       disabled={disabled}
       onClick={onClick}
       className={cx(
-        'items-center justify-center gap-[10px] font-body font-semibold leading-[1.1] whitespace-nowrap',
+        'items-center justify-center gap-[10px] font-body font-semibold leading-[1.1] text-center',
+        // Móvil primero: los CTAs pueden ajustar el texto en pantallas estrechas
+        // (evita desbordes); a partir de sm se mantiene en una sola línea.
+        'max-w-full whitespace-normal sm:whitespace-nowrap',
         'rounded-md border cursor-pointer',
         'transition duration-base ease-standard enabled:hover:-translate-y-px',
         'disabled:cursor-not-allowed disabled:opacity-[0.45]',
