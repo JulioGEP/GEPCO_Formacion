@@ -1,0 +1,40 @@
+/* GEP · Typography tokens
+ * Display grotesque + neutral body + technical mono. */
+:root {
+  /* Families */
+  --font-display: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-body: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-mono: "Poppins", system-ui, -apple-system, sans-serif;
+
+  /* Type scale */
+  --text-xs: 0.75rem;      /* 12px */
+  --text-sm: 0.875rem;     /* 14px */
+  --text-base: 1rem;       /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.375rem;     /* 22px */
+  --text-2xl: 1.875rem;    /* 30px */
+  --text-3xl: 2.5rem;      /* 40px */
+  --text-4xl: 3.25rem;     /* 52px */
+  --text-display: 4.5rem;  /* 72px — hero */
+
+  /* Weights */
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+  --weight-extrabold: 800;
+
+  /* Line heights */
+  --leading-none: 1;
+  --leading-tight: 1.05;    /* display */
+  --leading-snug: 1.2;      /* headings */
+  --leading-normal: 1.55;   /* body */
+  --leading-loose: 1.75;
+
+  /* Tracking */
+  --tracking-display: -0.03em;  /* big grotesque headings */
+  --tracking-heading: -0.02em;
+  --tracking-nav: 0;
+  --tracking-eyebrow: 0.16em;   /* uppercase red kickers + labels */
+  --tracking-mono: 0.02em;
+}

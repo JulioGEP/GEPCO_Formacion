@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import HomeScreen from '../components/screens/HomeScreen.jsx';
+const org = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "GEPCO Formación",
+  "legalName": "GEP&RISK 112 SL",
+  "url": "https://gepcoformacion.es/",
+  "logo": "https://gepcoformacion.es/wp-content/uploads/2024/02/logo-GEPCO-Formacion.png",
+  "description": "Escuela de emergencias y PRL. Formación práctica con simulacros de fuego real y certificaciones oficiales.",
+  "sameAs": [],
+  "location": [
+    { "@type": "Place", "name": "GEPCO Formación Sabadell", "address": { "@type": "PostalAddress", "streetAddress": "C. Moratín, 100", "postalCode": "08206", "addressLocality": "Sabadell", "addressRegion": "Barcelona", "addressCountry": "ES" } },
+    { "@type": "Place", "name": "GEPCO Formación Madrid", "address": { "@type": "PostalAddress", "streetAddress": "C. Primavera, 1", "postalCode": "28500", "addressLocality": "Arganda del Rey", "addressRegion": "Madrid", "addressCountry": "ES" } }
+  ]
+};
+---
+<Base title="GEPCO Formación - Cursos de Emergencias y PRL para Empresas" description="Formación en emergencias y PRL con simulacros de fuego real, aforo máximo de 15 alumnos y cobertura en toda la península. Solicita tu propuesta a medida." path="/" jsonld={org}>
+  <HomeScreen client:load />
+</Base>

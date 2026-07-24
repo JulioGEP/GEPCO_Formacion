@@ -1,0 +1,63 @@
+/* GEP · Color tokens
+ * Corporate red on near-black ink and warm neutrals. Dark panels for B2B/quote. */
+:root {
+  /* Base — brand red */
+  --color-brand: #e30613;
+  --color-brand-strong: #b90510;
+  --color-brand-soft: #fef2f3;
+
+  /* Base — accent (warm, emergencies) */
+  --color-accent: #f39200;
+  --color-accent-strong: #c87500;
+
+  /* Base — ink / near-black (headings, dark UI) */
+  --color-ink: #16181d;
+  --color-ink-soft: #2a2a2a;
+  --color-body: #464951;   /* ~8.5:1 on white — AA+ */
+  --color-subtle: #6b6e76; /* ~4.9:1 on white — AA */
+
+  /* Base — borders */
+  --color-border: #e7e7e7;
+  --color-border-strong: #d6d6d6;
+
+  /* Base — surfaces (light) */
+  --color-bg: #edecea;              /* warm light gray page (contrasts white header) */
+  --color-surface: #ffffff;
+  --color-surface-muted: #f2f2ef;   /* alternating sections (warm) */
+  --color-surface-tile: #eeeeec;    /* product image tiles */
+
+  /* Base — dark surfaces */
+  --color-dark: #16181d;            /* dark panels, dark buttons */
+  --color-dark-soft: #1e2027;
+  --color-dark-tile: #282b33;
+
+  /* Base — semantic states */
+  --color-success: #2f9e44;
+  --color-warning: #f39200;
+  --color-danger: #e30613;
+  --color-stock-out: #6f6f6f;
+
+  /* ---- Semantic aliases ---- */
+  --text-strong: var(--color-ink);
+  --text-body: var(--color-body);
+  --text-subtle: var(--color-subtle);
+  --text-on-brand: #ffffff;
+  --text-on-dark: #ffffff;
+  --text-on-dark-muted: rgba(255, 255, 255, 0.76);
+
+  --surface-page: var(--color-bg);
+  --surface-card: var(--color-surface);
+  --surface-sunken: var(--color-surface-muted);
+  --surface-tile: var(--color-surface-tile);
+  --surface-inverse: var(--color-dark);
+
+  --border-default: var(--color-border);
+  --border-hover: var(--color-border-strong);
+  --border-on-dark: rgba(255, 255, 255, 0.14);
+
+  --action-primary: var(--color-brand);
+  --action-primary-hover: var(--color-brand-strong);
+  --action-dark: var(--color-ink);
+  --action-dark-hover: #000000;
+  --focus-ring: var(--color-brand);
+}

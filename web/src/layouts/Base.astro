@@ -1,0 +1,47 @@
+---
+import { Navbar, Footer } from '../components/Chrome.jsx';
+const {
+  title,
+  description,
+  path = '/',
+  image = 'https://gepcoformacion.es/wp-content/uploads/2025/03/Bomberos4.jpg',
+  jsonld,
+} = Astro.props;
+const BASE = 'https://gepcoformacion.es';
+const canonical = BASE + path;
+const caHref = BASE + '/ca' + (path === '/' ? '/' : path);
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="es" href={canonical} />
+    <link rel="alternate" hreflang="ca" href={caHref} />
+    <link rel="alternate" hreflang="x-default" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:site_name" content="GEPCO Formación" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="stylesheet" href="/ds/tokens/fonts.css" />
+    <link rel="stylesheet" href="/ds/tokens/colors.css" />
+    <link rel="stylesheet" href="/ds/tokens/typography.css" />
+    <link rel="stylesheet" href="/ds/tokens/spacing.css" />
+    <link rel="stylesheet" href="/ds/tokens/effects.css" />
+    <link rel="stylesheet" href="/ds/styles.css" />
+    <link rel="stylesheet" href="/global.css" />
+    {jsonld && <script type="application/ld+json" set:html={JSON.stringify(jsonld)} />}
+  </head>
+  <body>
+    <Navbar client:load />
+    <main><slot /></main>
+    <Footer client:load />
+  </body>
+</html>

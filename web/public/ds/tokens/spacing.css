@@ -1,0 +1,31 @@
+/* GEP · Spacing & layout tokens */
+:root {
+  /* Spacing scale */
+  --space-1: 0.25rem;   /* 4px */
+  --space-2: 0.5rem;    /* 8px */
+  --space-3: 0.75rem;   /* 12px */
+  --space-4: 1rem;      /* 16px */
+  --space-5: 1.25rem;   /* 20px */
+  --space-6: 1.5rem;    /* 24px */
+  --space-8: 2rem;      /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+  --space-24: 6rem;     /* 96px */
+  --space-32: 8rem;     /* 128px */
+
+  /* Section rhythm */
+  --section-y: clamp(3rem, 4.5vw, 4.75rem); /* @kind spacing */
+  --section-y-sm: clamp(2.25rem, 3.5vw, 3.5rem); /* @kind spacing */
+
+  /* Layout */
+  --container-max: 1320px;
+  --container-padding: clamp(1rem, 4vw, 3rem);
+
+  /* Breakpoints (documental) */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 800px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1320px;
+}
