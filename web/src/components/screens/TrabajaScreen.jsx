@@ -85,7 +85,7 @@ function TrabajaScreen() {
                 <h2 className="m-[10px_0_6px] font-display text-2xl font-bold text-strong">Cuéntanos sobre ti</h2>
                 <p className="m-[0_0_var(--space-8)] text-base text-subtle leading-normal">Rellena el formulario y adjunta tu CV. Te responderemos por email.</p>
                 <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }} className="flex flex-col gap-5">
-                  <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <Input label="Nombre y apellidos *" placeholder="Tu nombre" />
                     <Input label="Email *" type="email" placeholder="tu@email.com" />
                     <Input label="Teléfono *" placeholder="+34 600 000 000" />

@@ -69,7 +69,7 @@ function Hero({ onNav }) {
       <img src={D.hero} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.42]" />
       <div className="absolute inset-0 bg-[linear-gradient(100deg,_rgba(16,18,22,0.96)_0%,_rgba(16,18,22,0.74)_52%,_rgba(16,18,22,0.42)_100%)]" />
       <Container className="relative py-section">
-        <div className="grid grid-cols-[1.3fr_0.85fr] gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.3fr_0.85fr] gap-10 lg:gap-16 items-center">
           <div>
             <div className="flex gap-2.5 flex-wrap mb-[26px]">
               <Badge tone="brand" dot>Simulacros con fuego real</Badge>
@@ -81,11 +81,11 @@ function Hero({ onNav }) {
             <p className="mt-0 mx-0 mb-[30px] text-xl leading-normal text-white/[0.85] max-w-[540px]">
               Formación práctica con fuego real, casa de humo y aforo máximo de 15 alumnos. Preparamos a empresas y profesionales en las 8 áreas de la seguridad y las emergencias.
             </p>
-            <div className="flex gap-3 flex-nowrap items-stretch mb-5">
-              <Button variant="primary" size="lg" iconRight={<span>→</span>} onClick={() => onNav("contact")}>Solicita propuesta para tu empresa</Button>
-              <Button variant="onDark" size="lg" onClick={() => onNav("abiertas")}>Ver convocatorias abiertas</Button>
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-5">
+              <Button variant="primary" size="lg" className="max-sm:whitespace-normal text-center" iconRight={<span>→</span>} onClick={() => onNav("contact")}>Solicita propuesta para tu empresa</Button>
+              <Button variant="onDark" size="lg" className="max-sm:whitespace-normal text-center" onClick={() => onNav("abiertas")}>Ver convocatorias abiertas</Button>
             </div>
-            <div className="flex gap-2.5 flex-nowrap">
+            <div className="flex flex-wrap gap-2.5">
               <FundaeChip onDark />
               <InCompanyChip />
             </div>
@@ -166,8 +166,8 @@ function Empresa({ onNav }) {
   return (
     <section className="bg-page pb-section">
       <Container>
-        <div className="rounded-xl overflow-hidden grid grid-cols-[1fr_1fr] shadow-lg">
-          <div className="relative bg-dark text-white p-12 min-h-[560px] flex flex-col justify-center overflow-hidden">
+        <div className="rounded-xl overflow-hidden grid grid-cols-1 lg:grid-cols-2 shadow-lg">
+          <div className="relative bg-dark text-white p-8 sm:p-12 lg:min-h-[560px] flex flex-col justify-center overflow-hidden">
             <img src={D.heroQuote} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.32]" />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,_rgba(16,18,22,0.72),_rgba(16,18,22,0.94))]" />
             <div className="relative">
@@ -184,12 +184,12 @@ function Empresa({ onNav }) {
               <p className="mt-3.5 mx-0 mb-0 text-sm text-white/[0.6] max-w-[420px] leading-normal">Te informamos de cómo bonificar la formación a través de FUNDAE. La gestión del trámite la realiza tu empresa.</p>
             </div>
           </div>
-          <div className="bg-dark-soft text-white p-12">
+          <div className="bg-dark-soft text-white p-8 sm:p-12">
             <h3 className="mt-0 mx-0 mb-2 font-display text-2xl font-bold tracking-heading">Cuéntanos qué necesitas.</h3>
             <p className="mt-0 mx-0 mb-[22px] text-sm text-on-dark-muted">Respondemos en menos de 24 h con una propuesta a medida.</p>
             <form onSubmit={(e) => { e.preventDefault(); if (accept) onNav("contact"); }} className="flex flex-col gap-5">
               <Input theme="dark" label="Empresa" placeholder="Razón social" />
-              <div className="grid grid-cols-[1fr_1fr] gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Select theme="dark" label="Empleados a formar" placeholder="Elige un rango" options={["1 a 5", "6 a 20", "21 a 50", "Más de 50"]} />
                 <Select theme="dark" label="Área de interés" placeholder="Elige un área" options={D.areas.map((a) => a.name)} />
               </div>
@@ -244,7 +244,7 @@ function PorQue({ onNav }) {
   return (
     <section className="bg-surface py-section">
       <Container>
-        <div className="grid grid-cols-[1fr_1fr] gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <SectionHeading eyebrow="Por qué elegir GEPCO" title="Trayectoria, instalaciones e instructores en activo" />
             <p className="mt-6 mx-0 mb-8 text-lg leading-normal text-body">Somos una escuela de emergencias y PRL con más de 15 años formando profesionales, campos de prácticas propios e instructores en activo en los servicios de emergencia.</p>

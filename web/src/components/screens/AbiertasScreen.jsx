@@ -60,12 +60,12 @@ function IntakeRow({ intake, course, onNav, compact }) {
   return (
     <div className="flex items-stretch gap-0 bg-surface border border-border rounded-lg overflow-hidden shadow-sm">
       {/* Tarjeta de fecha (acento naranja) */}
-      <div className="flex-[0_0_auto] w-[104px] bg-accent text-white flex flex-col items-center justify-center p-4">
-        <span className="font-display text-[2.6rem] font-extrabold leading-none">{d}</span>
-        <span className="font-mono text-[13px] tracking-mono mt-[4px]">{mesAny}</span>
+      <div className="flex-[0_0_auto] w-[76px] sm:w-[104px] bg-accent text-white flex flex-col items-center justify-center p-3 sm:p-4">
+        <span className="font-display text-[2rem] sm:text-[2.6rem] font-extrabold leading-none">{d}</span>
+        <span className="font-mono text-[12px] sm:text-[13px] tracking-mono mt-[4px]">{mesAny}</span>
       </div>
       {/* Detalle */}
-      <div className="flex-1 min-w-0 flex items-center justify-between gap-6 flex-wrap py-5 px-6">
+      <div className="flex-1 min-w-0 flex items-center justify-between gap-4 sm:gap-6 flex-wrap py-5 px-4 sm:px-6">
         <div className="min-w-0 flex-[1_1_220px]">
           <div className="flex items-center gap-[8px] mb-[8px] flex-wrap">
             <NormBadge>{course.norm}</NormBadge>{sedeEl}
@@ -73,7 +73,7 @@ function IntakeRow({ intake, course, onNav, compact }) {
           <h3 className="m-0 font-display text-lg font-bold tracking-heading leading-snug text-strong">{course.title}</h3>
           <div className="mt-[8px] text-sm font-semibold" style={{ color: plazasColor }}>{plazasTxt}</div>
         </div>
-        <div className="flex items-center gap-6 flex-[0_0_auto]">
+        <div className="flex items-center gap-4 flex-wrap">
           <div className="text-right">{priceEl}</div>
           <Button variant="primary" iconRight={<span>→</span>} onClick={() => onNav("course", course.id)}>Reserva tu plaza</Button>
         </div>
@@ -104,7 +104,7 @@ function CalendarView({ intakes, courseOf, onNav }) {
       className={cx('w-[40px] h-[40px] rounded-full border border-border bg-surface text-[20px] leading-none text-strong', disabled ? 'cursor-not-allowed opacity-40' : 'cursor-pointer opacity-100')}>{dir < 0 ? "‹" : "›"}</button>
   );
   return (
-    <div className="ab-cal grid grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-8 items-start">
+    <div className="grid grid-cols-1 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] gap-8 items-start">
       <div className="bg-surface border border-border rounded-lg p-6 shadow-sm">
         <div className="flex items-center justify-between mb-5">
           <NavBtn dir={-1} disabled={cur <= minM} />
@@ -185,7 +185,7 @@ function AbiertasScreen() {
       {/* EXPLICACIÓN — qué es una formación en abierto */}
       <section className="bg-surface border-b border-b-border py-section">
         <Container>
-          <div className="ab-explain grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start">
             <div>
               <h2 className="m-[0_0_var(--space-5)] font-display text-3xl font-extrabold tracking-display text-strong">¿Qué es una formación en abierto?</h2>
               <p className="m-[0_0_var(--space-4)] text-lg leading-loose text-body">
@@ -217,7 +217,7 @@ function AbiertasScreen() {
       {/* AGENDA de convocatorias */}
       <Container className="py-section">
         <div className="flex items-baseline justify-between gap-6 flex-wrap mb-6">
-          <h2 className="m-0 font-display text-3xl font-extrabold tracking-display text-strong">Próximas convocatorias<span className="text-accent">.</span></h2>
+          <h2 className="m-0 font-display text-2xl sm:text-3xl font-extrabold tracking-display text-strong">Próximas convocatorias<span className="text-accent">.</span></h2>
           <div className="inline-flex bg-surface-muted border border-border rounded-full p-[4px]">
             {[["list", "Lista"], ["calendar", "Calendario"]].map(([v, l]) => (
               <button key={v} onClick={() => setView(v)} className={cx(

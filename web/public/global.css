@@ -23,9 +23,9 @@ a:hover{color:var(--color-brand-strong)}
 .blog-side{position:sticky;top:88px}
 .blog-mobilecta{display:none}
 @media (max-width:960px){
-  .blog-grid{grid-template-columns:1fr;gap:var(--space-10)}
+  .blog-grid{grid-template-columns:minmax(0,1fr);gap:var(--space-10)}
   .blog-side{position:static;top:auto}
-  .blog-dualrec{grid-template-columns:1fr!important}
+  .blog-dualrec{grid-template-columns:minmax(0,1fr)!important}
   .blog-mobilecta{display:flex}
 }
 @media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms!important;transition-duration:0.001ms!important;scroll-behavior:auto!important}}

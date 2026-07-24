@@ -20,7 +20,7 @@ function NosotrosScreen() {
       </section>
 
       <section className="bg-surface p-[var(--section-y)_0]">
-        <Container className="grid grid-cols-[1fr_1fr] gap-16 items-center">
+        <Container className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           <div>
             <h2 className="m-[0_0_18px] font-display text-3xl font-extrabold tracking-display text-strong">Nuestra misión<span className="text-brand">.</span></h2>
             <p className="m-[0_0_14px] text-lg leading-normal text-body">Garantizar la máxima seguridad y protección de trabajadores y empresas, asegurando una intervención correcta ante cualquier emergencia.</p>
@@ -31,7 +31,7 @@ function NosotrosScreen() {
               <StatBlock value="ISPC" label="Centro homologado" />
             </div>
           </div>
-          <img src={D.hero} alt="Formación práctica en emergencias" className="w-full h-[440px] object-cover rounded-xl shadow-lg" />
+          <img src={D.hero} alt="Formación práctica en emergencias" className="w-full h-[260px] sm:h-[360px] lg:h-[440px] object-cover rounded-xl shadow-lg" />
         </Container>
       </section>
 
