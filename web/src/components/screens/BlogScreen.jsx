@@ -4,14 +4,15 @@ import { onNav, getParam } from '../../lib/router.js';
 import { Button, Badge } from '../ds/index.js';
 import { DATA as D } from '../../lib/data.js';
 import { Container } from '../common/Container.jsx';
+import { cx } from '../../lib/cx.js';
 
 const fmtEUR = (n) => {
   const [int, dec] = Number(n).toFixed(2).split(".");
   return int.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + dec + " €";
 };
 const Stars = ({ n = 5 }) => (
-  <span aria-label={n + " de 5 estrellas"} style={{ color: "var(--color-accent)", fontSize: "15px", letterSpacing: "2px", whiteSpace: "nowrap" }}>
-    {"★★★★★".slice(0, n)}<span style={{ color: "var(--border-hover)" }}>{"★★★★★".slice(n)}</span>
+  <span aria-label={n + " de 5 estrellas"} className="text-accent text-[15px] tracking-[2px] whitespace-nowrap">
+    {"★★★★★".slice(0, n)}<span className="text-border-strong">{"★★★★★".slice(n)}</span>
   </span>
 );
 
@@ -84,23 +85,23 @@ const ARTICLE = {
 function BlogList() {
   return (
     <div>
-      <section style={{ background: "var(--color-dark)", color: "#fff", padding: "var(--section-y) 0" }}>
+      <section className="bg-dark text-white py-section">
         <Container>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)" }}>Recursos</span>
-          <h1 style={{ margin: "14px 0 0", fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem,5vw,3.6rem)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-tight)" }}>Blog<span style={{ color: "var(--color-brand)" }}>.</span></h1>
-          <p style={{ margin: "16px 0 0", fontSize: "var(--text-lg)", color: "rgba(255,255,255,0.78)", maxWidth: "620px" }}>Guías prácticas sobre emergencias, extinción de incendios, primeros auxilios y prevención de riesgos laborales.</p>
+          <span className="font-mono text-sm uppercase tracking-eyebrow text-brand">Recursos</span>
+          <h1 className="mt-[14px] font-display text-[clamp(2.4rem,5vw,3.6rem)] font-extrabold tracking-display leading-tight">Blog<span className="text-brand">.</span></h1>
+          <p className="mt-[16px] text-lg text-white/[0.78] max-w-[620px]">Guías prácticas sobre emergencias, extinción de incendios, primeros auxilios y prevención de riesgos laborales.</p>
         </Container>
       </section>
-      <Container style={{ padding: "var(--section-y) var(--container-padding)" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "var(--space-6)" }}>
+      <Container className="py-section">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
           {D.blog.map((p) => (
-            <article key={p.id} onClick={() => onNav("post", p.id)} style={{ cursor: "pointer", background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
-              <div style={{ aspectRatio: "16 / 10", overflow: "hidden" }}><img src={p.img} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} /></div>
-              <div style={{ padding: "var(--space-6)" }}>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "var(--tracking-mono)", color: "var(--color-brand)" }}>{p.cat}</span>
-                <h3 style={{ margin: "10px 0 10px", fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", lineHeight: "var(--leading-snug)", letterSpacing: "var(--tracking-heading)", color: "var(--text-strong)" }}>{p.title}</h3>
-                <p style={{ margin: "0 0 14px", fontSize: "var(--text-sm)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>{p.excerpt}</p>
-                <span style={{ fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", color: "var(--color-ink)" }}>Leer artículo <span style={{ color: "var(--color-brand)" }}>→</span></span>
+            <article key={p.id} onClick={() => onNav("post", p.id)} className="cursor-pointer bg-surface border border-border rounded-lg overflow-hidden shadow-sm">
+              <div className="aspect-[16/10] overflow-hidden"><img src={p.img} alt={p.title} className="w-full h-full object-cover" /></div>
+              <div className="p-6">
+                <span className="font-mono text-[11px] uppercase tracking-mono text-brand">{p.cat}</span>
+                <h3 className="my-[10px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{p.title}</h3>
+                <p className="mb-[14px] text-sm leading-normal text-body">{p.excerpt}</p>
+                <span className="text-sm font-bold text-ink">Leer artículo <span className="text-brand">→</span></span>
               </div>
             </article>
           ))}
@@ -125,8 +126,8 @@ function ReadingProgress() {
     return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
   }, []);
   return (
-    <div style={{ position: "fixed", top: 0, left: 0, right: 0, height: "4px", background: "transparent", zIndex: 90 }}>
-      <div style={{ height: "100%", width: pct + "%", background: "var(--color-brand)", transition: "width 80ms linear" }} />
+    <div className="fixed top-0 left-0 right-0 h-[4px] bg-transparent z-[90]">
+      <div className="h-full bg-brand transition-[width] duration-[80ms] ease-linear" style={{ width: pct + "%" }} />
     </div>
   );
 }
@@ -135,33 +136,33 @@ function ReadingProgress() {
 function ConversionCard({ course, onNav, compact }) {
   const hasPrice = typeof course.price === "number";
   return (
-    <div style={{ background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-md)" }}>
-      <div style={{ position: "relative", aspectRatio: "16 / 9", overflow: "hidden" }}>
-        <img src={course.img} alt={course.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-        <span style={{ position: "absolute", top: "12px", left: "12px", background: "var(--color-brand)", color: "#fff", fontFamily: "var(--font-mono)", fontSize: "10px", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-mono)", textTransform: "uppercase", padding: "5px 9px", borderRadius: "var(--radius-sm)" }}>{course.norm}</span>
+    <div className="bg-surface border border-border rounded-lg overflow-hidden shadow-md">
+      <div className="relative aspect-[16/9] overflow-hidden">
+        <img src={course.img} alt={course.title} className="w-full h-full object-cover" />
+        <span className="absolute top-[12px] left-[12px] bg-brand text-white font-mono text-[10px] font-bold tracking-mono uppercase p-[5px_9px] rounded-sm">{course.norm}</span>
       </div>
-      <div style={{ padding: "var(--space-6)" }}>
-        <span style={{ display: "block", fontFamily: "var(--font-mono)", fontSize: "10px", textTransform: "uppercase", letterSpacing: "var(--tracking-mono)", color: "var(--color-brand)", marginBottom: "8px" }}>Curso recomendado</span>
-        <h3 style={{ margin: "0 0 12px", fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", lineHeight: "var(--leading-snug)", letterSpacing: "var(--tracking-heading)", color: "var(--text-strong)" }}>{course.title}</h3>
+      <div className="p-6">
+        <span className="block font-mono text-[10px] uppercase tracking-mono text-brand mb-[8px]">Curso recomendado</span>
+        <h3 className="mb-[12px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{course.title}</h3>
         {hasPrice ? (
-          <div style={{ display: "flex", alignItems: "baseline", gap: "6px", marginBottom: "var(--space-5)" }}>
-            <span style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-extrabold)", color: "var(--text-strong)" }}>{fmtEUR(course.price)}</span>
-            <span style={{ fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>/ alumno</span>
+          <div className="flex items-baseline gap-[6px] mb-5">
+            <span className="font-display text-2xl font-extrabold text-strong">{fmtEUR(course.price)}</span>
+            <span className="text-sm text-subtle">/ alumno</span>
           </div>
         ) : (
-          <div style={{ marginBottom: "var(--space-5)", display: "flex", alignItems: "center", gap: "8px", fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--color-success)" }}>
-            <span style={{ width: "8px", height: "8px", borderRadius: "var(--radius-full)", background: "var(--color-success)" }} />Convocatorias abiertas
+          <div className="mb-5 flex items-center gap-[8px] text-sm font-semibold text-success">
+            <span className="w-[8px] h-[8px] rounded-full bg-success" />Convocatorias abiertas
           </div>
         )}
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+        <div className="flex flex-col gap-3">
           <Button variant="primary" block size="lg" uppercase iconRight={<span>→</span>} onClick={() => onNav("course", course.id)}>Ver curso y fechas</Button>
           <Button variant="outline" block onClick={() => onNav("contact")}>Solicita propuesta</Button>
         </div>
         {!compact && (
-          <ul style={{ margin: "var(--space-6) 0 0", padding: 0, listStyle: "none", display: "grid", gap: "8px" }}>
+          <ul className="mt-6 p-0 list-none grid gap-[8px]">
             {["Certificaciones oficiales", "Prácticas con fuego real", "Bonificable FUNDAE"].map((t) => (
-              <li key={t} style={{ display: "flex", gap: "8px", fontSize: "var(--text-sm)", color: "var(--text-body)" }}>
-                <span style={{ color: "var(--color-success)", fontWeight: "var(--weight-bold)" }}>✓</span>{t}
+              <li key={t} className="flex gap-[8px] text-sm text-body">
+                <span className="text-success font-bold">✓</span>{t}
               </li>
             ))}
           </ul>
@@ -184,50 +185,50 @@ function BlogPost() {
   const readMin = Math.max(3, Math.round(words / 200));
 
   const H2 = ({ children }) => (
-    <h2 style={{ margin: "var(--space-10) 0 var(--space-5)", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-heading)", lineHeight: "var(--leading-snug)", color: "var(--text-strong)" }}>{children}</h2>
+    <h2 className="mt-10 mb-5 font-display text-2xl font-bold tracking-heading leading-snug text-strong">{children}</h2>
   );
   const P = ({ children }) => (
-    <p style={{ margin: "0 0 var(--space-5)", fontSize: "var(--text-lg)", lineHeight: "var(--leading-loose)", color: "var(--text-body)" }}>{children}</p>
+    <p className="mb-5 text-lg leading-loose text-body">{children}</p>
   );
 
   return (
-    <div style={{ paddingBottom: "72px" }}>
+    <div className="pb-[72px]">
       <ReadingProgress />
 
       {/* HERO */}
-      <section style={{ background: "var(--color-dark)", color: "#fff", padding: "var(--section-y) 0 0" }}>
+      <section className="bg-dark text-white pt-section">
         <Container style={{ maxWidth: "820px" }}>
-          <nav style={{ display: "flex", alignItems: "center", gap: "8px", fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", marginBottom: "22px" }}>
-            <button onClick={() => onNav("blog")} style={{ background: "none", border: "none", color: "var(--color-brand)", cursor: "pointer", fontFamily: "inherit", fontSize: "inherit", padding: 0 }}>Blog</button>
-            <span style={{ color: "rgba(255,255,255,0.4)" }}>/</span>
-            <span style={{ color: "rgba(255,255,255,0.65)" }}>{post.cat}</span>
+          <nav className="flex items-center gap-[8px] font-mono text-sm mb-[22px]">
+            <button onClick={() => onNav("blog")} className="bg-transparent border-none text-brand cursor-pointer [font-family:inherit] [font-size:inherit] p-0">Blog</button>
+            <span className="text-white/40">/</span>
+            <span className="text-white/[0.65]">{post.cat}</span>
           </nav>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "12px", textTransform: "uppercase", letterSpacing: "var(--tracking-mono)", color: "var(--color-brand)" }}>{post.cat}</span>
-          <h1 style={{ margin: "14px 0 20px", fontFamily: "var(--font-display)", fontSize: "clamp(2rem,4vw,3rem)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-tight)" }}>{post.title}<span style={{ color: "var(--color-brand)" }}>.</span></h1>
-          <div style={{ display: "flex", alignItems: "center", gap: "18px", flexWrap: "wrap", fontSize: "var(--text-sm)", color: "rgba(255,255,255,0.7)", paddingBottom: "var(--space-8)" }}>
-            <span style={{ fontWeight: "var(--weight-semibold)", color: "#fff" }}>{meta.author}</span>
+          <span className="font-mono text-[12px] uppercase tracking-mono text-brand">{post.cat}</span>
+          <h1 className="mt-[14px] mb-[20px] font-display text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-display leading-tight">{post.title}<span className="text-brand">.</span></h1>
+          <div className="flex items-center gap-[18px] flex-wrap text-sm text-white/70 pb-8">
+            <span className="font-semibold text-white">{meta.author}</span>
             <span>· {readMin} min de lectura</span>
             {meta.updated && <span>· Actualizado {meta.updated}</span>}
           </div>
         </Container>
-        <Container style={{ maxWidth: "1040px", paddingTop: "var(--space-4)" }}>
-          <img src={post.img} alt={post.title} style={{ width: "100%", height: "clamp(240px, 40vw, 440px)", objectFit: "cover", borderRadius: "var(--radius-xl) var(--radius-xl) 0 0", boxShadow: "var(--shadow-lg)", transform: "translateY(1px)" }} />
+        <Container className="pt-4" style={{ maxWidth: "1040px" }}>
+          <img src={post.img} alt={post.title} className="w-full h-[clamp(240px,40vw,440px)] object-cover rounded-t-xl shadow-lg translate-y-px" />
         </Container>
       </section>
 
       {/* CUERPO + SIDEBAR DE CONVERSIÓN */}
-      <Container style={{ maxWidth: "1040px", padding: "var(--section-y) var(--container-padding)" }}>
+      <Container className="py-section" style={{ maxWidth: "1040px" }}>
         <div className="blog-grid">
           <article>
-            <p style={{ margin: "0 0 var(--space-8)", fontSize: "var(--text-xl)", lineHeight: "var(--leading-normal)", color: "var(--text-strong)", fontWeight: "var(--weight-medium)", paddingLeft: "18px", borderLeft: "4px solid var(--color-brand)" }}>{post.excerpt}</p>
+            <p className="mb-8 text-xl leading-normal text-strong font-medium pl-[18px] border-l-4 border-l-brand">{post.excerpt}</p>
 
             {/* Puntos clave — retiene y da valor rápido */}
-            <div style={{ margin: "0 0 var(--space-6)", padding: "var(--space-6) var(--space-8)", background: "var(--surface-sunken)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)" }}>
-              <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "var(--tracking-mono)", color: "var(--color-brand)", marginBottom: "12px" }}>Lo que vas a aprender</div>
-              <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "grid", gap: "10px" }}>
+            <div className="mb-6 py-6 px-8 bg-surface-muted border border-border rounded-lg">
+              <div className="font-mono text-[11px] uppercase tracking-mono text-brand mb-[12px]">Lo que vas a aprender</div>
+              <ul className="m-0 p-0 list-none grid gap-[10px]">
                 {article.takeaways.map((t, i) => (
-                  <li key={i} style={{ display: "flex", gap: "10px", fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>
-                    <span style={{ color: "var(--color-brand)", fontWeight: "var(--weight-bold)" }}>→</span>{t}
+                  <li key={i} className="flex gap-[10px] text-base leading-normal text-body">
+                    <span className="text-brand font-bold">→</span>{t}
                   </li>
                 ))}
               </ul>
@@ -239,10 +240,10 @@ function BlogPost() {
                 {s.paras.map((p, j) => <P key={j}>{p}</P>)}
                 {/* CTA contextual a mitad de artículo */}
                 {i === 0 && (
-                  <div style={{ margin: "var(--space-8) 0", padding: "var(--space-6) var(--space-8)", background: "var(--color-dark)", borderRadius: "var(--radius-lg)", display: "flex", justifyContent: "space-between", alignItems: "center", gap: "20px", flexWrap: "wrap" }}>
-                    <div style={{ color: "#fff" }}>
-                      <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)" }}>¿Prefieres formarte con prácticas reales?</div>
-                      <div style={{ fontSize: "var(--text-sm)", color: "rgba(255,255,255,0.7)" }}>{primary.title} — {primary.norm}</div>
+                  <div className="my-8 py-6 px-8 bg-dark rounded-lg flex justify-between items-center gap-[20px] flex-wrap">
+                    <div className="text-white">
+                      <div className="font-display text-lg font-bold">¿Prefieres formarte con prácticas reales?</div>
+                      <div className="text-sm text-white/70">{primary.title} — {primary.norm}</div>
                     </div>
                     <Button variant="primary" uppercase iconRight={<span>→</span>} onClick={() => onNav("course", primary.id)}>Ver el curso</Button>
                   </div>
@@ -250,15 +251,15 @@ function BlogPost() {
               </React.Fragment>
             ))}
 
-            <p style={{ margin: "var(--space-6) 0 0", fontSize: "var(--text-sm)", color: "var(--text-subtle)", fontStyle: "italic" }}>Contenido a título informativo. Consulta la normativa aplicable a tu caso o escríbenos: preparamos un plan de formación a medida.</p>
+            <p className="mt-6 text-sm text-subtle italic">Contenido a título informativo. Consulta la normativa aplicable a tu caso o escríbenos: preparamos un plan de formación a medida.</p>
           </article>
 
           {/* SIDEBAR pegajoso */}
           <aside className="blog-side">
             <ConversionCard course={primary} onNav={onNav} />
-            <div style={{ marginTop: "var(--space-6)", padding: "var(--space-6)", background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", boxShadow: "var(--shadow-sm)" }}>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", marginBottom: "6px" }}>¿Formas a un equipo?</div>
-              <p style={{ margin: "0 0 var(--space-4)", fontSize: "var(--text-sm)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>Formación in company en toda la península, bonificable FUNDAE.</p>
+            <div className="mt-6 p-6 bg-surface border border-border rounded-lg shadow-sm">
+              <div className="font-display text-base font-bold text-strong mb-[6px]">¿Formas a un equipo?</div>
+              <p className="mb-4 text-sm leading-normal text-body">Formación in company en toda la península, bonificable FUNDAE.</p>
               <Button variant="dark" block onClick={() => onNav("contact")}>Solicita una propuesta</Button>
             </div>
           </aside>
@@ -266,17 +267,17 @@ function BlogPost() {
       </Container>
 
       {/* DOBLE RECORRIDO — empresa / particular */}
-      <section style={{ background: "var(--surface-card)", borderTop: "1px solid var(--border-default)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface border-t border-t-border py-section">
         <Container style={{ maxWidth: "1040px" }}>
-          <div className="blog-dualrec" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "var(--space-6)" }}>
+          <div className="blog-dualrec grid grid-cols-[1fr_1fr] gap-6">
             {[
               { tag: "Empresas", h: "Forma a tu plantilla", p: "Diseñamos un plan a medida y lo impartimos en tus instalaciones o en las nuestras. Bonificable FUNDAE.", cta: "Solicita propuesta", act: () => onNav("contact"), v: "primary" },
               { tag: "Particulares", h: "Certifícate y accede al sector", p: "Consulta las convocatorias abiertas y reserva tu plaza en formaciones con certificación oficial.", cta: "Ver convocatorias", act: () => onNav("abiertas"), v: "outline" },
             ].map((c, i) => (
-              <div key={i} style={{ padding: "var(--space-8)", background: "var(--surface-page)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", display: "flex", flexDirection: "column", gap: "12px" }}>
-                <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "var(--tracking-mono)", color: "var(--color-brand)" }}>{c.tag}</span>
-                <h3 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", color: "var(--text-strong)" }}>{c.h}</h3>
-                <p style={{ margin: "0 0 var(--space-4)", fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)", flex: 1 }}>{c.p}</p>
+              <div key={i} className="p-8 bg-page border border-border rounded-lg flex flex-col gap-[12px]">
+                <span className="font-mono text-[11px] uppercase tracking-mono text-brand">{c.tag}</span>
+                <h3 className="m-0 font-display text-2xl font-extrabold tracking-display text-strong">{c.h}</h3>
+                <p className="mb-4 text-base leading-normal text-body flex-1">{c.p}</p>
                 <div><Button variant={c.v} uppercase iconRight={<span>→</span>} onClick={c.act}>{c.cta}</Button></div>
               </div>
             ))}
@@ -285,18 +286,18 @@ function BlogPost() {
       </section>
 
       {/* PRUEBA SOCIAL — Google [PENDIENTE: reseñas reales] */}
-      <section style={{ padding: "var(--section-y) 0" }}>
+      <section className="py-section">
         <Container style={{ maxWidth: "1040px" }}>
-          <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "var(--space-8)" }}>
+          <div className="flex items-center gap-[12px] mb-8">
             <Stars n={5} />
-            <span style={{ fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>{D.reviews.rating != null ? D.reviews.rating + " · " : ""}Opiniones verificadas en Google</span>
+            <span className="text-sm text-subtle">{D.reviews.rating != null ? D.reviews.rating + " · " : ""}Opiniones verificadas en Google</span>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "var(--space-6)" }}>
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-6">
             {D.reviews.items.map((r, i) => (
-              <figure key={i} style={{ margin: 0, background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", padding: "var(--space-6)", boxShadow: "var(--shadow-sm)" }}>
+              <figure key={i} className="m-0 bg-surface border border-border rounded-lg p-6 shadow-sm">
                 <Stars n={r.stars} />
-                <blockquote style={{ margin: "12px 0 14px", fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>{r.quote}</blockquote>
-                <figcaption style={{ fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)" }}>{r.author}</figcaption>
+                <blockquote className="mt-[12px] mb-[14px] text-base leading-normal text-body">{r.quote}</blockquote>
+                <figcaption className="text-sm font-semibold text-strong">{r.author}</figcaption>
               </figure>
             ))}
           </div>
@@ -305,16 +306,16 @@ function BlogPost() {
 
       {/* ARTÍCULOS RELACIONADOS — retención on-site */}
       {otherPosts.length > 0 && (
-        <section style={{ background: "var(--surface-card)", borderTop: "1px solid var(--border-default)", padding: "var(--section-y) 0" }}>
+        <section className="bg-surface border-t border-t-border py-section">
           <Container style={{ maxWidth: "1040px" }}>
-            <h2 style={{ margin: "0 0 var(--space-8)", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", color: "var(--text-strong)" }}>Sigue leyendo<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "var(--space-6)" }}>
+            <h2 className="mb-8 font-display text-2xl font-extrabold tracking-display text-strong">Sigue leyendo<span className="text-brand">.</span></h2>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
               {otherPosts.map((p) => (
-                <article key={p.id} onClick={() => onNav("post", p.id)} style={{ cursor: "pointer", background: "var(--surface-page)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", overflow: "hidden", boxShadow: "var(--shadow-sm)" }}>
-                  <div style={{ aspectRatio: "16 / 10", overflow: "hidden" }}><img src={p.img} alt={p.title} style={{ width: "100%", height: "100%", objectFit: "cover" }} /></div>
-                  <div style={{ padding: "var(--space-6)" }}>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "var(--tracking-mono)", color: "var(--color-brand)" }}>{p.cat}</span>
-                    <h3 style={{ margin: "10px 0 0", fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", lineHeight: "var(--leading-snug)", letterSpacing: "var(--tracking-heading)", color: "var(--text-strong)" }}>{p.title}</h3>
+                <article key={p.id} onClick={() => onNav("post", p.id)} className="cursor-pointer bg-page border border-border rounded-lg overflow-hidden shadow-sm">
+                  <div className="aspect-[16/10] overflow-hidden"><img src={p.img} alt={p.title} className="w-full h-full object-cover" /></div>
+                  <div className="p-6">
+                    <span className="font-mono text-[11px] uppercase tracking-mono text-brand">{p.cat}</span>
+                    <h3 className="mt-[10px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{p.title}</h3>
                   </div>
                 </article>
               ))}
@@ -324,10 +325,10 @@ function BlogPost() {
       )}
 
       {/* CTA STICKY MÓVIL */}
-      <div className="blog-mobilecta" style={{ position: "fixed", bottom: 0, left: 0, right: 0, zIndex: 80, background: "var(--surface-card)", borderTop: "1px solid var(--border-default)", boxShadow: "0 -6px 20px rgba(0,0,0,0.1)", padding: "12px var(--container-padding)", alignItems: "center", gap: "12px" }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontSize: "11px", fontFamily: "var(--font-mono)", textTransform: "uppercase", letterSpacing: "var(--tracking-mono)", color: "var(--color-brand)" }}>Curso recomendado</div>
-          <div style={{ fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{typeof primary.price === "number" ? fmtEUR(primary.price) + " / alumno" : primary.norm}</div>
+      <div className="blog-mobilecta fixed bottom-0 left-0 right-0 z-[80] bg-surface border-t border-t-border shadow-[0_-6px_20px_rgba(0,0,0,0.1)] px-container py-[12px] items-center gap-[12px]">
+        <div className="flex-1 min-w-0">
+          <div className="text-[11px] font-mono uppercase tracking-mono text-brand">Curso recomendado</div>
+          <div className="text-sm font-bold text-strong whitespace-nowrap overflow-hidden text-ellipsis">{typeof primary.price === "number" ? fmtEUR(primary.price) + " / alumno" : primary.norm}</div>
         </div>
         <Button variant="primary" uppercase onClick={() => onNav("course", primary.id)}>Ver curso</Button>
       </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import { onNav, getParam } from '../../lib/router.js';
 import { cart } from '../../lib/cart.js';
 import { DATA as D } from '../../lib/data.js';
+import { cx } from '../../lib/cx.js';
 // Tramitar reserva — checkout: datos del comprador, datos fiscales (empresa/particular),
 // datos de cada alumno según las plazas del carrito, y elección de pasarela de pago.
 import { Button, Input, Select, Checkbox, SectionHeading, Badge } from '../ds/index.js';
@@ -19,7 +20,7 @@ function useCartItems() {
 }
 
 const eyebrow = { fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)" };
-const card = { background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", padding: "var(--space-8)" };
+const card = "bg-surface border border-border rounded-lg p-8";
 
 // Sedes físicas → dirección + Google Maps. La formación in company no tiene sede fija.
 const SEDES_INFO = {
@@ -47,11 +48,11 @@ const AVISOS = [
 
 function StepHead({ n, title, desc }) {
   return (
-    <div style={{ display: "flex", gap: "16px", alignItems: "flex-start", marginBottom: "var(--space-6)" }}>
-      <span aria-hidden="true" style={{ flex: "0 0 auto", width: "34px", height: "34px", borderRadius: "var(--radius-full)", background: "var(--color-brand)", color: "#fff", fontFamily: "var(--font-display)", fontWeight: "var(--weight-bold)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "var(--text-base)" }}>{n}</span>
+    <div className="flex gap-4 items-start mb-6">
+      <span aria-hidden="true" className="flex-none w-[34px] h-[34px] rounded-full bg-brand text-white font-display font-bold flex items-center justify-center text-base">{n}</span>
       <div>
-        <h2 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>{title}</h2>
-        {desc && <p style={{ margin: "4px 0 0", fontSize: "var(--text-sm)", color: "var(--text-subtle)", lineHeight: "var(--leading-normal)" }}>{desc}</p>}
+        <h2 className="m-0 font-display text-xl font-bold text-strong leading-snug">{title}</h2>
+        {desc && <p className="m-[4px_0_0] text-sm text-subtle leading-normal">{desc}</p>}
       </div>
     </div>
   );
@@ -60,13 +61,13 @@ function StepHead({ n, title, desc }) {
 function PayOption({ id, active, onSelect, title, desc, tag }) {
   return (
     <button type="button" onClick={() => onSelect(id)} aria-pressed={active}
-      style={{ textAlign: "left", cursor: "pointer", display: "flex", alignItems: "center", gap: "14px", padding: "var(--space-5) var(--space-6)", borderRadius: "var(--radius-md)", background: "var(--surface-card)", border: `2px solid ${active ? "var(--color-brand)" : "var(--border-default)"}`, boxShadow: active ? "var(--shadow-focus)" : "none", transition: "border-color var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard)", width: "100%" }}>
-      <span aria-hidden="true" style={{ flex: "0 0 auto", width: "20px", height: "20px", borderRadius: "var(--radius-full)", border: `2px solid ${active ? "var(--color-brand)" : "var(--border-hover)"}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
-        {active && <span style={{ width: "10px", height: "10px", borderRadius: "var(--radius-full)", background: "var(--color-brand)" }} />}
+      className={cx("text-left cursor-pointer flex items-center gap-3.5 p-[var(--space-5)_var(--space-6)] rounded-md bg-surface w-full border-2 transition-[border-color,box-shadow] duration-base ease-standard", active ? "border-brand shadow-focus" : "border-border shadow-none")}>
+      <span aria-hidden="true" className={cx("flex-none w-5 h-5 rounded-full border-2 flex items-center justify-center", active ? "border-brand" : "border-border-strong")}>
+        {active && <span className="w-2.5 h-2.5 rounded-full bg-brand" />}
       </span>
-      <span style={{ flex: 1 }}>
-        <span style={{ display: "block", fontFamily: "var(--font-display)", fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)" }}>{title}</span>
-        <span style={{ display: "block", fontSize: "var(--text-sm)", color: "var(--text-subtle)", marginTop: "2px" }}>{desc}</span>
+      <span className="flex-1">
+        <span className="block font-display text-base font-semibold text-strong">{title}</span>
+        <span className="block text-sm text-subtle mt-0.5">{desc}</span>
       </span>
       {tag && <Badge tone="soft">{tag}</Badge>}
     </button>
@@ -84,49 +85,49 @@ function CheckoutScreen() {
   // ---- Reserva confirmada ----
   if (sent) {
     const ref = "GEP-" + String(Date.now()).slice(-6);
-    const row = { display: "flex", gap: "10px", fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)" };
-    const rowLabel = { flex: "0 0 96px", fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--text-subtle)", paddingTop: "3px" };
+    const row = "flex gap-2.5 text-base leading-normal";
+    const rowLabel = "flex-[0_0_96px] font-mono text-xs uppercase tracking-eyebrow text-subtle pt-[3px]";
     return (
-      <section style={{ background: "var(--surface-sunken)", padding: "var(--section-y) 0 var(--space-24)" }}>
+      <section className="bg-surface-muted p-[var(--section-y)_0_var(--space-24)]">
         <Container style={{ maxWidth: "760px" }}>
           {/* Cabecera confirmación */}
-          <div style={{ ...card, textAlign: "center", padding: "var(--space-12) var(--space-10)" }}>
-            <div style={{ width: "64px", height: "64px", margin: "0 auto var(--space-6)", borderRadius: "var(--radius-full)", background: "var(--color-brand-soft, rgba(227,6,19,0.12))", color: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "34px" }}>✓</div>
-            <h1 style={{ margin: "0 0 12px", fontFamily: "var(--font-display)", fontSize: "var(--text-3xl)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", color: "var(--text-strong)" }}>Reserva recibida<span style={{ color: "var(--color-brand)" }}>.</span></h1>
-            <p style={{ margin: 0, fontSize: "var(--text-lg)", color: "var(--text-body)", lineHeight: "var(--leading-normal)" }}>Hemos registrado tu reserva. Aquí tienes todos los detalles y las instrucciones para el día de la formación.</p>
-            <div style={{ marginTop: "var(--space-6)", display: "inline-flex", alignItems: "center", gap: "10px", padding: "8px 16px", borderRadius: "var(--radius-full)", background: "var(--surface-sunken)", border: "1px solid var(--border-default)" }}>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--text-subtle)" }}>Localizador</span>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--color-brand)" }}>{ref}</span>
+          <div className="bg-surface border border-border rounded-lg p-[var(--space-12)_var(--space-10)] text-center">
+            <div className="w-16 h-16 m-[0_auto_var(--space-6)] rounded-full bg-brand-soft text-brand flex items-center justify-center text-[34px]">✓</div>
+            <h1 className="m-[0_0_12px] font-display text-3xl font-extrabold tracking-display text-strong">Reserva recibida<span className="text-brand">.</span></h1>
+            <p className="m-0 text-lg text-body leading-normal">Hemos registrado tu reserva. Aquí tienes todos los detalles y las instrucciones para el día de la formación.</p>
+            <div className="mt-6 inline-flex items-center gap-2.5 p-[8px_16px] rounded-full bg-surface-muted border border-border">
+              <span className="font-mono text-xs uppercase tracking-eyebrow text-subtle">Localizador</span>
+              <span className="font-mono text-sm font-semibold text-brand">{ref}</span>
             </div>
           </div>
 
           {/* Detalle por formación */}
-          <div style={{ marginTop: "var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+          <div className="mt-6 flex flex-col gap-6">
             {items.map((it) => {
               const sede = resolveSede(it.sede);
               return (
-                <div key={it.id} style={card}>
-                  <div style={{ display: "flex", gap: "var(--space-4)", alignItems: "flex-start", marginBottom: "var(--space-6)" }}>
-                    <img src={it.img} alt="" style={{ width: "64px", height: "64px", objectFit: "cover", borderRadius: "var(--radius-sm)", flex: "0 0 auto" }} />
+                <div key={it.id} className={card}>
+                  <div className="flex gap-4 items-start mb-6">
+                    <img src={it.img} alt="" className="w-16 h-16 object-cover rounded-sm flex-none" />
                     <div>
-                      <h2 style={{ margin: "0 0 4px", fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>{it.title}</h2>
-                      <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--color-brand)" }}>{it.norm} · {it.qty} {it.qty === 1 ? "plaza" : "plazas"}</div>
+                      <h2 className="m-[0_0_4px] font-display text-lg font-bold text-strong leading-snug">{it.title}</h2>
+                      <div className="font-mono text-[11px] text-brand">{it.norm} · {it.qty} {it.qty === 1 ? "plaza" : "plazas"}</div>
                     </div>
                   </div>
-                  <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", borderTop: "1px solid var(--border-default)", paddingTop: "var(--space-5)" }}>
-                    <div style={row}><span style={rowLabel}>Fecha</span><span style={{ color: "var(--text-strong)", fontWeight: "var(--weight-semibold)" }}>{it.fecha || "Por confirmar por email"}</span></div>
-                    <div style={row}><span style={rowLabel}>Hora</span><span style={{ color: "var(--text-strong)", fontWeight: "var(--weight-semibold)" }}>{courseHora(it.id)} h · presentación 15 min antes</span></div>
-                    <div style={row}>
-                      <span style={rowLabel}>Sede</span>
+                  <div className="flex flex-col gap-4 border-t border-border pt-5">
+                    <div className={row}><span className={rowLabel}>Fecha</span><span className="text-strong font-semibold">{it.fecha || "Por confirmar por email"}</span></div>
+                    <div className={row}><span className={rowLabel}>Hora</span><span className="text-strong font-semibold">{courseHora(it.id)} h · presentación 15 min antes</span></div>
+                    <div className={row}>
+                      <span className={rowLabel}>Sede</span>
                       <span>
                         {sede ? (
                           <React.Fragment>
-                            <span style={{ display: "block", color: "var(--text-strong)", fontWeight: "var(--weight-semibold)" }}>{sede.name}</span>
-                            <span style={{ display: "block", color: "var(--text-body)", margin: "2px 0 6px" }}>{sede.addr}</span>
-                            <a href={sede.maps} target="_blank" rel="noopener" style={{ display: "inline-flex", alignItems: "center", gap: "6px", fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", color: "var(--color-brand)", textDecoration: "none" }}>Cómo llegar (Google Maps) <span aria-hidden="true">→</span></a>
+                            <span className="block text-strong font-semibold">{sede.name}</span>
+                            <span className="block text-body m-[2px_0_6px]">{sede.addr}</span>
+                            <a href={sede.maps} target="_blank" rel="noopener" className="inline-flex items-center gap-1.5 text-sm font-semibold text-brand no-underline">Cómo llegar (Google Maps) <span aria-hidden="true">→</span></a>
                           </React.Fragment>
                         ) : (
-                          <span style={{ color: "var(--text-body)" }}>Formación in company · te confirmamos la dirección por email.</span>
+                          <span className="text-body">Formación in company · te confirmamos la dirección por email.</span>
                         )}
                       </span>
                     </div>
@@ -137,18 +138,18 @@ function CheckoutScreen() {
           </div>
 
           {/* Antes de venir — avisos importantes */}
-          <div style={{ ...card, marginTop: "var(--space-6)", borderColor: "var(--color-brand)", borderWidth: "1px" }}>
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "var(--space-6)" }}>
-              <span aria-hidden="true" style={{ flex: "0 0 auto", width: "34px", height: "34px", borderRadius: "var(--radius-full)", background: "var(--color-brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-display)", fontWeight: "var(--weight-bold)", fontSize: "20px" }}>!</span>
-              <h2 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>Importante antes de venir</h2>
+          <div className="bg-surface rounded-lg p-8 mt-6 border border-brand">
+            <div className="flex items-center gap-3 mb-6">
+              <span aria-hidden="true" className="flex-none w-[34px] h-[34px] rounded-full bg-brand text-white flex items-center justify-center font-display font-bold text-[20px]">!</span>
+              <h2 className="m-0 font-display text-xl font-bold text-strong">Importante antes de venir</h2>
             </div>
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
+            <div className="flex flex-col gap-5">
               {AVISOS.map((a) => (
-                <div key={a.t} style={{ display: "flex", gap: "14px", alignItems: "flex-start" }}>
-                  <span aria-hidden="true" style={{ flex: "0 0 auto", color: "var(--color-brand)", fontWeight: "var(--weight-bold)", fontSize: "var(--text-lg)", lineHeight: "1.3" }}>›</span>
+                <div key={a.t} className="flex gap-3.5 items-start">
+                  <span aria-hidden="true" className="flex-none text-brand font-bold text-lg leading-[1.3]">›</span>
                   <div>
-                    <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", marginBottom: "2px" }}>{a.t}</div>
-                    <div style={{ fontSize: "var(--text-base)", color: "var(--text-body)", lineHeight: "var(--leading-normal)" }}>{a.d}</div>
+                    <div className="font-display text-base font-bold text-strong mb-0.5">{a.t}</div>
+                    <div className="text-base text-body leading-normal">{a.d}</div>
                   </div>
                 </div>
               ))}
@@ -156,16 +157,16 @@ function CheckoutScreen() {
           </div>
 
           {/* Certificado */}
-          <div style={{ ...card, marginTop: "var(--space-6)", display: "flex", gap: "14px", alignItems: "flex-start", background: "var(--surface-card)" }}>
-            <span aria-hidden="true" style={{ flex: "0 0 auto", color: "var(--color-brand)", fontWeight: "var(--weight-bold)", fontSize: "var(--text-lg)", marginTop: "1px" }}>✓</span>
+          <div className="bg-surface border border-border rounded-lg p-8 mt-6 flex gap-3.5 items-start">
+            <span aria-hidden="true" className="flex-none text-brand font-bold text-lg mt-px">✓</span>
             <div>
-              <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", marginBottom: "2px" }}>Tu certificado</div>
-              <div style={{ fontSize: "var(--text-base)", color: "var(--text-body)", lineHeight: "var(--leading-normal)" }}>Una vez superada la formación, recibirás el certificado por email y en tu perfil de la web en un máximo de <strong>48&nbsp;horas hábiles</strong>.</div>
+              <div className="font-display text-base font-bold text-strong mb-0.5">Tu certificado</div>
+              <div className="text-base text-body leading-normal">Una vez superada la formación, recibirás el certificado por email y en tu perfil de la web en un máximo de <strong>48&nbsp;horas hábiles</strong>.</div>
             </div>
           </div>
 
-          <p style={{ margin: "var(--space-8) 0 var(--space-6)", textAlign: "center", fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>Te hemos enviado un email con esta misma información. Si tienes cualquier duda, contacta con nosotros.</p>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+          <p className="m-[var(--space-8)_0_var(--space-6)] text-center text-sm text-subtle">Te hemos enviado un email con esta misma información. Si tienes cualquier duda, contacta con nosotros.</p>
+          <div className="flex gap-3 justify-center flex-wrap">
             <Button variant="primary" uppercase iconRight={<span>→</span>} onClick={() => { cart && cart.clear(); onNav("catalog"); }}>Ver más formaciones</Button>
             <Button variant="outline" onClick={() => onNav("contact")}>Contactar</Button>
           </div>
@@ -177,11 +178,11 @@ function CheckoutScreen() {
   // ---- Carrito vacío ----
   if (items.length === 0) {
     return (
-      <section style={{ background: "var(--surface-sunken)", padding: "var(--section-y) 0", minHeight: "60vh", display: "flex", alignItems: "center" }}>
+      <section className="bg-surface-muted p-[var(--section-y)_0] min-h-[60vh] flex items-center">
         <Container style={{ maxWidth: "560px" }}>
-          <div style={{ ...card, textAlign: "center", padding: "var(--space-16)" }}>
-            <h1 style={{ margin: "0 0 12px", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-extrabold)", color: "var(--text-strong)" }}>Tu carrito está vacío</h1>
-            <p style={{ margin: "0 0 var(--space-8)", fontSize: "var(--text-base)", color: "var(--text-body)" }}>Añade una formación al carrito para tramitar tu reserva.</p>
+          <div className="bg-surface border border-border rounded-lg p-16 text-center">
+            <h1 className="m-[0_0_12px] font-display text-2xl font-extrabold text-strong">Tu carrito está vacío</h1>
+            <p className="m-[0_0_var(--space-8)] text-base text-body">Añade una formación al carrito para tramitar tu reserva.</p>
             <Button variant="primary" uppercase iconRight={<span>→</span>} onClick={() => onNav("catalog")}>Ver formaciones</Button>
           </div>
         </Container>
@@ -191,22 +192,22 @@ function CheckoutScreen() {
 
   return (
     <div>
-      <section style={{ background: "var(--surface-sunken)", padding: "var(--section-y) 0 var(--space-24)" }}>
+      <section className="bg-surface-muted p-[var(--section-y)_0_var(--space-24)]">
         <Container>
-          <div style={{ marginBottom: "var(--space-10)" }}>
-            <h1 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "clamp(1.75rem,3vw,2.4rem)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-tight)", color: "var(--text-strong)" }}>Tramitar reserva<span style={{ color: "var(--color-brand)" }}>.</span></h1>
-            <p style={{ margin: "10px 0 0", fontSize: "var(--text-lg)", color: "var(--text-body)", maxWidth: "620px", lineHeight: "var(--leading-normal)" }}>Completa los datos de facturación y de los alumnos.</p>
+          <div className="mb-10">
+            <h1 className="m-0 font-display text-[clamp(1.75rem,3vw,2.4rem)] font-extrabold tracking-display leading-tight text-strong">Tramitar reserva<span className="text-brand">.</span></h1>
+            <p className="m-[10px_0_0] text-lg text-body max-w-[620px] leading-normal">Completa los datos de facturación y de los alumnos.</p>
           </div>
           <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }}
-            style={{ display: "grid", gridTemplateColumns: "minmax(0,1.6fr) minmax(0,1fr)", gap: "var(--space-10)", alignItems: "start" }}>
+            className="grid grid-cols-[minmax(0,1.6fr)_minmax(0,1fr)] gap-10 items-start">
 
             {/* ---- Columna izquierda: pasos ---- */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+            <div className="flex flex-col gap-6">
 
               {/* 1. Comprador */}
-              <div style={card}>
+              <div className={card}>
                 <StepHead n="1" title="Datos de quien realiza la reserva" desc="Persona de contacto para la gestión de la reserva." />
-                <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "var(--space-4)" }}>
+                <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4">
                   <Input label="Nombre *" placeholder="Nombre" />
                   <Input label="Apellidos *" placeholder="Apellidos" />
                   <Input label="Email *" type="email" placeholder="tu@empresa.com" />
@@ -215,18 +216,18 @@ function CheckoutScreen() {
               </div>
 
               {/* 2. Datos fiscales */}
-              <div style={card}>
+              <div className={card}>
                 <StepHead n="2" title="Datos fiscales" desc="Para la emisión de la factura." />
-                <div role="tablist" aria-label="Tipo de cliente" style={{ display: "inline-flex", gap: "4px", padding: "4px", background: "var(--surface-sunken)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-md)", marginBottom: "var(--space-6)" }}>
+                <div role="tablist" aria-label="Tipo de cliente" className="inline-flex gap-1 p-1 bg-surface-muted border border-border rounded-md mb-6">
                   {[["empresa", "Empresa"], ["particular", "Autónomo / Particular"]].map(([id, lbl]) => (
                     <button key={id} type="button" role="tab" aria-selected={tipo === id} onClick={() => setTipo(id)}
-                      style={{ cursor: "pointer", border: "none", borderRadius: "var(--radius-sm)", padding: "9px 18px", fontFamily: "var(--font-body)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", background: tipo === id ? "var(--color-brand)" : "transparent", color: tipo === id ? "#fff" : "var(--text-body)", transition: "background var(--duration-base) var(--ease-standard)" }}>{lbl}</button>
+                      className={cx("cursor-pointer border-none rounded-sm p-[9px_18px] font-body text-sm font-semibold transition-[background] duration-base ease-standard", tipo === id ? "bg-brand text-white" : "bg-transparent text-body")}>{lbl}</button>
                   ))}
                 </div>
-                <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "var(--space-4)" }}>
+                <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4">
                   {tipo === "empresa" ? (
                     <React.Fragment>
-                      <div style={{ gridColumn: "1 / -1" }}><Input label="Razón social *" placeholder="Empresa, S.L." /></div>
+                      <div className="col-span-full"><Input label="Razón social *" placeholder="Empresa, S.L." /></div>
                       <Input label="CIF *" placeholder="B12345678" />
                       <Input label="Persona de contacto fiscal" placeholder="Departamento / nombre" />
                     </React.Fragment>
@@ -236,7 +237,7 @@ function CheckoutScreen() {
                       <Input label="NIF / DNI *" placeholder="12345678A" />
                     </React.Fragment>
                   )}
-                  <div style={{ gridColumn: "1 / -1" }}><Input label="Dirección fiscal *" placeholder="Calle, número, piso" /></div>
+                  <div className="col-span-full"><Input label="Dirección fiscal *" placeholder="Calle, número, piso" /></div>
                   <Input label="Código postal *" placeholder="08000" />
                   <Input label="Población *" placeholder="Ciudad" />
                   <Input label="Provincia *" placeholder="Provincia" />
@@ -245,20 +246,20 @@ function CheckoutScreen() {
               </div>
 
               {/* 3. Alumnos */}
-              <div style={card}>
+              <div className={card}>
                 <StepHead n="3" title="Datos de los alumnos" desc={`${totalAlumnos} ${totalAlumnos === 1 ? "plaza reservada" : "plazas reservadas"}. Indica los datos de cada asistente.`} />
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-6)" }}>
+                <div className="flex flex-col gap-6">
                   {items.map((it) => (
                     <div key={it.id}>
-                      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "var(--space-4)", paddingBottom: "10px", borderBottom: "1px solid var(--border-default)" }}>
-                        <span style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>{it.title}</span>
-                        <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--color-brand)" }}>{it.norm}{it.sede ? " · " + it.sede : ""}{it.fecha ? " · " + it.fecha : ""}</span>
+                      <div className="flex items-center gap-2.5 mb-4 pb-2.5 border-b border-border">
+                        <span className="font-display text-base font-bold text-strong">{it.title}</span>
+                        <span className="font-mono text-[11px] text-brand">{it.norm}{it.sede ? " · " + it.sede : ""}{it.fecha ? " · " + it.fecha : ""}</span>
                       </div>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
+                      <div className="flex flex-col gap-5">
                         {Array.from({ length: it.qty }).map((_, i) => (
                           <div key={i}>
-                            <div style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--text-subtle)", marginBottom: "10px" }}>Alumno {i + 1}</div>
-                            <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr) minmax(0,1fr)", gap: "var(--space-4)" }}>
+                            <div className="font-mono text-xs uppercase tracking-eyebrow text-subtle mb-2.5">Alumno {i + 1}</div>
+                            <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] gap-4">
                               <Input label="Nombre *" placeholder="Nombre" />
                               <Input label="Apellidos *" placeholder="Apellidos" />
                               <Input label="DNI *" placeholder="12345678A" />
@@ -272,9 +273,9 @@ function CheckoutScreen() {
               </div>
 
               {/* 4. Pago */}
-              <div style={card}>
+              <div className={card}>
                 <StepHead n="4" title="Método de pago" desc="Elige cómo quieres pagar. No se realiza ningún cargo hasta confirmar la reserva." />
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-3)" }}>
+                <div className="flex flex-col gap-3">
                   <PayOption id="tarjeta" active={pago === "tarjeta"} onSelect={setPago} title="Tarjeta de crédito / débito" desc="Visa, Mastercard · pago seguro" tag="Recomendado" />
                   <PayOption id="paypal" active={pago === "paypal"} onSelect={setPago} title="PayPal" desc="Paga con tu cuenta PayPal" />
                   <PayOption id="bizum" active={pago === "bizum"} onSelect={setPago} title="Bizum" desc="Pago inmediato desde el móvil" />
@@ -283,38 +284,38 @@ function CheckoutScreen() {
             </div>
 
             {/* ---- Columna derecha: resumen sticky ---- */}
-            <aside style={{ position: "sticky", top: "var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-              <div style={card}>
-                <h2 style={{ margin: "0 0 var(--space-6)", fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>Resumen de la reserva</h2>
-                <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)", marginBottom: "var(--space-6)" }}>
+            <aside className="sticky top-6 flex flex-col gap-4">
+              <div className={card}>
+                <h2 className="m-[0_0_var(--space-6)] font-display text-xl font-bold text-strong">Resumen de la reserva</h2>
+                <div className="flex flex-col gap-4 mb-6">
                   {items.map((it) => (
-                    <div key={it.id} style={{ display: "flex", gap: "12px" }}>
-                      <img src={it.img} alt="" style={{ width: "56px", height: "56px", objectFit: "cover", borderRadius: "var(--radius-sm)", flex: "0 0 auto" }} />
-                      <div style={{ flex: 1, minWidth: 0 }}>
-                        <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>{it.title}</div>
-                        <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--color-brand)", margin: "3px 0" }}>{it.norm}{it.sede ? " · " + it.sede : ""}{it.fecha ? " · " + it.fecha : ""}</div>
-                        <div style={{ fontSize: "var(--text-xs)", color: "var(--text-subtle)" }}>{it.qty} {it.qty === 1 ? "alumno" : "alumnos"}</div>
+                    <div key={it.id} className="flex gap-3">
+                      <img src={it.img} alt="" className="w-14 h-14 object-cover rounded-sm flex-none" />
+                      <div className="flex-1 min-w-0">
+                        <div className="font-display text-sm font-bold text-strong leading-snug">{it.title}</div>
+                        <div className="font-mono text-[11px] text-brand m-[3px_0]">{it.norm}{it.sede ? " · " + it.sede : ""}{it.fecha ? " · " + it.fecha : ""}</div>
+                        <div className="text-xs text-subtle">{it.qty} {it.qty === 1 ? "alumno" : "alumnos"}</div>
                       </div>
                     </div>
                   ))}
                 </div>
-                <div style={{ borderTop: "1px solid var(--border-default)", paddingTop: "var(--space-5)", display: "flex", flexDirection: "column", gap: "10px" }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", fontSize: "var(--text-sm)", color: "var(--text-body)" }}><span>Plazas</span><span style={{ fontFamily: "var(--font-mono)" }}>{totalAlumnos}</span></div>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
-                    <span style={{ fontFamily: "var(--font-display)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>Importe total</span>
-                    <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>[PENDIENTE: precio]</span>
+                <div className="border-t border-border pt-5 flex flex-col gap-2.5">
+                  <div className="flex justify-between text-sm text-body"><span>Plazas</span><span className="font-mono">{totalAlumnos}</span></div>
+                  <div className="flex justify-between items-baseline">
+                    <span className="font-display font-bold text-strong">Importe total</span>
+                    <span className="font-mono text-sm text-subtle">[PENDIENTE: precio]</span>
                   </div>
-                  <p style={{ margin: 0, fontSize: "var(--text-xs)", color: "var(--text-subtle)", lineHeight: "var(--leading-normal)" }}>El importe definitivo (IVA incluido) se confirma por email antes de cualquier cargo.</p>
+                  <p className="m-0 text-xs text-subtle leading-normal">El importe definitivo (IVA incluido) se confirma por email antes de cualquier cargo.</p>
                 </div>
               </div>
 
-              <div style={{ ...card, padding: "var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
+              <div className="bg-surface border border-border rounded-lg p-6 flex flex-col gap-5">
                 <Checkbox checked={accept} onChange={(e) => setAccept(e.target.checked)} label={<span>He leído y acepto la <a href="#">Política de Privacidad</a>, el <a href="#">Aviso Legal</a> y las condiciones de reserva.</span>} />
                 <Button type="submit" variant="primary" block size="lg" uppercase disabled={!accept} iconRight={<span>→</span>}>Confirmar reserva</Button>
-                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: "8px" }}>
+                <ul className="list-none m-0 p-0 flex flex-col gap-2">
                   {["Sin cargo hasta confirmar la reserva", "Respuesta y factura en menos de 24 h", "Centro homologado ISPC"].map((t) => (
-                    <li key={t} style={{ display: "flex", gap: "10px", alignItems: "flex-start", fontSize: "var(--text-xs)", color: "var(--text-subtle)", lineHeight: "var(--leading-normal)" }}>
-                      <span aria-hidden="true" style={{ color: "var(--color-brand)", fontWeight: "var(--weight-bold)" }}>✓</span><span>{t}</span>
+                    <li key={t} className="flex gap-2.5 items-start text-xs text-subtle leading-normal">
+                      <span aria-hidden="true" className="text-brand font-bold">✓</span><span>{t}</span>
                     </li>
                   ))}
                 </ul>

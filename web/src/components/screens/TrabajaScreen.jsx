@@ -5,6 +5,7 @@ import { onNav, getParam } from '../../lib/router.js';
 // entornos de formación, adjuntar CV y envío. Sin backend (estado de éxito simulado).
 import { Button, Input, Select, Checkbox, StatBlock, SectionHeading, Badge } from '../ds/index.js';
 import { DATA as D } from '../../lib/data.js';
+import { cx } from '../../lib/cx.js';
 import { Container } from '../common/Container.jsx';
 
 const MOTIVOS = [
@@ -26,40 +27,40 @@ function TrabajaScreen() {
   const [entornos, setEntornos] = React.useState([]);
   const fileRef = React.useRef(null);
   const toggleEntorno = (e) => setEntornos((prev) => prev.includes(e) ? prev.filter((x) => x !== e) : prev.concat(e));
-  const eyebrow = { fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)" };
+  const eyebrow = "font-mono text-sm uppercase tracking-eyebrow text-brand";
 
   return (
     <div>
       {/* Hero */}
-      <section style={{ position: "relative", background: "var(--color-dark)", color: "#fff", overflow: "hidden" }}>
-        <img src={D.heroQuote} alt="" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", opacity: 0.34 }} />
-        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(100deg, rgba(15,15,15,0.94), rgba(15,15,15,0.55))" }} />
-        <Container style={{ position: "relative", padding: "var(--section-y) var(--container-padding)" }}>
-          <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
+      <section className="relative bg-dark text-white overflow-hidden">
+        <img src={D.heroQuote} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.34]" />
+        <div className="absolute inset-0 bg-[linear-gradient(100deg,_rgba(15,15,15,0.94),_rgba(15,15,15,0.55))]" />
+        <Container className="relative p-[var(--section-y)_var(--container-padding)]">
+          <div className="flex gap-2 mb-5 flex-wrap">
             <Badge tone="brand">Únete al equipo</Badge>
             <Badge tone="onDark" dot>Formadores y bomberos</Badge>
           </div>
-          <h1 style={{ margin: "0 0 20px", fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem,5vw,4rem)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-tight)", maxWidth: "860px" }}>Forma a quienes protegen. Trabaja con nosotros<span style={{ color: "var(--color-brand)" }}>.</span></h1>
-          <p style={{ margin: "0 0 var(--space-8)", fontSize: "var(--text-xl)", color: "rgba(255,255,255,0.85)", maxWidth: "620px", lineHeight: "var(--leading-normal)" }}>Buscamos formadores, bomberos y técnicos de emergencia que quieran transmitir su experiencia en una escuela puntera en formación práctica. Déjanos tus datos y tu CV.</p>
-          <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+          <h1 className="m-[0_0_20px] font-display text-[clamp(2.4rem,5vw,4rem)] font-extrabold tracking-display leading-tight max-w-[860px]">Forma a quienes protegen. Trabaja con nosotros<span className="text-brand">.</span></h1>
+          <p className="m-[0_0_var(--space-8)] text-xl text-white/[0.85] max-w-[620px] leading-normal">Buscamos formadores, bomberos y técnicos de emergencia que quieran transmitir su experiencia en una escuela puntera en formación práctica. Déjanos tus datos y tu CV.</p>
+          <div className="flex gap-3 flex-wrap">
             <Button variant="primary" size="lg" uppercase iconRight={<span>→</span>} onClick={() => { const el = document.getElementById("form-trabaja"); if (el) window.scrollTo({ top: window.pageYOffset + el.getBoundingClientRect().top - 100, behavior: "smooth" }); }}>Enviar mi candidatura</Button>
           </div>
         </Container>
       </section>
 
       {/* Por qué unirte */}
-      <section style={{ background: "var(--surface-card)", borderBottom: "1px solid var(--border-default)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface border-b border-border p-[var(--section-y)_0]">
         <Container>
           <SectionHeading eyebrow="Por qué unirte" title="Un sitio donde tu experiencia importa" />
-          <div style={{ marginTop: "var(--space-10)", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "var(--space-8)" }}>
+          <div className="mt-10 grid grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))] gap-8">
             {MOTIVOS.map((m) => (
-              <div key={m.t} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                <span style={{ flex: "0 0 auto", width: "48px", height: "48px", borderRadius: "var(--radius-md)", background: "var(--color-brand-soft)", color: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div key={m.t} className="flex gap-4 items-start">
+                <span className="flex-none w-12 h-12 rounded-md bg-brand-soft text-brand flex items-center justify-center">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{m.icon}</svg>
                 </span>
                 <div>
-                  <h3 style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>{m.t}</h3>
-                  <p style={{ margin: 0, fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>{m.d}</p>
+                  <h3 className="m-[0_0_6px] font-display text-lg font-bold text-strong leading-snug">{m.t}</h3>
+                  <p className="m-0 text-base leading-normal text-body">{m.d}</p>
                 </div>
               </div>
             ))}
@@ -68,23 +69,23 @@ function TrabajaScreen() {
       </section>
 
       {/* Formulario */}
-      <section id="form-trabaja" style={{ background: "var(--surface-sunken)", padding: "var(--section-y) 0 var(--space-24)" }}>
+      <section id="form-trabaja" className="bg-surface-muted p-[var(--section-y)_0_var(--space-24)]">
         <Container style={{ maxWidth: "820px" }}>
-          <div style={{ background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: "var(--space-12)" }}>
+          <div className="bg-surface border border-border rounded-xl shadow-md p-12">
             {sent ? (
-              <div style={{ textAlign: "center", padding: "var(--space-8) 0" }}>
-                <div style={{ width: "64px", height: "64px", margin: "0 auto var(--space-6)", borderRadius: "var(--radius-full)", background: "var(--color-brand-soft)", color: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "34px" }}>✓</div>
-                <h2 style={{ margin: "0 0 12px", fontFamily: "var(--font-display)", fontSize: "var(--text-3xl)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", color: "var(--text-strong)" }}>¡Candidatura recibida!<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-                <p style={{ margin: "0 0 var(--space-8)", fontSize: "var(--text-lg)", color: "var(--text-body)", lineHeight: "var(--leading-normal)" }}>Gracias por tu interés en formar parte de GEPCO. Revisaremos tu perfil y te contactaremos si encaja con nuestras necesidades.</p>
+              <div className="text-center p-[var(--space-8)_0]">
+                <div className="w-16 h-16 m-[0_auto_var(--space-6)] rounded-full bg-brand-soft text-brand flex items-center justify-center text-[34px]">✓</div>
+                <h2 className="m-[0_0_12px] font-display text-3xl font-extrabold tracking-display text-strong">¡Candidatura recibida!<span className="text-brand">.</span></h2>
+                <p className="m-[0_0_var(--space-8)] text-lg text-body leading-normal">Gracias por tu interés en formar parte de GEPCO. Revisaremos tu perfil y te contactaremos si encaja con nuestras necesidades.</p>
                 <Button variant="outline" onClick={() => onNav("home")}>Volver al inicio</Button>
               </div>
             ) : (
               <React.Fragment>
-                <span style={eyebrow}>Candidatura</span>
-                <h2 style={{ margin: "10px 0 6px", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>Cuéntanos sobre ti</h2>
-                <p style={{ margin: "0 0 var(--space-8)", fontSize: "var(--text-base)", color: "var(--text-subtle)", lineHeight: "var(--leading-normal)" }}>Rellena el formulario y adjunta tu CV. Te responderemos por email.</p>
-                <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }} style={{ display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
-                  <div style={{ display: "grid", gridTemplateColumns: "minmax(0,1fr) minmax(0,1fr)", gap: "var(--space-4)" }}>
+                <span className={eyebrow}>Candidatura</span>
+                <h2 className="m-[10px_0_6px] font-display text-2xl font-bold text-strong">Cuéntanos sobre ti</h2>
+                <p className="m-[0_0_var(--space-8)] text-base text-subtle leading-normal">Rellena el formulario y adjunta tu CV. Te responderemos por email.</p>
+                <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }} className="flex flex-col gap-5">
+                  <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-4">
                     <Input label="Nombre y apellidos *" placeholder="Tu nombre" />
                     <Input label="Email *" type="email" placeholder="tu@email.com" />
                     <Input label="Teléfono *" placeholder="+34 600 000 000" />
@@ -94,8 +95,8 @@ function TrabajaScreen() {
                   <Select label="Experiencia mínima en formación o emergencias *" placeholder="Elige una opción" options={["Menos de 1 año", "1 a 3 años", "3 a 5 años", "Más de 5 años", "Más de 10 años"]} />
 
                   <div>
-                    <div style={{ fontSize: "var(--text-xs)", fontWeight: "var(--weight-semibold)", letterSpacing: "var(--tracking-eyebrow)", textTransform: "uppercase", color: "var(--text-subtle)", marginBottom: "12px" }}>¿En qué entornos estás formado/a? *</div>
-                    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "10px var(--space-6)" }}>
+                    <div className="text-xs font-semibold tracking-eyebrow uppercase text-subtle mb-3">¿En qué entornos estás formado/a? *</div>
+                    <div className="grid grid-cols-[repeat(auto-fit,_minmax(220px,_1fr))] gap-[10px_var(--space-6)]">
                       {ENTORNOS.map((e) => (
                         <Checkbox key={e} label={e} checked={entornos.includes(e)} onChange={() => toggleEntorno(e)} />
                       ))}
@@ -104,15 +105,15 @@ function TrabajaScreen() {
 
                   {/* Adjuntar CV */}
                   <div>
-                    <div style={{ fontSize: "var(--text-xs)", fontWeight: "var(--weight-semibold)", letterSpacing: "var(--tracking-eyebrow)", textTransform: "uppercase", color: "var(--text-subtle)", marginBottom: "10px" }}>Currículum (PDF o Word) *</div>
-                    <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" onChange={(e) => setCv(e.target.files && e.target.files[0] ? e.target.files[0].name : null)} style={{ display: "none" }} />
-                    <button type="button" onClick={() => fileRef.current && fileRef.current.click()} style={{ width: "100%", display: "flex", alignItems: "center", gap: "14px", padding: "var(--space-5) var(--space-6)", borderRadius: "var(--radius-md)", border: `1px dashed ${cv ? "var(--color-brand)" : "var(--border-hover)"}`, background: cv ? "var(--color-brand-soft)" : "var(--surface-sunken)", cursor: "pointer", textAlign: "left" }}>
-                      <span aria-hidden="true" style={{ flex: "0 0 auto", width: "40px", height: "40px", borderRadius: "var(--radius-md)", background: "var(--surface-card)", color: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <div className="text-xs font-semibold tracking-eyebrow uppercase text-subtle mb-2.5">Currículum (PDF o Word) *</div>
+                    <input ref={fileRef} type="file" accept=".pdf,.doc,.docx" onChange={(e) => setCv(e.target.files && e.target.files[0] ? e.target.files[0].name : null)} className="hidden" />
+                    <button type="button" onClick={() => fileRef.current && fileRef.current.click()} className={cx("w-full flex items-center gap-3.5 p-[var(--space-5)_var(--space-6)] rounded-md cursor-pointer text-left border border-dashed", cv ? "border-brand bg-brand-soft" : "border-border-strong bg-surface-muted")}>
+                      <span aria-hidden="true" className="flex-none w-10 h-10 rounded-md bg-surface text-brand flex items-center justify-center">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" /></svg>
                       </span>
-                      <span style={{ flex: 1, minWidth: 0 }}>
-                        <span style={{ display: "block", fontFamily: "var(--font-body)", fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{cv || "Adjuntar mi CV"}</span>
-                        <span style={{ display: "block", fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>{cv ? "Archivo seleccionado · haz clic para cambiar" : "Haz clic para seleccionar el archivo"}</span>
+                      <span className="flex-1 min-w-0">
+                        <span className="block font-body text-base font-semibold text-strong whitespace-nowrap overflow-hidden text-ellipsis">{cv || "Adjuntar mi CV"}</span>
+                        <span className="block text-sm text-subtle">{cv ? "Archivo seleccionado · haz clic para cambiar" : "Haz clic para seleccionar el archivo"}</span>
                       </span>
                     </button>
                   </div>
@@ -121,7 +122,7 @@ function TrabajaScreen() {
 
                   <Checkbox checked={accept} onChange={(e) => setAccept(e.target.checked)} label={<span>He leído y acepto la <a href="#">Política de Privacidad</a> y autorizo el tratamiento de mis datos para procesos de selección.</span>} />
                   <Button type="submit" variant="primary" block size="lg" uppercase disabled={!accept} iconRight={<span>→</span>}>Enviar candidatura</Button>
-                  <p style={{ margin: 0, textAlign: "center", fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>Tratamos tu candidatura de forma confidencial.</p>
+                  <p className="m-0 text-center text-sm text-subtle">Tratamos tu candidatura de forma confidencial.</p>
                 </form>
               </React.Fragment>
             )}
