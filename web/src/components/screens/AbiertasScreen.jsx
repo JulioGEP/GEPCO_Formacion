@@ -46,7 +46,7 @@ function IntakeRow({ intake, course, onNav, compact }) {
           <div className="flex items-center gap-[8px] mb-[8px] flex-wrap">
             <NormBadge>{course.norm}</NormBadge>{sedeEl}
           </div>
-          <h3 className="mb-[8px] font-display text-lg font-bold tracking-heading leading-snug text-strong">{course.title}</h3>
+          <h3 className="m-[0_0_8px] font-display text-lg font-bold tracking-heading leading-snug text-strong">{course.title}</h3>
           <div className="mb-5 text-sm font-semibold" style={{ color: plazasColor }}>{plazasTxt}</div>
           <div className="flex items-center justify-between gap-4 flex-wrap">
             {priceEl}
@@ -173,10 +173,10 @@ function AbiertasScreen() {
         <div className="absolute inset-0 bg-[radial-gradient(120%_140%_at_100%_0%,rgba(243,146,0,0.28)_0%,rgba(243,146,0,0)_55%)]" />
         <Container className="relative py-section">
           <span className="font-mono text-sm uppercase tracking-eyebrow text-accent">Convocatorias abiertas</span>
-          <h1 className="mt-[14px] font-display text-[clamp(2.4rem,5vw,3.6rem)] font-extrabold tracking-display leading-tight">
+          <h1 className="m-[14px_0_0] font-display text-[clamp(2.4rem,5vw,3.6rem)] font-extrabold tracking-display leading-tight">
             Formaciones en abierto<span className="text-accent">.</span>
           </h1>
-          <p className="mt-[16px] text-lg text-white/[0.82] max-w-[640px]">
+          <p className="m-[16px_0_0] text-lg text-white/[0.82] max-w-[640px]">
             Sesiones de un día con fecha fija a las que puedes apuntarte de forma individual, sin necesidad de montar un grupo completo.
           </p>
         </Container>
@@ -187,8 +187,8 @@ function AbiertasScreen() {
         <Container>
           <div className="ab-explain grid grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-16 items-start">
             <div>
-              <h2 className="mb-5 font-display text-3xl font-extrabold tracking-display text-strong">¿Qué es una formación en abierto?</h2>
-              <p className="mb-4 text-lg leading-loose text-body">
+              <h2 className="m-[0_0_var(--space-5)] font-display text-3xl font-extrabold tracking-display text-strong">¿Qué es una formación en abierto?</h2>
+              <p className="m-[0_0_var(--space-4)] text-lg leading-loose text-body">
                 Una formación en abierto es una sesión que se celebra un día concreto y ese día está <strong className="text-strong">«abierto»</strong> a autónomos y a empresas que quieren formarse o formar a muy pocos empleados.
               </p>
               <p className="m-0 text-base leading-loose text-body">
@@ -252,7 +252,7 @@ function AbiertasScreen() {
         ) : (
           <CalendarView intakes={intakes} courseOf={courseOf} onNav={onNav} />
         )}
-        <p className="mt-8 text-sm text-subtle">Fechas y plazas orientativas. [PENDIENTE: gestión de convocatorias y disponibilidad desde el backend.]</p>
+        <p className="m-[var(--space-8)_0_0] text-sm text-subtle">Fechas y plazas orientativas. [PENDIENTE: gestión de convocatorias y disponibilidad desde el backend.]</p>
       </Container>
 
       {/* CTA empresa */}
@@ -260,7 +260,7 @@ function AbiertasScreen() {
         <Container>
           <div className="flex items-center justify-between gap-8 flex-wrap">
             <div className="max-w-[620px]">
-              <h2 className="mb-[10px] font-display text-2xl font-extrabold tracking-display">¿No encuentras tu fecha o formas a un equipo?</h2>
+              <h2 className="m-[0_0_10px] font-display text-2xl font-extrabold tracking-display">¿No encuentras tu fecha o formas a un equipo?</h2>
               <p className="m-0 text-lg text-white/80">Organizamos la formación in company en tus instalaciones, con fechas a tu medida y bonificable FUNDAE.</p>
             </div>
             <Button variant="primary" size="lg" uppercase iconRight={<span>→</span>} onClick={() => onNav("contact")}>Solicita una propuesta</Button>

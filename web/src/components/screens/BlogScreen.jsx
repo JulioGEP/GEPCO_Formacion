@@ -88,8 +88,8 @@ function BlogList() {
       <section className="bg-dark text-white py-section">
         <Container>
           <span className="font-mono text-sm uppercase tracking-eyebrow text-brand">Recursos</span>
-          <h1 className="mt-[14px] font-display text-[clamp(2.4rem,5vw,3.6rem)] font-extrabold tracking-display leading-tight">Blog<span className="text-brand">.</span></h1>
-          <p className="mt-[16px] text-lg text-white/[0.78] max-w-[620px]">Guías prácticas sobre emergencias, extinción de incendios, primeros auxilios y prevención de riesgos laborales.</p>
+          <h1 className="m-[14px_0_0] font-display text-[clamp(2.4rem,5vw,3.6rem)] font-extrabold tracking-display leading-tight">Blog<span className="text-brand">.</span></h1>
+          <p className="m-[16px_0_0] text-lg text-white/[0.78] max-w-[620px]">Guías prácticas sobre emergencias, extinción de incendios, primeros auxilios y prevención de riesgos laborales.</p>
         </Container>
       </section>
       <Container className="py-section">
@@ -99,8 +99,8 @@ function BlogList() {
               <div className="aspect-[16/10] overflow-hidden"><img src={p.img} alt={p.title} className="w-full h-full object-cover" /></div>
               <div className="p-6">
                 <span className="font-mono text-[11px] uppercase tracking-mono text-brand">{p.cat}</span>
-                <h3 className="my-[10px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{p.title}</h3>
-                <p className="mb-[14px] text-sm leading-normal text-body">{p.excerpt}</p>
+                <h3 className="m-[10px_0_10px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{p.title}</h3>
+                <p className="m-[0_0_14px] text-sm leading-normal text-body">{p.excerpt}</p>
                 <span className="text-sm font-bold text-ink">Leer artículo <span className="text-brand">→</span></span>
               </div>
             </article>
@@ -143,7 +143,7 @@ function ConversionCard({ course, onNav, compact }) {
       </div>
       <div className="p-6">
         <span className="block font-mono text-[10px] uppercase tracking-mono text-brand mb-[8px]">Curso recomendado</span>
-        <h3 className="mb-[12px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{course.title}</h3>
+        <h3 className="m-[0_0_12px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{course.title}</h3>
         {hasPrice ? (
           <div className="flex items-baseline gap-[6px] mb-5">
             <span className="font-display text-2xl font-extrabold text-strong">{fmtEUR(course.price)}</span>
@@ -159,7 +159,7 @@ function ConversionCard({ course, onNav, compact }) {
           <Button variant="outline" block onClick={() => onNav("contact")}>Solicita propuesta</Button>
         </div>
         {!compact && (
-          <ul className="mt-6 p-0 list-none grid gap-[8px]">
+          <ul className="m-[var(--space-6)_0_0] p-0 list-none grid gap-[8px]">
             {["Certificaciones oficiales", "Prácticas con fuego real", "Bonificable FUNDAE"].map((t) => (
               <li key={t} className="flex gap-[8px] text-sm text-body">
                 <span className="text-success font-bold">✓</span>{t}
@@ -185,10 +185,10 @@ function BlogPost() {
   const readMin = Math.max(3, Math.round(words / 200));
 
   const H2 = ({ children }) => (
-    <h2 className="mt-10 mb-5 font-display text-2xl font-bold tracking-heading leading-snug text-strong">{children}</h2>
+    <h2 className="m-[var(--space-10)_0_var(--space-5)] font-display text-2xl font-bold tracking-heading leading-snug text-strong">{children}</h2>
   );
   const P = ({ children }) => (
-    <p className="mb-5 text-lg leading-loose text-body">{children}</p>
+    <p className="m-[0_0_var(--space-5)] text-lg leading-loose text-body">{children}</p>
   );
 
   return (
@@ -204,7 +204,7 @@ function BlogPost() {
             <span className="text-white/[0.65]">{post.cat}</span>
           </nav>
           <span className="font-mono text-[12px] uppercase tracking-mono text-brand">{post.cat}</span>
-          <h1 className="mt-[14px] mb-[20px] font-display text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-display leading-tight">{post.title}<span className="text-brand">.</span></h1>
+          <h1 className="m-[14px_0_20px] font-display text-[clamp(2rem,4vw,3rem)] font-extrabold tracking-display leading-tight">{post.title}<span className="text-brand">.</span></h1>
           <div className="flex items-center gap-[18px] flex-wrap text-sm text-white/70 pb-8">
             <span className="font-semibold text-white">{meta.author}</span>
             <span>· {readMin} min de lectura</span>
@@ -220,10 +220,10 @@ function BlogPost() {
       <Container className="py-section" style={{ maxWidth: "1040px" }}>
         <div className="blog-grid">
           <article>
-            <p className="mb-8 text-xl leading-normal text-strong font-medium pl-[18px] border-l-4 border-l-brand">{post.excerpt}</p>
+            <p className="m-[0_0_var(--space-8)] text-xl leading-normal text-strong font-medium pl-[18px] border-l-4 border-l-brand">{post.excerpt}</p>
 
             {/* Puntos clave — retiene y da valor rápido */}
-            <div className="mb-6 py-6 px-8 bg-surface-muted border border-border rounded-lg">
+            <div className="m-[0_0_var(--space-6)] py-6 px-8 bg-surface-muted border border-border rounded-lg">
               <div className="font-mono text-[11px] uppercase tracking-mono text-brand mb-[12px]">Lo que vas a aprender</div>
               <ul className="m-0 p-0 list-none grid gap-[10px]">
                 {article.takeaways.map((t, i) => (
@@ -240,7 +240,7 @@ function BlogPost() {
                 {s.paras.map((p, j) => <P key={j}>{p}</P>)}
                 {/* CTA contextual a mitad de artículo */}
                 {i === 0 && (
-                  <div className="my-8 py-6 px-8 bg-dark rounded-lg flex justify-between items-center gap-[20px] flex-wrap">
+                  <div className="m-[var(--space-8)_0] py-6 px-8 bg-dark rounded-lg flex justify-between items-center gap-[20px] flex-wrap">
                     <div className="text-white">
                       <div className="font-display text-lg font-bold">¿Prefieres formarte con prácticas reales?</div>
                       <div className="text-sm text-white/70">{primary.title} — {primary.norm}</div>
@@ -251,7 +251,7 @@ function BlogPost() {
               </React.Fragment>
             ))}
 
-            <p className="mt-6 text-sm text-subtle italic">Contenido a título informativo. Consulta la normativa aplicable a tu caso o escríbenos: preparamos un plan de formación a medida.</p>
+            <p className="m-[var(--space-6)_0_0] text-sm text-subtle italic">Contenido a título informativo. Consulta la normativa aplicable a tu caso o escríbenos: preparamos un plan de formación a medida.</p>
           </article>
 
           {/* SIDEBAR pegajoso */}
@@ -259,7 +259,7 @@ function BlogPost() {
             <ConversionCard course={primary} onNav={onNav} />
             <div className="mt-6 p-6 bg-surface border border-border rounded-lg shadow-sm">
               <div className="font-display text-base font-bold text-strong mb-[6px]">¿Formas a un equipo?</div>
-              <p className="mb-4 text-sm leading-normal text-body">Formación in company en toda la península, bonificable FUNDAE.</p>
+              <p className="m-[0_0_var(--space-4)] text-sm leading-normal text-body">Formación in company en toda la península, bonificable FUNDAE.</p>
               <Button variant="dark" block onClick={() => onNav("contact")}>Solicita una propuesta</Button>
             </div>
           </aside>
@@ -277,7 +277,7 @@ function BlogPost() {
               <div key={i} className="p-8 bg-page border border-border rounded-lg flex flex-col gap-[12px]">
                 <span className="font-mono text-[11px] uppercase tracking-mono text-brand">{c.tag}</span>
                 <h3 className="m-0 font-display text-2xl font-extrabold tracking-display text-strong">{c.h}</h3>
-                <p className="mb-4 text-base leading-normal text-body flex-1">{c.p}</p>
+                <p className="m-[0_0_var(--space-4)] text-base leading-normal text-body flex-1">{c.p}</p>
                 <div><Button variant={c.v} uppercase iconRight={<span>→</span>} onClick={c.act}>{c.cta}</Button></div>
               </div>
             ))}
@@ -296,7 +296,7 @@ function BlogPost() {
             {D.reviews.items.map((r, i) => (
               <figure key={i} className="m-0 bg-surface border border-border rounded-lg p-6 shadow-sm">
                 <Stars n={r.stars} />
-                <blockquote className="mt-[12px] mb-[14px] text-base leading-normal text-body">{r.quote}</blockquote>
+                <blockquote className="m-[12px_0_14px] text-base leading-normal text-body">{r.quote}</blockquote>
                 <figcaption className="text-sm font-semibold text-strong">{r.author}</figcaption>
               </figure>
             ))}
@@ -308,14 +308,14 @@ function BlogPost() {
       {otherPosts.length > 0 && (
         <section className="bg-surface border-t border-t-border py-section">
           <Container style={{ maxWidth: "1040px" }}>
-            <h2 className="mb-8 font-display text-2xl font-extrabold tracking-display text-strong">Sigue leyendo<span className="text-brand">.</span></h2>
+            <h2 className="m-[0_0_var(--space-8)] font-display text-2xl font-extrabold tracking-display text-strong">Sigue leyendo<span className="text-brand">.</span></h2>
             <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6">
               {otherPosts.map((p) => (
                 <article key={p.id} onClick={() => onNav("post", p.id)} className="cursor-pointer bg-page border border-border rounded-lg overflow-hidden shadow-sm">
                   <div className="aspect-[16/10] overflow-hidden"><img src={p.img} alt={p.title} className="w-full h-full object-cover" /></div>
                   <div className="p-6">
                     <span className="font-mono text-[11px] uppercase tracking-mono text-brand">{p.cat}</span>
-                    <h3 className="mt-[10px] font-display text-lg font-bold leading-snug tracking-heading text-strong">{p.title}</h3>
+                    <h3 className="m-[10px_0_0] font-display text-lg font-bold leading-snug tracking-heading text-strong">{p.title}</h3>
                   </div>
                 </article>
               ))}
