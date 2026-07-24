@@ -1,0 +1,11 @@
+# El proyecto Astro no está en la raíz del repo, sino en web/.
+# Con `base = "web"` Netlify entra en web/ antes de instalar y construir,
+# y `publish` se resuelve relativo a esa base (web/dist).
+[build]
+  base = "web"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  # Astro 4 requiere Node >=18.20.8 (usamos 20 LTS).
+  NODE_VERSION = "20"
