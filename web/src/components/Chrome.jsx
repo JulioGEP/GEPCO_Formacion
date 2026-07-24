@@ -4,6 +4,7 @@ import { cart } from '../lib/cart.js';
 // Store-style chrome: two-row header (search + login) with mega-menus + dark footer
 import { SearchBar, Button } from './ds/index.js';
 import { DATA as D } from '../lib/data.js';
+import { cx } from '../lib/cx.js';
 
 // --- Simple line icons (functional UI icons) ---
 function Icon({ name, size = 22, stroke = 2 }) {
@@ -51,32 +52,30 @@ const NOSOTROS = [
 
 function ColLabel({ children }) {
   return (
-    <span style={{ display: "block", marginBottom: "var(--space-4)", fontSize: "var(--text-xs)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-eyebrow)", textTransform: "uppercase", color: "var(--color-brand)" }}>{children}</span>
+    <span className="block mb-4 text-xs font-bold tracking-eyebrow uppercase text-brand">{children}</span>
   );
 }
 
 function SubLink({ s, onNav }) {
-  const [h, setH] = React.useState(false);
   return (
-    <a href="#" onClick={(e) => { e.preventDefault(); onNav(s.go[0], s.go[1]); }} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ display: "inline-flex", alignItems: "center", gap: "7px", fontSize: "var(--text-sm)", color: h ? "var(--color-brand)" : "var(--text-body)", textDecoration: "none", padding: "2px 0", transition: "color var(--duration-fast) var(--ease-standard)" }}>
-      <span aria-hidden="true" style={{ color: "var(--color-brand)", fontWeight: "var(--weight-bold)", fontSize: "var(--text-xs)", transform: h ? "translateX(3px)" : "none", transition: "transform var(--duration-fast) var(--ease-standard)" }}>›</span>{s.t}
+    <a href="#" onClick={(e) => { e.preventDefault(); onNav(s.go[0], s.go[1]); }}
+      className="group inline-flex items-center gap-[7px] text-sm text-body hover:text-brand no-underline py-[2px] px-0 transition-colors duration-fast ease-standard">
+      <span aria-hidden="true" className="text-brand font-bold text-xs translate-x-0 group-hover:translate-x-[3px] transition-transform duration-fast ease-standard">›</span>{s.t}
     </a>
   );
 }
 
 function SpecialtyItem({ it, onNav }) {
-  const [h, setH] = React.useState(false);
   return (
     <div>
-      <a href="#" onClick={(e) => { e.preventDefault(); onNav("catalog", it.cat); }} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-        style={{ display: "flex", alignItems: "center", gap: "11px", textDecoration: "none", marginBottom: "2px" }}>
-        <span style={{ flex: "0 0 auto", width: "36px", height: "36px", borderRadius: "var(--radius-md)", display: "flex", alignItems: "center", justifyContent: "center", background: h ? "var(--color-brand)" : "var(--color-brand-soft)", color: h ? "#fff" : "var(--color-brand)", transition: "background var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard)" }}>
+      <a href="#" onClick={(e) => { e.preventDefault(); onNav("catalog", it.cat); }}
+        className="group flex items-center gap-[11px] no-underline mb-[2px]">
+        <span className="flex-none w-[36px] h-[36px] rounded-md flex items-center justify-center bg-brand-soft text-brand group-hover:bg-brand group-hover:text-white transition-colors duration-fast ease-standard">
           <Icon name={it.icon} size={18} />
         </span>
-        <span style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-heading)", textTransform: "uppercase", color: h ? "var(--color-brand)" : "var(--text-strong)", transition: "color var(--duration-fast) var(--ease-standard)" }}>{it.name}</span>
+        <span className="font-display text-sm font-bold tracking-heading uppercase text-strong group-hover:text-brand transition-colors duration-fast ease-standard">{it.name}</span>
       </a>
-      <div style={{ display: "flex", flexDirection: "column", paddingLeft: "47px" }}>
+      <div className="flex flex-col pl-[47px]">
         {it.subs.map((s) => <SubLink key={s.t} s={s} onNav={onNav} />)}
       </div>
     </div>
@@ -87,7 +86,7 @@ function CursosCol({ col, onNav }) {
   return (
     <div>
       <ColLabel>{col.title}</ColLabel>
-      <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+      <div className="flex flex-col gap-4">
         {col.items.map((it) => <SpecialtyItem key={it.name} it={it} onNav={onNav} />)}
       </div>
     </div>
@@ -96,33 +95,32 @@ function CursosCol({ col, onNav }) {
 
 function CursosMenu({ onNav }) {
   return (
-    <div style={{ background: "var(--surface-card)", borderRadius: "var(--radius-xl)", overflow: "hidden", boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-default)", marginTop: "6px", width: "720px" }}>
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
-        <div style={{ padding: "var(--space-6)" }}><CursosCol col={CURSOS.left} onNav={onNav} /></div>
-        <div style={{ padding: "var(--space-6)", borderLeft: "1px solid var(--border-default)" }}><CursosCol col={CURSOS.right} onNav={onNav} /></div>
+    <div className="bg-surface rounded-xl overflow-hidden shadow-lg border border-border mt-[6px] w-[720px]">
+      <div className="grid grid-cols-[1fr_1fr]">
+        <div className="p-6"><CursosCol col={CURSOS.left} onNav={onNav} /></div>
+        <div className="p-6 border-l border-border"><CursosCol col={CURSOS.right} onNav={onNav} /></div>
       </div>
     </div>
   );
 }
 
 function NosotrosRow({ it, onNav }) {
-  const [h, setH] = React.useState(false);
   return (
-    <a href="#" onClick={(e) => { e.preventDefault(); onNav("nosotros"); }} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ display: "flex", alignItems: "center", gap: "12px", padding: "8px var(--space-3)", borderRadius: "var(--radius-md)", textDecoration: "none", color: "var(--text-strong)", background: h ? "var(--surface-sunken)" : "transparent", transition: "background var(--duration-fast) var(--ease-standard)" }}>
-      <span style={{ flex: "0 0 auto", width: "36px", height: "36px", borderRadius: "var(--radius-md)", background: h ? "var(--color-brand)" : "var(--color-brand-soft)", color: h ? "#fff" : "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", transition: "background var(--duration-fast) var(--ease-standard), color var(--duration-fast) var(--ease-standard)" }}>
+    <a href="#" onClick={(e) => { e.preventDefault(); onNav("nosotros"); }}
+      className="group flex items-center gap-3 py-2 px-3 rounded-md no-underline text-strong bg-transparent hover:bg-surface-muted transition-colors duration-fast ease-standard">
+      <span className="flex-none w-[36px] h-[36px] rounded-md bg-brand-soft text-brand group-hover:bg-brand group-hover:text-white flex items-center justify-center transition-colors duration-fast ease-standard">
         <Icon name={it.icon} size={18} />
       </span>
-      <span style={{ flex: 1, fontFamily: "var(--font-display)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-heading)", textTransform: "uppercase", color: h ? "var(--color-brand)" : "var(--text-strong)", transition: "color var(--duration-fast) var(--ease-standard)" }}>{it.name}</span>
-      <span aria-hidden="true" style={{ color: "var(--color-brand)", fontSize: "15px", fontWeight: "var(--weight-bold)", transform: h ? "translateX(3px)" : "none", transition: "transform var(--duration-fast) var(--ease-standard)" }}>›</span>
+      <span className="flex-1 font-display text-sm font-bold tracking-heading uppercase text-strong group-hover:text-brand transition-colors duration-fast ease-standard">{it.name}</span>
+      <span aria-hidden="true" className="text-brand text-[15px] font-bold translate-x-0 group-hover:translate-x-[3px] transition-transform duration-fast ease-standard">›</span>
     </a>
   );
 }
 
 function NosotrosMenu({ onNav }) {
   return (
-    <div style={{ background: "var(--surface-card)", borderRadius: "var(--radius-xl)", overflow: "hidden", boxShadow: "var(--shadow-lg)", border: "1px solid var(--border-default)", maxWidth: "420px", marginTop: "6px" }}>
-      <div style={{ padding: "var(--space-3)" }}>
+    <div className="bg-surface rounded-xl overflow-hidden shadow-lg border border-border max-w-[420px] mt-[6px]">
+      <div className="p-3">
         {NOSOTROS.map((it) => <NosotrosRow key={it.name} it={it} onNav={onNav} />)}
       </div>
     </div>
@@ -132,17 +130,17 @@ function NosotrosMenu({ onNav }) {
 function NavTrigger({ label, open, onEnter, onClick }) {
   return (
     <button type="button" onMouseEnter={onEnter} onFocus={onEnter} onClick={onClick} aria-expanded={open}
-      style={{ display: "inline-flex", alignItems: "center", gap: "8px", padding: "10px 18px", borderRadius: "var(--radius-md)", border: "none", cursor: "pointer", fontFamily: "var(--font-body)", fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)", background: open ? "var(--color-surface-muted)" : "transparent", transition: "background var(--duration-fast) var(--ease-standard)" }}>
+      className={cx("inline-flex items-center gap-2 py-[10px] px-[18px] rounded-md border-none cursor-pointer font-body text-base font-semibold text-strong transition-colors duration-fast ease-standard", open ? "bg-surface-muted" : "bg-transparent")}>
       {label}
-      <span aria-hidden="true" style={{ fontSize: "11px", color: "var(--text-subtle)", transform: open ? "rotate(180deg)" : "none", transition: "transform var(--duration-fast) var(--ease-standard)" }}>▾</span>
+      <span aria-hidden="true" className="text-[11px] text-subtle transition-transform duration-fast ease-standard" style={{ transform: open ? "rotate(180deg)" : "none" }}>▾</span>
     </button>
   );
 }
 
 function NavLink({ label, onClick }) {
   return (
-    <a href="#" onClick={onClick} onMouseEnter={(e) => (e.currentTarget.style.background = "var(--color-surface-muted)")} onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
-      style={{ padding: "10px 18px", borderRadius: "var(--radius-md)", fontFamily: "var(--font-body)", fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)", textDecoration: "none", transition: "background var(--duration-fast) var(--ease-standard)" }}>{label}</a>
+    <a href="#" onClick={onClick}
+      className="py-[10px] px-[18px] rounded-md font-body text-base font-semibold text-strong no-underline hover:bg-surface-muted transition-colors duration-fast ease-standard">{label}</a>
   );
 }
 
@@ -152,14 +150,15 @@ function CollapsibleSearch() {
   React.useEffect(() => { if (open && inputRef.current) inputRef.current.focus(); }, [open]);
   return (
     <div onMouseEnter={() => setOpen(true)} onMouseLeave={() => { if (inputRef.current && !inputRef.current.value) setOpen(false); }}
-      style={{ display: "flex", alignItems: "center", gap: "8px", height: "48px", width: open ? "360px" : "48px", padding: open ? "0 18px" : "0", background: "var(--color-surface-muted)", border: "1px solid " + (open ? "var(--border-hover)" : "transparent"), borderRadius: "var(--radius-full)", overflow: "hidden", cursor: "text", transition: "width var(--duration-base) var(--ease-standard), padding var(--duration-base) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard)" }}
+      className="flex items-center gap-2 h-[48px] bg-surface-muted rounded-full overflow-hidden cursor-text border"
+      style={{ width: open ? "360px" : "48px", padding: open ? "0 18px" : "0", borderColor: open ? "var(--border-hover)" : "transparent", transition: "width var(--duration-base) var(--ease-standard), padding var(--duration-base) var(--ease-standard), border-color var(--duration-fast) var(--ease-standard)" }}
       onClick={() => { setOpen(true); if (inputRef.current) inputRef.current.focus(); }}>
-      <span style={{ flex: "0 0 auto", width: open ? "auto" : "48px", height: "48px", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--text-subtle)" }} aria-hidden="true">
+      <span className="flex-none h-[48px] flex items-center justify-center text-subtle" style={{ width: open ? "auto" : "48px" }} aria-hidden="true">
         <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><path d="m20 20-3.2-3.2" /></svg>
       </span>
       <input ref={inputRef} type="text" placeholder="Buscar formación, certificación…" aria-label="Buscar"
         onBlur={() => { if (inputRef.current && !inputRef.current.value) setOpen(false); }}
-        style={{ flex: 1, minWidth: 0, border: "none", outline: "none", background: "transparent", fontFamily: "var(--font-body)", fontSize: "var(--text-base)", color: "var(--text-strong)", opacity: open ? 1 : 0, transition: "opacity var(--duration-fast) var(--ease-standard)" }} />
+        className="flex-1 min-w-0 border-none [outline:none] bg-transparent font-body text-base text-strong transition-opacity duration-fast ease-standard" style={{ opacity: open ? 1 : 0 }} />
     </div>
   );
 }
@@ -180,9 +179,9 @@ function CartButton({ onClick }) {
   const count = items.reduce((n, i) => n + i.qty, 0);
   return (
     <button type="button" onClick={onClick} aria-label={`Abrir carrito, ${count} formaciones`}
-      style={{ position: "relative", width: "46px", height: "46px", borderRadius: "var(--radius-full)", border: "none", background: "transparent", cursor: "pointer", color: "var(--text-strong)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      className="relative w-[46px] h-[46px] rounded-full border-none bg-transparent cursor-pointer text-strong flex items-center justify-center">
       <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
-      {count > 0 && <span style={{ position: "absolute", top: "1px", right: "1px", minWidth: "18px", height: "18px", padding: "0 4px", borderRadius: "9px", background: "var(--color-brand)", color: "#fff", fontSize: "11px", fontWeight: "var(--weight-bold)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "var(--font-mono)" }}>{count}</span>}
+      {count > 0 && <span className="absolute top-px right-px min-w-[18px] h-[18px] py-0 px-1 rounded-[9px] bg-brand text-white text-[11px] font-bold flex items-center justify-center font-mono">{count}</span>}
     </button>
   );
 }
@@ -197,51 +196,52 @@ function CartDrawer({ open, onClose, onNav }) {
   }, [open, onClose]);
   const set = (id, q) => cart.setQty(id, q);
   const Step = ({ label, glyph, onClick }) => (
-    <button type="button" onClick={onClick} aria-label={label} style={{ width: "30px", height: "30px", borderRadius: "var(--radius-sm)", border: "1px solid var(--border-default)", background: "var(--surface-card)", cursor: "pointer", fontSize: "18px", lineHeight: 1, color: "var(--text-strong)", display: "flex", alignItems: "center", justifyContent: "center", padding: 0 }}>{glyph}</button>
+    <button type="button" onClick={onClick} aria-label={label} className="w-[30px] h-[30px] rounded-sm border border-border bg-surface cursor-pointer text-[18px] leading-none text-strong flex items-center justify-center p-0">{glyph}</button>
   );
   return (
-    <div aria-hidden={!open} style={{ position: "fixed", inset: 0, zIndex: 200, pointerEvents: open ? "auto" : "none" }}>
-      <div onClick={onClose} style={{ position: "absolute", inset: 0, background: "rgba(15,15,15,0.5)", opacity: open ? 1 : 0, transition: "opacity var(--duration-base) var(--ease-standard)" }} />
+    <div aria-hidden={!open} className={cx("fixed inset-0 z-[200]", open ? "pointer-events-auto" : "pointer-events-none")}>
+      <div onClick={onClose} className="absolute inset-0 bg-[rgba(15,15,15,0.5)] transition-opacity duration-base ease-standard" style={{ opacity: open ? 1 : 0 }} />
       <aside role="dialog" aria-modal="true" aria-label="Carrito de formaciones"
-        style={{ position: "absolute", top: 0, right: 0, height: "100%", width: "min(420px, 92vw)", background: "var(--surface-page)", boxShadow: "var(--shadow-lg)", transform: open ? "translateX(0)" : "translateX(100%)", transition: "transform var(--duration-base) var(--ease-standard)", display: "flex", flexDirection: "column", fontFamily: "var(--font-body)" }}>
-        <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "var(--space-6)", borderBottom: "1px solid var(--border-default)", background: "var(--surface-card)" }}>
-          <h2 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>Tu carrito{count > 0 && <span style={{ color: "var(--color-brand)" }}> ({count})</span>}</h2>
-          <button type="button" onClick={onClose} aria-label="Cerrar carrito" style={{ border: "none", background: "transparent", fontSize: "28px", lineHeight: 1, cursor: "pointer", color: "var(--text-subtle)" }}>×</button>
+        className="absolute top-0 right-0 h-full w-[min(420px,_92vw)] bg-page shadow-lg transition-transform duration-base ease-standard flex flex-col font-body"
+        style={{ transform: open ? "translateX(0)" : "translateX(100%)" }}>
+        <header className="flex items-center justify-between p-6 border-b border-border bg-surface">
+          <h2 className="m-0 font-display text-xl font-bold text-strong">Tu carrito{count > 0 && <span className="text-brand"> ({count})</span>}</h2>
+          <button type="button" onClick={onClose} aria-label="Cerrar carrito" className="border-none bg-transparent text-[28px] leading-none cursor-pointer text-subtle">×</button>
         </header>
-        <div style={{ flex: 1, overflowY: "auto", padding: "var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+        <div className="flex-1 overflow-y-auto p-6 flex flex-col gap-4">
           {items.length === 0 ? (
-            <div style={{ textAlign: "center", padding: "var(--space-16) var(--space-4)", color: "var(--text-subtle)" }}>
-              <p style={{ margin: "0 0 20px", fontSize: "var(--text-base)" }}>Tu carrito está vacío.</p>
+            <div className="text-center py-16 px-4 text-subtle">
+              <p className="mt-0 mx-0 mb-5 text-base">Tu carrito está vacío.</p>
               <Button variant="outline" onClick={() => { onClose(); onNav("catalog"); }}>Ver formaciones</Button>
             </div>
           ) : items.map((it) => (
-            <div key={it.id} style={{ display: "flex", gap: "var(--space-4)", background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-md)", padding: "var(--space-4)" }}>
-              <img src={it.img} alt="" style={{ width: "64px", height: "64px", objectFit: "cover", borderRadius: "var(--radius-sm)", flex: "0 0 auto" }} />
-              <div style={{ flex: 1, minWidth: 0 }}>
-                <div style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)", marginBottom: "4px" }}>{it.title}</div>
-                <div style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "var(--color-brand)", marginBottom: "8px" }}>{it.norm}{it.sede ? " \u00b7 " + it.sede : ""}{it.fecha ? " \u00b7 " + it.fecha : ""}</div>
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+            <div key={it.id} className="flex gap-4 bg-surface border border-border rounded-md p-4">
+              <img src={it.img} alt="" className="w-[64px] h-[64px] object-cover rounded-sm flex-none" />
+              <div className="flex-1 min-w-0">
+                <div className="font-display text-sm font-bold text-strong leading-snug mb-1">{it.title}</div>
+                <div className="font-mono text-[11px] text-brand mb-2">{it.norm}{it.sede ? " \u00b7 " + it.sede : ""}{it.fecha ? " \u00b7 " + it.fecha : ""}</div>
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
                     <Step label="Restar alumno" glyph="−" onClick={() => set(it.id, it.qty - 1)} />
-                    <span style={{ minWidth: "20px", textAlign: "center", fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", color: "var(--text-strong)" }}>{it.qty}</span>
+                    <span className="min-w-[20px] text-center font-mono text-sm text-strong">{it.qty}</span>
                     <Step label="Sumar alumno" glyph="+" onClick={() => set(it.id, it.qty + 1)} />
-                    <span style={{ fontSize: "var(--text-xs)", color: "var(--text-subtle)" }}>alumnos</span>
+                    <span className="text-xs text-subtle">alumnos</span>
                   </div>
-                  <button type="button" onClick={() => cart.remove(it.id)} style={{ border: "none", background: "transparent", cursor: "pointer", fontSize: "var(--text-sm)", color: "var(--text-subtle)", textDecoration: "underline" }}>Quitar</button>
+                  <button type="button" onClick={() => cart.remove(it.id)} className="border-none bg-transparent cursor-pointer text-sm text-subtle underline">Quitar</button>
                 </div>
               </div>
             </div>
           ))}
         </div>
         {items.length > 0 && (
-          <footer style={{ padding: "var(--space-6)", borderTop: "1px solid var(--border-default)", background: "var(--surface-card)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", fontSize: "var(--text-sm)", color: "var(--text-body)" }}>
+          <footer className="p-6 border-t border-border bg-surface flex flex-col gap-4">
+            <div className="flex justify-between items-baseline text-sm text-body">
               <span>Importe total</span>
-              <span style={{ fontFamily: "var(--font-mono)", color: "var(--text-subtle)" }}>[PENDIENTE: precio]</span>
+              <span className="font-mono text-subtle">[PENDIENTE: precio]</span>
             </div>
-            <p style={{ margin: 0, fontSize: "var(--text-xs)", color: "var(--text-subtle)", lineHeight: "var(--leading-normal)" }}>El importe y las condiciones de pago se confirman al tramitar la reserva.</p>
+            <p className="m-0 text-xs text-subtle leading-normal">El importe y las condiciones de pago se confirman al tramitar la reserva.</p>
             <Button variant="primary" block size="lg" uppercase iconRight={<span>→</span>} onClick={() => { onClose(); onNav("checkout"); }}>Tramitar reserva</Button>
-            <button type="button" onClick={() => cart.clear()} style={{ border: "none", background: "transparent", cursor: "pointer", fontSize: "var(--text-sm)", color: "var(--text-subtle)", textDecoration: "underline", alignSelf: "center" }}>Vaciar carrito</button>
+            <button type="button" onClick={() => cart.clear()} className="border-none bg-transparent cursor-pointer text-sm text-subtle underline self-center">Vaciar carrito</button>
           </footer>
         )}
       </aside>
@@ -257,12 +257,12 @@ function Navbar() {
   const narrow = w < 1060;
   return (
     <header onMouseLeave={() => setOpen(null)}
-      style={{ position: "sticky", top: 0, zIndex: 50, background: "var(--surface-card)", borderBottom: "1px solid var(--border-default)", fontFamily: "var(--font-body)" }}>
-      <div style={{ maxWidth: "var(--container-max)", margin: "0 auto", padding: "14px var(--container-padding)", display: "flex", alignItems: "center", gap: "28px" }}>
-        <a href="#" onClick={(e) => { e.preventDefault(); onNav("home"); }} style={{ flex: "0 0 auto", display: "flex", alignItems: "center" }}>
-          <img src={D.logoDark} alt="GEPCO Formación" style={{ height: "72px", objectFit: "contain", transform: "scale(1.2)", transformOrigin: "left center", marginLeft: "-7px" }} />
+      className="sticky top-0 z-50 bg-surface border-b border-border font-body">
+      <div className="max-w-container mx-auto py-[14px] px-container flex items-center gap-[28px]">
+        <a href="#" onClick={(e) => { e.preventDefault(); onNav("home"); }} className="flex-none flex items-center">
+          <img src={D.logoDark} alt="GEPCO Formación" className="h-[72px] object-contain scale-[1.2] origin-left ml-[-7px]" />
         </a>
-        <nav style={{ display: "flex", alignItems: "center", gap: "6px", marginLeft: narrow ? "12px" : "28px", minWidth: 0 }}>
+        <nav className={cx("flex items-center gap-[6px] min-w-0", narrow ? "ml-3" : "ml-[28px]")}>
           <div onMouseEnter={() => setOpen("cursos")}>
             <NavTrigger label="Cursos" open={open === "cursos"} onEnter={() => setOpen("cursos")} onClick={() => onNav("catalog")} />
           </div>
@@ -272,21 +272,21 @@ function Navbar() {
           <div onMouseEnter={() => setOpen(null)}><NavLink label="Blog" onClick={(e) => { e.preventDefault(); onNav("blog"); }} /></div>
           <div onMouseEnter={() => setOpen(null)}><NavLink label="Contacto" onClick={(e) => { e.preventDefault(); onNav("contact"); }} /></div>
         </nav>
-        <div style={{ marginLeft: "auto", display: "flex", alignItems: "center", gap: "16px" }} onMouseEnter={() => setOpen(null)}>
+        <div className="ml-auto flex items-center gap-4" onMouseEnter={() => setOpen(null)}>
           <CollapsibleSearch />
           <CartButton onClick={() => setCartOpen(true)} />
-          <span style={{ width: "1px", height: "30px", background: "var(--border-default)" }} />
-          <a href="#" onClick={(e) => e.preventDefault()} style={{ display: "flex", alignItems: "center", gap: "10px", textDecoration: "none" }}>
-            <span style={{ width: "38px", height: "38px", borderRadius: "var(--radius-full)", background: "var(--color-brand)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }} aria-hidden="true">
+          <span className="w-px h-[30px] bg-border" />
+          <a href="#" onClick={(e) => e.preventDefault()} className="flex items-center gap-[10px] no-underline">
+            <span className="w-[38px] h-[38px] rounded-full bg-brand text-white flex items-center justify-center" aria-hidden="true">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="4" /><path d="M4 21c0-4 4-6 8-6s8 2 8 6" /></svg>
             </span>
-            <span style={{ fontSize: "var(--text-base)", color: "var(--text-body)", whiteSpace: "nowrap", display: narrow ? "none" : "inline" }}>Hola, <strong style={{ color: "var(--text-strong)", fontWeight: "var(--weight-semibold)" }}>alumno/a</strong></span>
+            <span className={cx("text-base text-body whitespace-nowrap", narrow ? "hidden" : "inline")}>Hola, <strong className="text-strong font-semibold">alumno/a</strong></span>
           </a>
         </div>
       </div>
       {open && (
-        <div style={{ position: "absolute", left: 0, right: 0, top: "100%" }}>
-          <div style={{ maxWidth: "var(--container-max)", margin: "0 auto", padding: "0 var(--container-padding)", display: "flex", justifyContent: "flex-start" }}>
+        <div className="absolute left-0 right-0 top-full">
+          <div className="max-w-container mx-auto py-0 px-container flex justify-start">
             <div>
               {open === "cursos" ? <CursosMenu onNav={onNav} /> : <NosotrosMenu onNav={onNav} />}
             </div>
@@ -299,11 +299,10 @@ function Navbar() {
 }
 
 function FLink({ label, onClick }) {
-  const [h, setH] = React.useState(false);
   return (
-    <a href="#" onClick={(e) => { e.preventDefault(); onClick(); }} onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
-      style={{ display: "inline-flex", alignItems: "center", gap: "8px", fontSize: "var(--text-sm)", color: h ? "var(--color-brand)" : "var(--text-body)", textDecoration: "none", padding: "3px 0", transition: "color var(--duration-base) var(--ease-standard)" }}>
-      <span aria-hidden="true" style={{ color: "var(--color-brand)", fontWeight: "var(--weight-bold)", opacity: h ? 1 : 0, transform: h ? "translateX(0)" : "translateX(-6px)", transition: "opacity var(--duration-base) var(--ease-standard), transform var(--duration-base) var(--ease-standard)", marginRight: h ? 0 : "-14px" }}>→</span>
+    <a href="#" onClick={(e) => { e.preventDefault(); onClick(); }}
+      className="group inline-flex items-center gap-2 text-sm text-body hover:text-brand no-underline py-[3px] px-0 transition-colors duration-base ease-standard">
+      <span aria-hidden="true" className="text-brand font-bold opacity-0 group-hover:opacity-100 translate-x-[-6px] group-hover:translate-x-0 mr-[-14px] group-hover:mr-0 transition-[opacity,transform] duration-base ease-standard">→</span>
       {label}
     </a>
   );
@@ -323,39 +322,39 @@ function Footer() {
     { label: "Contacto", go: "contact" },
     { label: "Trabaja con nosotros", go: "trabaja" },
   ];
-  const colLabel = { fontFamily: "var(--font-body)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)", fontWeight: "var(--weight-bold)", marginBottom: "var(--space-5)" };
+  const colLabel = "font-body text-xs uppercase tracking-eyebrow text-brand font-bold mb-5";
   return (
-    <footer style={{ background: "#e8e6e2", color: "var(--text-strong)", borderTop: "1px solid var(--border-default)", fontFamily: "var(--font-body)" }}>
-      <div style={{ maxWidth: "var(--container-max)", margin: "0 auto", padding: "var(--space-8) var(--container-padding) var(--space-5)", display: "grid", gridTemplateColumns: "1.7fr 1fr 1fr 1fr", gap: "var(--space-10)" }}>
-        <div style={{ maxWidth: "320px" }}>
-          <img src={D.logoDark} alt="GEPCO Formación" style={{ height: "72px", objectFit: "contain", marginBottom: "18px", transform: "scale(1.2)", transformOrigin: "left center", marginLeft: "-7px" }} />
-          <p style={{ margin: "0 0 var(--space-5)", fontSize: "var(--text-sm)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>Escuela de Emergencias y PRL. Centro homologado por el ISPC. Más de 15 años formando profesionales.</p>
-          <button type="button" onClick={() => nav("contact")} style={{ display: "inline-flex", alignItems: "center", gap: "10px", background: "var(--color-brand)", color: "#fff", border: "none", borderRadius: "var(--radius-md)", padding: "12px 20px", fontFamily: "var(--font-body)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)", letterSpacing: "0.04em", cursor: "pointer" }}>Solicita información <span aria-hidden="true">→</span></button>
+    <footer className="bg-[#e8e6e2] text-strong border-t border-border font-body">
+      <div className="max-w-container mx-auto pt-8 px-container pb-5 grid grid-cols-[1.7fr_1fr_1fr_1fr] gap-10">
+        <div className="max-w-[320px]">
+          <img src={D.logoDark} alt="GEPCO Formación" className="h-[72px] object-contain mb-[18px] scale-[1.2] origin-left ml-[-7px]" />
+          <p className="mt-0 mx-0 mb-5 text-sm leading-normal text-body">Escuela de Emergencias y PRL. Centro homologado por el ISPC. Más de 15 años formando profesionales.</p>
+          <button type="button" onClick={() => nav("contact")} className="inline-flex items-center gap-[10px] bg-brand text-white border-none rounded-md py-3 px-5 font-body text-sm font-semibold tracking-[0.04em] cursor-pointer">Solicita información <span aria-hidden="true">→</span></button>
         </div>
         <div>
-          <div style={colLabel}>Formación</div>
-          <div style={{ display: "flex", flexDirection: "column", gap: "2px" }}>
+          <div className={colLabel}>Formación</div>
+          <div className="flex flex-col gap-[2px]">
             {links.map((l) => <FLink key={l.label} label={l.label} onClick={() => nav(l.go)} />)}
           </div>
         </div>
         {offices.map((o) => (
           <div key={o.city}>
-            <div style={colLabel}>{o.city}</div>
-            {o.lines.map((l, i) => <div key={i} style={{ fontSize: "var(--text-sm)", color: "var(--text-body)", lineHeight: "var(--leading-loose)" }}>{l}</div>)}
+            <div className={colLabel}>{o.city}</div>
+            {o.lines.map((l, i) => <div key={i} className="text-sm text-body leading-loose">{l}</div>)}
           </div>
         ))}
       </div>
 
-      <div style={{ borderTop: "1px solid var(--border-default)" }}>
-        <div style={{ maxWidth: "var(--container-max)", margin: "0 auto", padding: "var(--space-4) var(--container-padding)", display: "flex", alignItems: "center", gap: "var(--space-6)", flexWrap: "wrap", justifyContent: "center" }}>
-          <span style={{ fontFamily: "var(--font-body)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--text-subtle)", flex: "0 0 auto" }}>Certificaciones y acreditaciones oficiales</span>
-          <img src="/assets/logos-acreditacion-gris-g.png" alt="Acreditaciones: Gobierno de España, Policía Nacional, IRATA International, SEMICYUC, ISO 9001, DGT e Irudek" loading="lazy" style={{ flex: "0 1 520px", minWidth: 0, height: "auto", objectFit: "contain", opacity: 0.85 }} />
+      <div className="border-t border-border">
+        <div className="max-w-container mx-auto py-4 px-container flex items-center gap-6 flex-wrap justify-center">
+          <span className="font-body text-xs uppercase tracking-eyebrow text-subtle flex-none">Certificaciones y acreditaciones oficiales</span>
+          <img src="/assets/logos-acreditacion-gris-g.png" alt="Acreditaciones: Gobierno de España, Policía Nacional, IRATA International, SEMICYUC, ISO 9001, DGT e Irudek" loading="lazy" className="flex-[0_1_520px] min-w-0 h-auto object-contain opacity-[0.85]" />
         </div>
       </div>
 
-      <div style={{ borderTop: "1px solid var(--border-default)" }}>
-        <div style={{ maxWidth: "var(--container-max)", margin: "0 auto", padding: "var(--space-3) var(--container-padding)", display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "12px", fontSize: "var(--text-xs)", color: "var(--text-subtle)" }}>
-          <span style={{ fontFamily: "var(--font-body)" }}>© 2010–2024 · GEP&amp;RISK 112 SL</span>
+      <div className="border-t border-border">
+        <div className="max-w-container mx-auto py-3 px-container flex justify-between flex-wrap gap-3 text-xs text-subtle">
+          <span className="font-body">© 2010–2024 · GEP&amp;RISK 112 SL</span>
           <span>Privacidad · Aviso Legal · Términos y condiciones · Cookies</span>
         </div>
       </div>

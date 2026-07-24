@@ -8,13 +8,14 @@ import { cart } from '../../lib/cart.js';
 import { Button, Input, Select, Badge, NormBadge, Accordion, StatBlock, ProductCard, IconButton } from '../ds/index.js';
 import { DATA as D } from '../../lib/data.js';
 import { Container } from '../common/Container.jsx';
+import { cx } from '../../lib/cx.js';
 const fmtEUR = (n) => {
   const [int, dec] = Number(n).toFixed(2).split(".");
   return int.replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "," + dec + " €";
 };
 const Stars = ({ n = 5 }) => (
-  <span aria-label={n + " de 5 estrellas"} style={{ color: "var(--color-accent)", fontSize: "16px", letterSpacing: "2px", whiteSpace: "nowrap" }}>
-    {"★★★★★".slice(0, n)}<span style={{ color: "var(--border-hover)" }}>{"★★★★★".slice(n)}</span>
+  <span aria-label={n + " de 5 estrellas"} className="text-accent text-[16px] tracking-[2px] whitespace-nowrap">
+    {"★★★★★".slice(0, n)}<span className="text-border-strong">{"★★★★★".slice(n)}</span>
   </span>
 );
 
@@ -76,41 +77,41 @@ function CourseScreen() {
   const [fecha, setFecha] = React.useState("");
   const [alumnos, setAlumnos] = React.useState(1);
   const [added, setAdded] = React.useState(false);
-  const stepBtn = { width: "44px", height: "44px", border: "none", background: "transparent", cursor: "pointer", fontSize: "20px", lineHeight: 1, color: "var(--text-strong)", flex: "0 0 auto" };
+  const stepBtn = "w-[44px] h-[44px] border-none bg-transparent cursor-pointer text-[20px] leading-none text-strong flex-none";
 
-  const h2 = { margin: "0 0 var(--space-4)", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-heading)", color: "var(--text-strong)" };
+  const h2 = "m-[0_0_var(--space-4)] font-display text-2xl font-bold tracking-heading text-strong";
 
   return (
     <div>
       {/* Hero B2B */}
-      <section style={{ background: "var(--color-dark)", color: "#fff" }}>
-        <Container style={{ padding: "var(--section-y) var(--container-padding)", display: "grid", gridTemplateColumns: "1.05fr 0.95fr", gap: "var(--space-16)", alignItems: "center" }}>
+      <section className="bg-dark text-white">
+        <Container className="py-section grid grid-cols-[1.05fr_0.95fr] gap-16 items-center">
           <div>
-            <button onClick={() => onNav("catalog", course.cat)} style={{ background: "none", border: "none", color: "var(--color-brand)", cursor: "pointer", fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", padding: 0, marginBottom: "20px" }}>← {catName(course.cat)}</button>
-            <div style={{ display: "flex", gap: "8px", marginBottom: "20px", flexWrap: "wrap" }}>
+            <button onClick={() => onNav("catalog", course.cat)} className="bg-transparent border-none text-brand cursor-pointer font-mono text-sm p-0 mb-[20px]">← {catName(course.cat)}</button>
+            <div className="flex gap-[8px] mb-[20px] flex-wrap">
               <Badge tone="brand">Formación in company</Badge>
               <Badge tone="onDark" dot>Bonificable FUNDAE</Badge>
               <NormBadge onDark>{course.norm}</NormBadge>
             </div>
-            <span style={{ display: "block", fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "rgba(255,255,255,0.6)", marginBottom: "12px" }}>Forma a tu equipo</span>
-            <h1 style={{ margin: "0 0 18px", fontFamily: "var(--font-display)", fontSize: "clamp(2.2rem,4.4vw,3.4rem)", fontWeight: "var(--weight-extrabold)", lineHeight: "var(--leading-tight)", letterSpacing: "var(--tracking-display)" }}>{course.title}<span style={{ color: "var(--color-brand)" }}>.</span></h1>
-            <p style={{ margin: "0 0 var(--space-8)", fontSize: "var(--text-lg)", lineHeight: "var(--leading-normal)", color: "rgba(255,255,255,0.82)", maxWidth: "520px" }}>{course.soloSede ? "Diseñamos esta formación a la medida de tu empresa, impartida en nuestras instalaciones especializadas, con contenido y fechas adaptados a tu equipo. Certificación oficial y bonificable a través de FUNDAE." : "Diseñamos esta formación a la medida de tu empresa: en vuestras instalaciones o en las nuestras, con contenido y fechas adaptados a tu equipo. Certificación oficial y bonificable a través de FUNDAE."}</p>
-            <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+            <span className="block font-mono text-sm uppercase tracking-eyebrow text-white/[0.6] mb-[12px]">Forma a tu equipo</span>
+            <h1 className="m-[0_0_18px] font-display text-[clamp(2.2rem,4.4vw,3.4rem)] font-extrabold leading-tight tracking-display">{course.title}<span className="text-brand">.</span></h1>
+            <p className="m-[0_0_var(--space-8)] text-lg leading-normal text-white/[0.82] max-w-[520px]">{course.soloSede ? "Diseñamos esta formación a la medida de tu empresa, impartida en nuestras instalaciones especializadas, con contenido y fechas adaptados a tu equipo. Certificación oficial y bonificable a través de FUNDAE." : "Diseñamos esta formación a la medida de tu empresa: en vuestras instalaciones o en las nuestras, con contenido y fechas adaptados a tu equipo. Certificación oficial y bonificable a través de FUNDAE."}</p>
+            <div className="flex gap-[12px] flex-wrap">
               <Button variant="primary" size="lg" uppercase iconRight={<span>→</span>} onClick={scrollToLead}>Solicita propuesta para tu empresa</Button>
               <Button variant="onDark" size="lg" onClick={() => onNav("contact")}>Hablar con un asesor</Button>
             </div>
-            <p style={{ margin: "16px 0 0", fontSize: "var(--text-sm)", color: "rgba(255,255,255,0.6)" }}>Respuesta en menos de 24&nbsp;h · Sin compromiso</p>
+            <p className="m-[16px_0_0] text-sm text-white/[0.6]">Respuesta en menos de 24&nbsp;h · Sin compromiso</p>
           </div>
-          <img src={course.img} alt={course.title} style={{ width: "100%", height: "420px", objectFit: "cover", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-lg)" }} />
+          <img src={course.img} alt={course.title} className="w-full h-[420px] object-cover rounded-xl shadow-lg" />
         </Container>
       </section>
 
-      <Container style={{ padding: "var(--section-y) var(--container-padding)", display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: "var(--space-16)", alignItems: "start" }}>
+      <Container className="py-section grid grid-cols-[1.6fr_1fr] gap-16 items-start">
         {/* Main */}
-        <div style={{ display: "flex", flexDirection: "column", gap: "var(--space-12)" }}>
+        <div className="flex flex-col gap-12">
           <div>
-            <h2 style={h2}>Información básica<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-            <dl style={{ margin: 0, display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1px", background: "var(--border-default)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", overflow: "hidden" }}>
+            <h2 className={h2}>Información básica<span className="text-brand">.</span></h2>
+            <dl className="m-0 grid grid-cols-[1fr_1fr] gap-[1px] bg-border border border-border rounded-lg overflow-hidden">
               {[
                 { k: "Certificación", v: course.norm },
                 { k: "Horas de formación", v: course.hours || "A medida según programa" },
@@ -118,55 +119,55 @@ function CourseScreen() {
                 { k: "Modalidad", v: "In company · teórico-práctica" },
                 { k: "Detalle", v: course.bullets[0], span: true },
               ].map((f) => (
-                <div key={f.k} style={{ gridColumn: f.span ? "1 / -1" : "auto", background: "var(--surface-card)", padding: "var(--space-5) var(--space-6)" }}>
-                  <dt style={{ fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--text-subtle)", marginBottom: "6px" }}>{f.k}</dt>
-                  <dd style={{ margin: 0, fontSize: "var(--text-base)", fontWeight: "var(--weight-semibold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>{f.v}</dd>
+                <div key={f.k} className={cx("bg-surface py-5 px-6", f.span && "col-span-full")}>
+                  <dt className="text-xs uppercase tracking-eyebrow text-subtle mb-[6px]">{f.k}</dt>
+                  <dd className="m-0 text-base font-semibold text-strong leading-snug">{f.v}</dd>
                 </div>
               ))}
             </dl>
           </div>
           <div>
-            <h2 style={h2}>Descripción<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-            <p style={{ margin: "0 0 14px", fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>Esta formación prepara a tu equipo para organizar la respuesta, intervenir en emergencias, evaluar riesgos y aplicar las normas de seguridad necesarias en cada situación, con un enfoque eminentemente práctico.</p>
-            <p style={{ margin: 0, fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>La adaptamos a vuestro sector y a los riesgos reales de vuestras instalaciones. Al finalizar, cada participante recibe la acreditación correspondiente y os acompañamos en el proceso de habilitación y renovación.</p>
+            <h2 className={h2}>Descripción<span className="text-brand">.</span></h2>
+            <p className="m-[0_0_14px] text-base leading-normal text-body">Esta formación prepara a tu equipo para organizar la respuesta, intervenir en emergencias, evaluar riesgos y aplicar las normas de seguridad necesarias en cada situación, con un enfoque eminentemente práctico.</p>
+            <p className="m-0 text-base leading-normal text-body">La adaptamos a vuestro sector y a los riesgos reales de vuestras instalaciones. Al finalizar, cada participante recibe la acreditación correspondiente y os acompañamos en el proceso de habilitación y renovación.</p>
           </div>
           <div>
-            <h2 style={h2}>Plan de estudios<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-            <p style={{ margin: "0 0 var(--space-6)", fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>Formación teórico-práctica: combina fundamentos en aula con prácticas reales en campo de fuego y casa de humo.</p>
-            <div style={{ display: "flex", height: "14px", borderRadius: "var(--radius-full)", overflow: "hidden", marginBottom: "10px" }}>
-              <div style={{ flex: "0 0 20%", background: "var(--color-ink)" }} />
-              <div style={{ flex: 1, background: "var(--color-brand)" }} />
+            <h2 className={h2}>Plan de estudios<span className="text-brand">.</span></h2>
+            <p className="m-[0_0_var(--space-6)] text-base leading-normal text-body">Formación teórico-práctica: combina fundamentos en aula con prácticas reales en campo de fuego y casa de humo.</p>
+            <div className="flex h-[14px] rounded-full overflow-hidden mb-[10px]">
+              <div className="flex-[0_0_20%] bg-ink" />
+              <div className="flex-1 bg-brand" />
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: "8px", fontSize: "var(--text-xs)", color: "var(--text-subtle)", marginBottom: "6px" }}>
-              <span><strong style={{ color: "var(--text-strong)" }}>Teoría</strong> · aula y fundamentos</span>
-              <span><strong style={{ color: "var(--color-brand)" }}>Práctica</strong> · campo de fuego y casa de humo</span>
+            <div className="flex justify-between flex-wrap gap-[8px] text-xs text-subtle mb-[6px]">
+              <span><strong className="text-strong">Teoría</strong> · aula y fundamentos</span>
+              <span><strong className="text-brand">Práctica</strong> · campo de fuego y casa de humo</span>
             </div>
-            <p style={{ margin: "0 0 var(--space-8)", fontSize: "var(--text-xs)", color: "var(--text-subtle)" }}>Aprox. 20% teoría · 80% práctica.</p>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "var(--space-6)" }}>
+            <p className="m-[0_0_var(--space-8)] text-xs text-subtle">Aprox. 20% teoría · 80% práctica.</p>
+            <div className="grid grid-cols-[repeat(auto-fit,_minmax(260px,_1fr))] gap-6">
               {[
                 { key: "teoria", label: "Parte teórica", accent: "var(--color-ink)", soft: "var(--surface-sunken)",
                   icon: <path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2zM19 3v16" />, items: [PLAN[0], PLAN[1]] },
                 { key: "practica", label: "Parte práctica", accent: "var(--color-brand)", soft: "var(--color-brand-soft)",
                   icon: <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z" />, items: [PLAN[2]] },
               ].map((t) => (
-                <div key={t.key} style={{ background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", padding: "var(--space-6)" }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "var(--space-5)", paddingBottom: "var(--space-4)", borderBottom: "1px solid var(--border-default)" }}>
-                    <span style={{ flex: "0 0 auto", width: "40px", height: "40px", borderRadius: "var(--radius-md)", background: t.soft, color: t.accent, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <div key={t.key} className="bg-surface border border-border rounded-lg p-6">
+                  <div className="flex items-center gap-[12px] mb-5 pb-4 border-b border-border">
+                    <span className="flex-none w-[40px] h-[40px] rounded-md flex items-center justify-center" style={{ background: t.soft, color: t.accent }}>
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{t.icon}</svg>
                     </span>
                     <div>
-                      <h3 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>{t.label}</h3>
-                      <span style={{ fontFamily: "var(--font-mono)", fontSize: "11px", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--text-subtle)" }}>{t.items.length} {t.items.length === 1 ? "módulo" : "módulos"}</span>
+                      <h3 className="m-0 font-display text-lg font-bold text-strong">{t.label}</h3>
+                      <span className="font-mono text-[11px] uppercase tracking-eyebrow text-subtle">{t.items.length} {t.items.length === 1 ? "módulo" : "módulos"}</span>
                     </div>
                   </div>
-                  <ul style={{ margin: 0, padding: 0, listStyle: "none", display: "flex", flexDirection: "column", gap: "var(--space-5)" }}>
+                  <ul className="m-0 p-0 list-none flex flex-col gap-5">
                     {t.items.map((it, i) => (
                       <li key={i}>
-                        <div style={{ display: "flex", gap: "10px", alignItems: "baseline", marginBottom: "4px" }}>
-                          <span aria-hidden="true" style={{ color: t.accent, fontWeight: "var(--weight-bold)" }}>›</span>
-                          <span style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>{it.q}</span>
+                        <div className="flex gap-[10px] items-baseline mb-[4px]">
+                          <span aria-hidden="true" className="font-bold" style={{ color: t.accent }}>›</span>
+                          <span className="font-display text-base font-bold text-strong leading-snug">{it.q}</span>
                         </div>
-                        <p style={{ margin: 0, paddingLeft: "20px", fontSize: "var(--text-sm)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>{it.a}</p>
+                        <p className="m-0 pl-[20px] text-sm leading-normal text-body">{it.a}</p>
                       </li>
                     ))}
                   </ul>
@@ -177,73 +178,73 @@ function CourseScreen() {
         </div>
 
         {/* Sticky — captación de lead B2B */}
-        <aside ref={leadRef} style={{ position: "sticky", top: "120px", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
-          <div style={{ background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-md)", padding: "var(--space-8)" }}>
+        <aside ref={leadRef} className="sticky top-[120px] flex flex-col gap-4">
+          <div className="bg-surface border border-border rounded-xl shadow-md p-8">
             {sent ? (
-              <div style={{ textAlign: "center", padding: "var(--space-8) 0" }}>
-                <div style={{ width: "56px", height: "56px", margin: "0 auto var(--space-4)", borderRadius: "var(--radius-full)", background: "var(--color-brand-soft)", color: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "30px" }}>✓</div>
-                <h3 style={{ margin: "0 0 8px", fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>Solicitud enviada</h3>
-                <p style={{ margin: 0, fontSize: "var(--text-base)", color: "var(--text-body)", lineHeight: "var(--leading-normal)" }}>Un asesor preparará tu propuesta a medida y te contactará en menos de 24&nbsp;h.</p>
+              <div className="text-center py-8">
+                <div className="w-[56px] h-[56px] m-[0_auto_var(--space-4)] rounded-full bg-brand-soft text-brand flex items-center justify-center text-[30px]">✓</div>
+                <h3 className="m-[0_0_8px] font-display text-xl font-bold text-strong">Solicitud enviada</h3>
+                <p className="m-0 text-base text-body leading-normal">Un asesor preparará tu propuesta a medida y te contactará en menos de 24&nbsp;h.</p>
               </div>
             ) : (
               <React.Fragment>
-                <span style={{ display: "block", fontFamily: "var(--font-mono)", fontSize: "var(--text-xs)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)", marginBottom: "8px" }}>Presupuesto a medida</span>
-                <h3 style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: "var(--text-xl)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>Solicita propuesta para tu empresa</h3>
-                <p style={{ margin: "0 0 var(--space-6)", fontSize: "var(--text-sm)", color: "var(--text-subtle)", lineHeight: "var(--leading-normal)" }}>Te enviamos programa, calendario y presupuesto adaptados a tu equipo. Sin compromiso.</p>
-                <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} style={{ display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+                <span className="block font-mono text-xs uppercase tracking-eyebrow text-brand mb-[8px]">Presupuesto a medida</span>
+                <h3 className="m-[0_0_6px] font-display text-xl font-bold text-strong leading-snug">Solicita propuesta para tu empresa</h3>
+                <p className="m-[0_0_var(--space-6)] text-sm text-subtle leading-normal">Te enviamos programa, calendario y presupuesto adaptados a tu equipo. Sin compromiso.</p>
+                <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="flex flex-col gap-4">
                   <Input label="Nombre *" placeholder="Tu nombre" />
                   <Input label="Empresa *" placeholder="Razón social" />
                   <Input label="Email *" type="email" placeholder="tu@empresa.com" />
                   <Input label="Teléfono *" placeholder="+34 600 000 000" />
                   <Input label="Nº aprox. de personas *" type="number" min="1" placeholder="Ej. 12" />
                   <Button type="submit" variant="primary" block size="lg" uppercase iconRight={<span>→</span>}>Solicitar propuesta</Button>
-                  <p style={{ margin: 0, textAlign: "center", fontSize: "var(--text-xs)", color: "var(--text-subtle)" }}>Respuesta en 24&nbsp;h · Bonificable FUNDAE · Sin compromiso</p>
+                  <p className="m-0 text-center text-xs text-subtle">Respuesta en 24&nbsp;h · Bonificable FUNDAE · Sin compromiso</p>
                 </form>
               </React.Fragment>
             )}
-            <div style={{ display: "flex", justifyContent: "space-between", marginTop: "var(--space-8)", paddingTop: "var(--space-6)", borderTop: "1px solid var(--border-default)" }}>
+            <div className="flex justify-between mt-8 pt-6 border-t border-border">
               <StatBlock value="+2.400" label="Profesionales formados" />
               <StatBlock value="24 h" label="Respuesta" />
             </div>
           </div>
 
           {/* Opción secundaria con protagonismo: reserva individual (particulares / autónomos) */}
-          <div style={{ background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-xl)", boxShadow: "var(--shadow-sm)", overflow: "hidden" }}>
-            <div style={{ height: "4px", background: "var(--color-ink)" }} />
-            <button type="button" onClick={() => setOpenInd((o) => !o)} aria-expanded={openInd} style={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px", textAlign: "left", padding: "var(--space-6)", background: "transparent", border: "none", cursor: "pointer" }}>
-              <span style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-                <span aria-hidden="true" style={{ flex: "0 0 auto", width: "42px", height: "42px", borderRadius: "var(--radius-md)", background: "var(--surface-sunken)", color: "var(--text-strong)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <div className="bg-surface border border-border rounded-xl shadow-sm overflow-hidden">
+            <div className="h-[4px] bg-ink" />
+            <button type="button" onClick={() => setOpenInd((o) => !o)} aria-expanded={openInd} className="w-full flex items-center justify-between gap-[12px] text-left p-6 bg-transparent border-none cursor-pointer">
+              <span className="flex items-center gap-[14px]">
+                <span aria-hidden="true" className="flex-none w-[42px] h-[42px] rounded-md bg-surface-muted text-strong flex items-center justify-center">
                   <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="9" cy="21" r="1" /><circle cx="20" cy="21" r="1" /><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" /></svg>
                 </span>
                 <span>
-                  <span style={{ display: "block", fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>Reserva individual online</span>
-                  <span style={{ display: "block", fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>Para particulares y autónomos</span>
+                  <span className="block font-display text-lg font-bold text-strong leading-snug">Reserva individual online</span>
+                  <span className="block text-sm text-subtle">Para particulares y autónomos</span>
                 </span>
               </span>
-              <span aria-hidden="true" style={{ flex: "0 0 auto", color: "var(--color-brand)", fontSize: "24px", lineHeight: 1, transform: openInd ? "rotate(45deg)" : "none", transition: "transform var(--duration-base) var(--ease-standard)" }}>+</span>
+              <span aria-hidden="true" className="flex-none text-brand text-[24px] leading-none transition-transform duration-base ease-standard" style={{ transform: openInd ? "rotate(45deg)" : "none" }}>+</span>
             </button>
             {openInd && (
-              <div style={{ padding: "0 var(--space-6) var(--space-6)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+              <div className="pt-0 px-6 pb-6 flex flex-col gap-4">
                 {typeof course.price === "number" ? (
-                  <div style={{ display: "flex", alignItems: "baseline", gap: "8px", padding: "var(--space-2) 0 var(--space-4)", borderTop: "1px solid var(--border-default)", marginTop: "var(--space-2)", paddingTop: "var(--space-5)" }}>
-                    <span style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.75rem,3vw,2.25rem)", fontWeight: "var(--weight-extrabold)", color: "var(--text-strong)", lineHeight: 1 }}>{fmtEUR(course.price)}</span>
-                    <span style={{ fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>/ alumno</span>
+                  <div className="flex items-baseline gap-[8px] border-t border-border mt-2 pt-5 pb-4">
+                    <span className="font-display text-[clamp(1.75rem,3vw,2.25rem)] font-extrabold text-strong leading-none">{fmtEUR(course.price)}</span>
+                    <span className="text-sm text-subtle">/ alumno</span>
                   </div>
                 ) : (
-                  <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--text-subtle)", borderTop: "1px solid var(--border-default)", paddingTop: "var(--space-5)" }}>Precio disponible en convocatorias abiertas. Consulta fechas.</p>
+                  <p className="m-0 text-sm text-subtle border-t border-border pt-5">Precio disponible en convocatorias abiertas. Consulta fechas.</p>
                 )}
                 <Select label="Localización" placeholder="Elige una opción" value={sede} onChange={(e) => setSede(e.target.value)} options={["Sabadell", "Madrid"]} />
                 <Select label="Fechas" placeholder="Elige una opción" value={fecha} onChange={(e) => setFecha(e.target.value)} options={["20/05/2025", "23/10/2025"]} />
-                <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                  <label htmlFor="alumnos" style={{ fontSize: "var(--text-xs)", fontWeight: "var(--weight-semibold)", letterSpacing: "var(--tracking-eyebrow)", textTransform: "uppercase", color: "var(--text-subtle)" }}>Nº de plazas</label>
-                  <div style={{ display: "flex", alignItems: "center", border: "1px solid var(--border-default)", borderRadius: "var(--radius-md)", overflow: "hidden", background: "var(--surface-card)" }}>
-                    <button type="button" aria-label="Restar plaza" onClick={() => setAlumnos((a) => Math.max(1, a - 1))} style={stepBtn}>−</button>
-                    <input id="alumnos" type="number" min="1" value={alumnos} onChange={(e) => setAlumnos(Math.max(1, parseInt(e.target.value, 10) || 1))} aria-label="Número de plazas" style={{ flex: 1, minWidth: 0, textAlign: "center", border: "none", borderLeft: "1px solid var(--border-default)", borderRight: "1px solid var(--border-default)", padding: "10px 8px", fontFamily: "var(--font-mono)", fontSize: "var(--text-base)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", outline: "none", background: "transparent" }} />
-                    <button type="button" aria-label="Sumar plaza" onClick={() => setAlumnos((a) => a + 1)} style={stepBtn}>+</button>
+                <div className="flex flex-col gap-[8px]">
+                  <label htmlFor="alumnos" className="text-xs font-semibold tracking-eyebrow uppercase text-subtle">Nº de plazas</label>
+                  <div className="flex items-center border border-border rounded-md overflow-hidden bg-surface">
+                    <button type="button" aria-label="Restar plaza" onClick={() => setAlumnos((a) => Math.max(1, a - 1))} className={stepBtn}>−</button>
+                    <input id="alumnos" type="number" min="1" value={alumnos} onChange={(e) => setAlumnos(Math.max(1, parseInt(e.target.value, 10) || 1))} aria-label="Número de plazas" className="flex-1 min-w-0 text-center border-x border-y-0 border-border py-[10px] px-[8px] font-mono text-base font-bold text-strong [outline:none] bg-transparent" />
+                    <button type="button" aria-label="Sumar plaza" onClick={() => setAlumnos((a) => a + 1)} className={stepBtn}>+</button>
                   </div>
                 </div>
                 <Button variant="dark" block uppercase disabled={course.outOfStock} iconRight={<span>→</span>} onClick={() => { cart.add(course, { sede: sede || null, fecha: fecha || null, qty: alumnos }); setAdded(true); setTimeout(() => setAdded(false), 2500); }}>{course.outOfStock ? "Sin plazas" : "Añadir al carrito"}</Button>
-                {added && <p role="status" style={{ margin: 0, textAlign: "center", fontSize: "var(--text-sm)", color: "var(--color-success)", fontWeight: "var(--weight-semibold)" }}>Añadido al carrito ✓</p>}
+                {added && <p role="status" className="m-0 text-center text-sm text-success font-semibold">Añadido al carrito ✓</p>}
               </div>
             )}
           </div>
@@ -251,19 +252,19 @@ function CourseScreen() {
       </Container>
 
       {/* Por qué formar a tu equipo con GEPCO */}
-      <section style={{ background: "var(--surface-card)", borderBottom: "1px solid var(--border-default)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface border-b border-border py-section">
         <Container>
-          <span style={{ display: "block", marginBottom: "12px", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-eyebrow)", textTransform: "uppercase", color: "var(--color-brand)" }}>Formación para empresas</span>
-          <h2 style={{ margin: "0 0 var(--space-10)", fontFamily: "var(--font-display)", fontSize: "var(--text-3xl)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", color: "var(--text-strong)", maxWidth: "760px", lineHeight: "var(--leading-snug)" }}>La forma más rentable de formar a todo tu equipo, a la vez<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "var(--space-6)" }}>
+          <span className="block mb-[12px] text-sm font-bold tracking-eyebrow uppercase text-brand">Formación para empresas</span>
+          <h2 className="m-[0_0_var(--space-10)] font-display text-3xl font-extrabold tracking-display text-strong max-w-[760px] leading-snug">La forma más rentable de formar a todo tu equipo, a la vez<span className="text-brand">.</span></h2>
+          <div className="grid grid-cols-[repeat(auto-fit,_minmax(300px,_1fr))] gap-6">
             {ventajas.map((v) => (
-              <div key={v.t} style={{ display: "flex", gap: "16px", alignItems: "flex-start" }}>
-                <span style={{ flex: "0 0 auto", width: "48px", height: "48px", borderRadius: "var(--radius-md)", background: "var(--color-brand-soft)", color: "var(--color-brand)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div key={v.t} className="flex gap-[16px] items-start">
+                <span className="flex-none w-[48px] h-[48px] rounded-md bg-brand-soft text-brand flex items-center justify-center">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">{v.icon}</svg>
                 </span>
                 <div>
-                  <h3 style={{ margin: "0 0 6px", fontFamily: "var(--font-display)", fontSize: "var(--text-lg)", fontWeight: "var(--weight-bold)", color: "var(--text-strong)", lineHeight: "var(--leading-snug)" }}>{v.t}</h3>
-                  <p style={{ margin: 0, fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-body)" }}>{v.d}</p>
+                  <h3 className="m-[0_0_6px] font-display text-lg font-bold text-strong leading-snug">{v.t}</h3>
+                  <p className="m-0 text-base leading-normal text-body">{v.d}</p>
                 </div>
               </div>
             ))}
@@ -272,27 +273,27 @@ function CourseScreen() {
       </section>
 
       {/* Opiniones — Google My Business [PENDIENTE: reseñas reales] */}
-      <section style={{ background: "var(--surface-sunken)", borderTop: "1px solid var(--border-default)", padding: "var(--section-y) 0" }}>
+      <section className="bg-surface-muted border-t border-border py-section">
         <Container>
-          <span style={{ display: "block", marginBottom: "12px", fontSize: "var(--text-sm)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-eyebrow)", textTransform: "uppercase", color: "var(--color-brand)" }}>Valoraciones en Google</span>
-          <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "var(--space-6)", flexWrap: "wrap", marginBottom: "var(--space-10)" }}>
-            <h2 style={{ margin: 0, fontFamily: "var(--font-display)", fontSize: "var(--text-3xl)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", color: "var(--text-strong)" }}>Opiniones<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-            <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-              <span style={{ fontFamily: "var(--font-display)", fontSize: "var(--text-3xl)", fontWeight: "var(--weight-extrabold)", color: "var(--text-strong)", lineHeight: 1 }}>{D.reviews.rating != null ? String(D.reviews.rating).replace(".", ",") : "[PENDIENTE]"}</span>
+          <span className="block mb-[12px] text-sm font-bold tracking-eyebrow uppercase text-brand">Valoraciones en Google</span>
+          <div className="flex items-end justify-between gap-6 flex-wrap mb-10">
+            <h2 className="m-0 font-display text-3xl font-extrabold tracking-display text-strong">Opiniones<span className="text-brand">.</span></h2>
+            <div className="flex items-center gap-[14px]">
+              <span className="font-display text-3xl font-extrabold text-strong leading-none">{D.reviews.rating != null ? String(D.reviews.rating).replace(".", ",") : "[PENDIENTE]"}</span>
               <div>
                 <Stars n={5} />
-                <div style={{ fontSize: "var(--text-sm)", color: "var(--text-subtle)" }}>{D.reviews.count != null ? D.reviews.count + " reseñas en Google" : "[PENDIENTE: nº de reseñas] en Google"}</div>
+                <div className="text-sm text-subtle">{D.reviews.count != null ? D.reviews.count + " reseñas en Google" : "[PENDIENTE: nº de reseñas] en Google"}</div>
               </div>
             </div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "var(--space-6)" }}>
+          <div className="grid grid-cols-[repeat(auto-fit,_minmax(280px,_1fr))] gap-6">
             {D.reviews.items.map((r, i) => (
-              <figure key={i} style={{ margin: 0, background: "var(--surface-card)", border: "1px solid var(--border-default)", borderRadius: "var(--radius-lg)", padding: "var(--space-8)", display: "flex", flexDirection: "column", gap: "var(--space-4)" }}>
+              <figure key={i} className="m-0 bg-surface border border-border rounded-lg p-8 flex flex-col gap-4">
                 <Stars n={r.stars} />
-                <blockquote style={{ margin: 0, fontSize: "var(--text-base)", lineHeight: "var(--leading-normal)", color: "var(--text-strong)", flex: 1 }}>{r.quote}</blockquote>
-                <figcaption style={{ fontSize: "var(--text-sm)" }}>
-                  <span style={{ display: "block", fontWeight: "var(--weight-bold)", color: "var(--text-strong)" }}>{r.author}</span>
-                  <span style={{ color: "var(--text-subtle)" }}>{r.date} · vía Google</span>
+                <blockquote className="m-0 text-base leading-normal text-strong flex-1">{r.quote}</blockquote>
+                <figcaption className="text-sm">
+                  <span className="block font-bold text-strong">{r.author}</span>
+                  <span className="text-subtle">{r.date} · vía Google</span>
                 </figcaption>
               </figure>
             ))}
@@ -301,11 +302,11 @@ function CourseScreen() {
       </section>
 
       {/* CTA final empresa */}
-      <section style={{ background: "var(--color-dark)", color: "#fff", padding: "var(--section-y) 0" }}>
-        <Container style={{ textAlign: "center" }}>
-          <h2 style={{ margin: "0 auto var(--space-4)", fontFamily: "var(--font-display)", fontSize: "var(--text-3xl)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", maxWidth: "720px", lineHeight: "var(--leading-snug)" }}>¿Formamos a tu equipo?<span style={{ color: "var(--color-brand)" }}>.</span></h2>
-          <p style={{ margin: "0 auto var(--space-8)", fontSize: "var(--text-lg)", color: "rgba(255,255,255,0.8)", maxWidth: "560px", lineHeight: "var(--leading-normal)" }}>Cuéntanos vuestras necesidades y preparamos una propuesta a medida, bonificable FUNDAE, en menos de 24&nbsp;h.</p>
-          <div style={{ display: "flex", gap: "12px", justifyContent: "center", flexWrap: "wrap" }}>
+      <section className="bg-dark text-white py-section">
+        <Container className="text-center">
+          <h2 className="m-[0_auto_var(--space-4)] font-display text-3xl font-extrabold tracking-display max-w-[720px] leading-snug">¿Formamos a tu equipo?<span className="text-brand">.</span></h2>
+          <p className="m-[0_auto_var(--space-8)] text-lg text-white/[0.8] max-w-[560px] leading-normal">Cuéntanos vuestras necesidades y preparamos una propuesta a medida, bonificable FUNDAE, en menos de 24&nbsp;h.</p>
+          <div className="flex gap-[12px] justify-center flex-wrap">
             <Button variant="primary" size="lg" uppercase iconRight={<span>→</span>} onClick={scrollToLead}>Solicita propuesta</Button>
             <Button variant="onDark" size="lg" onClick={() => onNav("contact")}>Contactar</Button>
           </div>
@@ -314,9 +315,9 @@ function CourseScreen() {
 
       {/* Formaciones relacionadas */}
       {related.length > 0 && (
-        <section style={{ background: "var(--surface-sunken)", padding: "var(--section-y) 0" }}>
+        <section className="bg-surface-muted py-section">
           <Container>
-            <h2 style={{ margin: "0 0 var(--space-10)", fontFamily: "var(--font-display)", fontSize: "var(--text-2xl)", fontWeight: "var(--weight-bold)", letterSpacing: "var(--tracking-heading)", color: "var(--text-strong)" }}>Formaciones relacionadas<span style={{ color: "var(--color-brand)" }}>.</span></h2>
+            <h2 className="m-[0_0_var(--space-10)] font-display text-2xl font-bold tracking-heading text-strong">Formaciones relacionadas<span className="text-brand">.</span></h2>
             <HScroll itemWidth="300px">
               {related.map((c) => (
                 <ProductCard key={c.id} title={c.title} image={c.img} code={c.code} norm={c.norm} recommended={c.recommended} cover bullets={c.bullets} ctaLabel="Ver curso" onClick={(e) => { e.preventDefault(); onNav("course", c.id); }} />

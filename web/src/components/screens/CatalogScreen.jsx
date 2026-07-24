@@ -4,6 +4,7 @@ import { onNav, getParam } from '../../lib/router.js';
 import { ProductCard, Button } from '../ds/index.js';
 import { DATA as D } from '../../lib/data.js';
 import { Container } from '../common/Container.jsx';
+import { cx } from '../../lib/cx.js';
 
 function CatalogScreen() {
   const filter = getParam("cat");
@@ -16,39 +17,36 @@ function CatalogScreen() {
   return (
     <div>
       {/* Header band */}
-      <section style={{ background: "var(--color-dark)", color: "#fff", padding: "var(--section-y) 0" }}>
+      <section className="bg-dark text-white py-section">
         <Container>
-          <span style={{ fontFamily: "var(--font-mono)", fontSize: "var(--text-sm)", textTransform: "uppercase", letterSpacing: "var(--tracking-eyebrow)", color: "var(--color-brand)" }}>Catálogo · {list.length} formaciones</span>
-          <h1 style={{ margin: "14px 0 0", fontFamily: "var(--font-display)", fontSize: "clamp(2.4rem,5vw,3.6rem)", fontWeight: "var(--weight-extrabold)", letterSpacing: "var(--tracking-display)", lineHeight: "var(--leading-tight)" }}>
-            {active === "all" ? "Todas las formaciones" : catName(active)}<span style={{ color: "var(--color-brand)" }}>.</span>
+          <span className="font-mono text-sm uppercase tracking-eyebrow text-brand">Catálogo · {list.length} formaciones</span>
+          <h1 className="mt-3.5 mx-0 mb-0 font-display text-[clamp(2.4rem,5vw,3.6rem)] font-extrabold tracking-display leading-tight">
+            {active === "all" ? "Todas las formaciones" : catName(active)}<span className="text-brand">.</span>
           </h1>
-          <p style={{ margin: "16px 0 0", fontSize: "var(--text-lg)", color: "rgba(255,255,255,0.78)", maxWidth: "620px" }}>
+          <p className="mt-4 mx-0 mb-0 text-lg text-white/[0.78] max-w-[620px]">
             {active === "all" ? "Cursos certificados en emergencias, extinción de incendios, primeros auxilios y prevención de riesgos laborales." : (D.categories.find((c) => c.slug === active) || {}).blurb}
           </p>
         </Container>
       </section>
 
       {/* Filter chips */}
-      <Container style={{ padding: "var(--space-10) var(--container-padding) 0" }}>
-        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap" }}>
+      <Container className="pt-10">
+        <div className="flex gap-2.5 flex-wrap">
           {cats.map((c) => {
             const on = active === c.slug;
             return (
-              <button key={c.slug} onClick={() => setActive(c.slug)} style={{
-                fontFamily: "var(--font-body)", fontSize: "var(--text-sm)", fontWeight: "var(--weight-semibold)",
-                padding: "10px 18px", borderRadius: "var(--radius-full)", cursor: "pointer",
-                border: `1px solid ${on ? "var(--color-ink)" : "var(--border-default)"}`,
-                background: on ? "var(--color-ink)" : "var(--surface-card)",
-                color: on ? "#fff" : "var(--text-body)", transition: "all var(--duration-base) var(--ease-standard)",
-              }}>{c.name}</button>
+              <button key={c.slug} onClick={() => setActive(c.slug)} className={cx(
+                "font-body text-sm font-semibold py-2.5 px-[18px] rounded-full cursor-pointer border transition-all duration-base ease-standard",
+                on ? "border-ink bg-ink text-white" : "border-border bg-surface text-body"
+              )}>{c.name}</button>
             );
           })}
         </div>
       </Container>
 
       {/* Grid */}
-      <Container style={{ padding: "var(--space-10) var(--container-padding) 0" }}>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "var(--space-6)" }}>
+      <Container className="pt-10">
+        <div className="grid grid-cols-[repeat(auto-fill,_minmax(260px,_1fr))] gap-6">
           {list.map((c) => (
             <ProductCard key={c.id} title={c.title} image={c.img} code={c.code} norm={c.norm} recommended={c.recommended} cover
               bullets={c.bullets} ctaLabel="Ver curso" onClick={(e) => { e.preventDefault(); onNav("course", c.id); }} />
