@@ -58,12 +58,12 @@ function ContactScreen() {
               <img src={D.hero} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover opacity-[0.28]" />
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,15,15,0.72),rgba(15,15,15,0.94))]" />
               <div className="relative">
-                <h1 className="mb-[16px] font-display text-[clamp(2rem,3.6vw,3rem)] font-extrabold tracking-display leading-tight">Hablemos de tu formación<span className="text-brand">.</span></h1>
-                <p className="mb-[26px] text-lg leading-normal text-white/[0.82] max-w-[440px]">Cuéntanos qué necesitas y un asesor te responde en menos de 24&nbsp;h. Sin compromiso.</p>
+                <h1 className="m-[0_0_16px] font-display text-[clamp(2rem,3.6vw,3rem)] font-extrabold tracking-display leading-tight">Hablemos de tu formación<span className="text-brand">.</span></h1>
+                <p className="m-[0_0_26px] text-lg leading-normal text-white/[0.82] max-w-[440px]">Cuéntanos qué necesitas y un asesor te responde en menos de 24&nbsp;h. Sin compromiso.</p>
 
                 {/* Qué recibirás — reduce la incertidumbre de rellenar el formulario */}
                 <div className="font-mono text-xs uppercase tracking-eyebrow text-white/[0.55] mb-[12px]">Qué recibirás</div>
-                <ul className="list-none mb-[30px] p-0 flex flex-col gap-[10px]">
+                <ul className="list-none m-[0_0_30px] p-0 flex flex-col gap-[10px]">
                   {RECIBES.map((t) => (
                     <li key={t} className="flex gap-[12px] items-start text-base text-white/90 leading-normal">
                       <span aria-hidden="true" className="flex-[0_0_auto] text-brand font-bold mt-px">✓</span>
@@ -86,13 +86,13 @@ function ContactScreen() {
               {sent ? (
                 <div className="text-center py-16">
                   <div className="text-[44px] mb-[12px] text-success">✓</div>
-                  <h3 className="mb-[8px] font-display text-2xl font-bold">¡Gracias por tu mensaje!</h3>
+                  <h3 className="m-[0_0_8px] font-display text-2xl font-bold">¡Gracias por tu mensaje!</h3>
                   <p className="m-0 text-on-dark-muted">Lo hemos recibido correctamente. Un asesor te responderá en menos de 24&nbsp;h con propuesta, fechas y presupuesto.</p>
                 </div>
               ) : (
                 <React.Fragment>
-                  <h2 className="mb-[6px] font-display text-2xl font-bold">Solicita información</h2>
-                  <p className="mb-6 text-base text-on-dark-muted">Te preparamos una propuesta a medida en menos de 24&nbsp;h.</p>
+                  <h2 className="m-[0_0_6px] font-display text-2xl font-bold">Solicita información</h2>
+                  <p className="m-[0_0_var(--space-6)] text-base text-on-dark-muted">Te preparamos una propuesta a medida en menos de 24&nbsp;h.</p>
                   <form onSubmit={(e) => { e.preventDefault(); if (accept) setSent(true); }} className="flex flex-col gap-5">
                     <div className="grid grid-cols-[1fr_1fr] gap-4">
                       <Input theme="dark" label="Nombre *" placeholder="Tu nombre" />
@@ -135,7 +135,7 @@ function ContactScreen() {
           <div className="grid grid-cols-[1fr_1fr] gap-16 items-stretch">
             <div>
               <SectionHeading eyebrow="Prefieres hablar" title="Llámanos ahora mismo" />
-              <p className="mt-[16px] mb-10 text-lg text-body leading-normal max-w-[460px]">Si tienes prisa o prefieres el trato directo, marca la sede más cercana. Horario de atención de lunes a viernes, 8:00–16:00.</p>
+              <p className="m-[16px_0_var(--space-10)] text-lg text-body leading-normal max-w-[460px]">Si tienes prisa o prefieres el trato directo, marca la sede más cercana. Horario de atención de lunes a viernes, 8:00–16:00.</p>
               <div className="flex flex-col gap-6">
                 {SEDES.map((s) => (
                   <div key={s.city} className="bg-surface-muted border border-border rounded-lg p-8">
@@ -157,7 +157,7 @@ function ContactScreen() {
               <div className="relative flex flex-col gap-8">
                 <div>
                   <Badge tone="soft">Atención directa</Badge>
-                  <h3 className="mt-[16px] font-display text-2xl font-bold leading-snug">Escríbenos por el canal que prefieras</h3>
+                  <h3 className="m-[16px_0_0] font-display text-2xl font-bold leading-snug">Escríbenos por el canal que prefieras</h3>
                 </div>
                 <div className="flex flex-col gap-6">
                   <ChannelRow icon="✉" label="Email" value="info@gepcoformacion.es" href="mailto:info@gepcoformacion.es" />
