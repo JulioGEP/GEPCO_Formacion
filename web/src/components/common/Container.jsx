@@ -1,7 +1,8 @@
 import React from 'react';
+import { cx } from '../../lib/cx.js';
 
-export function Container({ children, style }) {
+export function Container({ children, className, ...rest }) {
   return (
-    <div style={{ maxWidth: "var(--container-max)", margin: "0 auto", padding: "0 var(--container-padding)", ...style }}>{children}</div>
+    <div className={cx('mx-auto w-full max-w-container px-container', className)} {...rest}>{children}</div>
   );
 }
