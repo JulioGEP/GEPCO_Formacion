@@ -1,0 +1,20 @@
+/* GEP · Shape & elevation tokens */
+:root {
+  /* Radii — generous, editorial e-commerce */
+  --radius-sm: 8px;    /* badges, small controls */
+  --radius-md: 14px;   /* buttons, inputs */
+  --radius-lg: 20px;   /* cards */
+  --radius-xl: 28px;   /* hero cards, big panels */
+  --radius-full: 9999px;
+
+  /* Shadows — soft, layered */
+  --shadow-sm: 0 1px 2px rgb(20 20 20 / 6%), 0 2px 8px rgb(20 20 20 / 4%);
+  --shadow-md: 0 10px 34px rgb(20 20 20 / 9%);
+  --shadow-lg: 0 26px 64px rgb(20 20 20 / 16%);
+  --shadow-focus: 0 0 0 3px rgb(227 6 19 / 18%);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --duration-fast: 130ms; /* @kind other */
+  --duration-base: 240ms; /* @kind other */
+}

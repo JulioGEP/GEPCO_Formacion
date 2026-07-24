@@ -1,0 +1,5 @@
+/* GEP · Design tokens — Webfonts
+ * Display: Sora (geometric grotesque, heavy). Body: Hanken Grotesk.
+ * Mono: Space Mono — technical accents (REF, EN norms, numbers, kbd).
+ * All three are genuine Google Fonts. */
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap");

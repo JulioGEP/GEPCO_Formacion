@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GEPCO Formación - Cursos de Emergencias y PRL para Empresas</title>
+<meta name="description" content="Formación en emergencias y PRL con simulacros de fuego real, aforo máximo de 15 alumnos y cobertura en toda la península. Solicita tu propuesta a medida.">
+<link rel="canonical" href="https://gepcoformacion.es/">
+<link rel="alternate" hreflang="es" href="https://gepcoformacion.es/">
+<link rel="alternate" hreflang="ca" href="https://gepcoformacion.es/ca/">
+<link rel="alternate" hreflang="x-default" href="https://gepcoformacion.es/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_ES">
+<meta property="og:site_name" content="GEPCO Formación">
+<meta property="og:title" content="GEPCO Formación - Cursos de Emergencias y PRL para Empresas">
+<meta property="og:description" content="Formación en emergencias y PRL con simulacros de fuego real, aforo máximo de 15 alumnos y cobertura en toda la península. Solicita tu propuesta a medida.">
+<meta property="og:url" content="https://gepcoformacion.es/">
+<meta property="og:image" content="https://gepcoformacion.es/wp-content/uploads/2025/03/Bomberos4.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "GEPCO Formación",
+  "legalName": "GEP&RISK 112 SL",
+  "url": "https://gepcoformacion.es/",
+  "logo": "https://gepcoformacion.es/wp-content/uploads/2024/02/logo-GEPCO-Formacion.png",
+  "description": "Escuela de emergencias y PRL. Formación práctica con simulacros de fuego real y certificaciones oficiales.",
+  "sameAs": [],
+  "location": [
+    {
+      "@type": "Place",
+      "name": "GEPCO Formación Sabadell",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "C. Moratín, 100",
+        "postalCode": "08206",
+        "addressLocality": "Sabadell",
+        "addressRegion": "Barcelona",
+        "addressCountry": "ES"
+      }
+    },
+    {
+      "@type": "Place",
+      "name": "GEPCO Formación Madrid",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "C. Primavera, 1",
+        "postalCode": "28500",
+        "addressLocality": "Arganda del Rey",
+        "addressRegion": "Madrid",
+        "addressCountry": "ES"
+      }
+    }
+  ]
+}
+</script>
+<link rel="stylesheet" href="ds/styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin></script>
+<script src="ds/_ds_bundle.js"></script>
+<script src="js/data.js"></script>
+<script src="js/cart.js"></script>
+<style>
+  html,body{margin:0;background:var(--surface-page);font-family:var(--font-body);color:var(--text-strong)}
+  a{color:var(--color-brand)}a:hover{color:var(--color-brand-strong)}
+  :focus-visible{outline:3px solid var(--color-brand);outline-offset:2px;border-radius:2px}
+  #root{min-height:100vh;display:flex;flex-direction:column}
+  main{flex:1}
+  .gepco-hscroll{scrollbar-width:thin;scrollbar-color:var(--border-hover) transparent}
+  .gepco-hscroll::-webkit-scrollbar{height:8px}.gepco-hscroll::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:99px}.gepco-hscroll::-webkit-scrollbar-track{background:transparent}
+  @keyframes gepco-marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+  .gepco-marquee-mask{-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+  .gepco-marquee-track{display:flex;width:max-content;animation:gepco-marquee 48s linear infinite}
+  .gepco-marquee-mask:hover .gepco-marquee-track{animation-play-state:paused}
+  @media (prefers-reduced-motion: reduce){*{animation-duration:0.001ms!important;transition-duration:0.001ms!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="js/common.jsx"></script>
+<script type="text/babel" src="js/Chrome.jsx"></script>
+<script type="text/babel" src="js/HomeScreen.jsx"></script>
+<script type="text/babel" data-presets="react">
+function mount(){
+  const need = ["Navbar","Footer","Container","HomeScreen"];
+  if(!need.every(function(n){return window[n];})){ setTimeout(mount, 40); return; }
+  ReactDOM.createRoot(document.getElementById("root")).render(
+    <React.Fragment>
+      <window.Navbar onNav={window.onNav} />
+      <main><window.HomeScreen onNav={window.onNav} /></main>
+      <window.Footer />
+    </React.Fragment>
+  );
+}
+mount();
+</script>
+</body>
+</html>
