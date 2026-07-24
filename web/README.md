@@ -77,7 +77,9 @@ import { Button, ProductCard, SectionHeading } from '../ds/index.js';
 - **Espaciado:** la escala por defecto de Tailwind ya equivale a los `--space-*` (`p-4`=16px, `gap-6`=24px…); además `py-section` (`--section-y`), `px-container`, `max-w-container`.
 - **Reglas:** *preflight desactivado* (`corePlugins.preflight=false`) para no alterar el reset propio; hover que dependía de `!disabled` → `enabled:hover:`; hover de padre→hijo → `group` + `group-hover:`.
 
-Estado de la conversión: **los 13 componentes de `ds/` y los comunes (`Container`, `HScroll`) ya están en Tailwind.** Las **pantallas de `screens/` y `Chrome.jsx` siguen con estilos inline** (renderizan igual, con los mismos tokens) y se migrarán a Tailwind de forma incremental.
+Estado de la conversión: **todo el código está en Tailwind** — los 13 componentes de `ds/`, los comunes (`Container`, `HScroll`), `Chrome.jsx` y las 9 pantallas de `screens/`. Solo quedan estilos `style={{…}}` inline donde el valor es **dinámico en runtime** (estado/props): drawer y buscador de `Chrome`, celdas del calendario de `AbiertasScreen`, barra de progreso de lectura del `BlogScreen`, `maxHeight` animado del `Accordion`, `flex`/offset de `HScroll` y overrides puntuales de ancho en `Container`. Eso es correcto: no son expresables como clases estáticas.
+
+Paridad verificada con regresión visual (Playwright + pixelmatch): las 11 páginas renderizan **idénticas al pixel** respecto a la maquetación original antes de Tailwind.
 
 ## Añadir una página nueva
 
