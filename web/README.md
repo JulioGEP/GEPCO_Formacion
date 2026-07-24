@@ -1,6 +1,6 @@
-# GEPCO Formación — Astro (build real)
+# GEPCO Formación — Astro estático + Tailwind
 
-Migración del sitio estático (React 18 + Babel en el navegador) a un **proyecto Astro + Vite** con **JSX precompilado**, enrutado por ficheros e **islas React**. El diseño es idéntico: mismo DOM, mismos estilos inline, mismos tokens. Es una migración de build, no un rediseño.
+Web en **Astro (SSG) + Vite** con **JSX precompilado**, enrutado por ficheros e **islas React**, y **Tailwind** como sistema de estilos con los **tokens del design system mapeados al `theme`**. Solo front (sin lógica de negocio todavía). El diseño se conserva: cada utilidad de Tailwind resuelve al mismo token `var(--*)` que usaban los estilos originales.
 
 ## Requisitos y arranque
 
@@ -11,14 +11,15 @@ npm run build     # build estático → dist/
 npm run preview   # sirve dist/ para comprobar
 ```
 
-- Astro `^4`, `@astrojs/react`, `react` / `react-dom` 18. Salida **estática (SSG)**.
+- Astro `^4`, `@astrojs/react`, `react` / `react-dom` 18, `@astrojs/tailwind` + `tailwindcss` `^3`. Salida **estática (SSG)**.
 - Sin React/Babel por CDN: todo se transpila en build con Vite/esbuild.
 
 ## Estructura
 
 ```
-gepco-astro/
-  astro.config.mjs         SSG + integración React (site: gepcoformacion.es)
+web/
+  astro.config.mjs         SSG + integraciones React y Tailwind (site: gepcoformacion.es)
+  tailwind.config.mjs      Tailwind: cada utilidad mapeada a un token var(--*); preflight off
   package.json             scripts dev/build/preview
   tsconfig.json            strict + jsx react
   public/
@@ -39,6 +40,7 @@ gepco-astro/
       data.js              datos (export const DATA) — antes window.GEPCO_DATA
       cart.js              carrito localStorage (export const cart) — clave gepco_cart_v1, evento cart:change
       router.js            onNav(screen,param) + getParam(k) adaptados a rutas Astro
+      cx.js                une clases condicionales (alternativa mínima a clsx)
 ```
 
 ## Islas React (hidratación)
@@ -62,8 +64,20 @@ import { Button, ProductCard, SectionHeading } from '../ds/index.js';
 
 1. **Tokens = única fuente de verdad** en `public/ds/tokens/*.css`. Nunca hardcodees valores: usa `var(--*)`.
 2. **Poppins en TODO** (`--font-display`, `--font-body`, `--font-mono`), cargada desde Google Fonts (`public/ds/tokens/fonts.css`, pesos 400–800). *(Se sustituyó el Sora/Hanken/Space Mono del token original por Poppins, que es la fuente de la marca GEPCO.)*
-3. Estilos **inline** en cada componente, idénticos al original. Lo no expresable inline (resets, `@keyframes` del marquee, scrollbar de `HScroll`, layout responsive del blog) vive en `public/global.css`.
+3. **Estilos con Tailwind mapeado a tokens.** Cada utilidad resuelve a un token (`bg-brand`→`var(--color-brand)`, `rounded-lg`→`var(--radius-lg)`, `text-ink`, `shadow-md`, `font-display`…). No hardcodees valores: usa la utilidad con nombre y, si no existe, el arbitrario con la var (`p-[var(--space-5)]`). Lo no expresable con utilidades (resets, `@keyframes` del marquee, scrollbar de `HScroll`, layout responsive del blog) vive en `public/global.css`.
 4. Color rojo `--color-brand` lidera, naranja `--color-accent` puntúa; fotografía real; sin emoji. (Ver detalle en el README del sitio original.)
+
+## Estilos: Tailwind + tokens
+
+`tailwind.config.mjs` mapea cada utilidad al token CSS correspondiente, así que **usar Tailwind = usar los tokens**, sin poder salirte de la identidad:
+
+- **Color:** `bg-brand` / `bg-brand-strong` / `bg-accent` / `bg-ink` / `bg-surface` / `bg-surface-muted` / `bg-page` / `bg-dark`; texto `text-strong` / `text-body` / `text-subtle` / `text-on-dark` / `text-brand`; borde `border-border` / `border-border-strong`; acciones `bg-action-primary` (+`-hover`), `bg-action-dark`.
+- **Tipografía:** `font-display` / `font-body` / `font-mono` (todas Poppins); tamaño `text-xs…text-4xl`, `text-display`; peso `font-semibold` / `font-bold` / `font-extrabold`; `tracking-heading` / `tracking-eyebrow`; `leading-tight` / `leading-snug` / `leading-normal`.
+- **Forma / elevación / motion:** `rounded-sm|md|lg|xl|full`, `shadow-sm|md|lg|focus`, `duration-fast|base`, `ease-standard`.
+- **Espaciado:** la escala por defecto de Tailwind ya equivale a los `--space-*` (`p-4`=16px, `gap-6`=24px…); además `py-section` (`--section-y`), `px-container`, `max-w-container`.
+- **Reglas:** *preflight desactivado* (`corePlugins.preflight=false`) para no alterar el reset propio; hover que dependía de `!disabled` → `enabled:hover:`; hover de padre→hijo → `group` + `group-hover:`.
+
+Estado de la conversión: **los 13 componentes de `ds/` y los comunes (`Container`, `HScroll`) ya están en Tailwind.** Las **pantallas de `screens/` y `Chrome.jsx` siguen con estilos inline** (renderizan igual, con los mismos tokens) y se migrarán a Tailwind de forma incremental.
 
 ## Añadir una página nueva
 
