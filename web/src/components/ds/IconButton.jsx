@@ -1,73 +1,37 @@
 import React from 'react';
+import { cx } from '../../lib/cx.js';
 
-function _extends() { return _extends = Object.assign ? Object.assign.bind() : function (n) { for (var e = 1; e < arguments.length; e++) { var t = arguments[e]; for (var r in t) ({}).hasOwnProperty.call(t, r) && (n[r] = t[r]); } return n; }, _extends.apply(null, arguments); }
-const tones = {
-  dark: {
-    bg: "var(--color-ink)",
-    fg: "#fff",
-    bd: "transparent",
-    hbg: "#000"
-  },
-  light: {
-    bg: "#fff",
-    fg: "var(--color-ink)",
-    bd: "var(--border-default)",
-    hbg: "var(--color-surface-muted)"
-  },
-  ghost: {
-    bg: "transparent",
-    fg: "var(--color-ink)",
-    bd: "var(--border-default)",
-    hbg: "var(--color-surface-muted)"
-  },
-  brand: {
-    bg: "var(--color-brand)",
-    fg: "#fff",
-    bd: "transparent",
-    hbg: "var(--color-brand-strong)"
-  }
+const toneCls = {
+  dark: 'bg-ink text-white border-transparent hover:bg-black',
+  light: 'bg-white text-ink border-border hover:bg-surface-muted',
+  ghost: 'bg-transparent text-ink border-border hover:bg-surface-muted',
+  brand: 'bg-brand text-white border-transparent hover:bg-brand-strong',
 };
-const dims = {
-  sm: 36,
-  md: 44,
-  lg: 54
+
+const sizeCls = {
+  sm: 'w-9 h-9 text-[16px]',
+  md: 'w-11 h-11 text-[16px]',
+  lg: 'w-[54px] h-[54px] text-[20px]',
 };
-function IconButton({
-  children,
-  tone = "dark",
-  size = "md",
-  label,
-  onClick,
-  style: styleProp,
-  ...rest
-}) {
-  const [hover, setHover] = React.useState(false);
-  const t = tones[tone] || tones.dark;
-  const d = dims[size] || dims.md;
-  return /*#__PURE__*/React.createElement("button", _extends({
-    "aria-label": label,
-    title: label,
-    onClick: onClick,
-    onMouseEnter: () => setHover(true),
-    onMouseLeave: () => setHover(false),
-    style: {
-      width: d + "px",
-      height: d + "px",
-      display: "inline-flex",
-      alignItems: "center",
-      justifyContent: "center",
-      borderRadius: "var(--radius-full)",
-      border: `1px solid ${t.bd}`,
-      background: hover ? t.hbg : t.bg,
-      color: t.fg,
-      cursor: "pointer",
-      fontSize: size === "lg" ? "20px" : "16px",
-      transition: "background var(--duration-base) var(--ease-standard), transform var(--duration-fast) var(--ease-standard)",
-      transform: hover ? "translateY(-1px)" : "none",
-      flex: "0 0 auto",
-      ...styleProp
-    }
-  }, rest), children);
+
+function IconButton({ children, tone = 'dark', size = 'md', label, onClick, className, ...rest }) {
+  return (
+    <button
+      aria-label={label}
+      title={label}
+      onClick={onClick}
+      className={cx(
+        'inline-flex items-center justify-center flex-none rounded-full border cursor-pointer',
+        'transition duration-base ease-standard hover:-translate-y-px',
+        sizeCls[size] || sizeCls.md,
+        toneCls[tone] || toneCls.dark,
+        className,
+      )}
+      {...rest}
+    >
+      {children}
+    </button>
+  );
 }
 
 export { IconButton };

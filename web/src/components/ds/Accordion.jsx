@@ -1,4 +1,5 @@
 import React from 'react';
+import { cx } from '../../lib/cx.js';
 
 function Accordion({
   items = [],
@@ -13,72 +14,43 @@ function Accordion({
       return next;
     });
   };
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      gap: "var(--space-3)",
-      fontFamily: "var(--font-body)"
-    }
-  }, items.map((it, i) => {
-    const isOpen = open.has(i);
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      style: {
-        background: "var(--surface-card)",
-        border: "1px solid var(--border-default)",
-        borderRadius: "var(--radius-md)",
-        overflow: "hidden"
-      }
-    }, /*#__PURE__*/React.createElement("button", {
-      onClick: () => toggle(i),
-      "aria-expanded": isOpen,
-      style: {
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: "16px",
-        textAlign: "left",
-        padding: "var(--space-4) var(--space-6)",
-        background: "transparent",
-        border: "none",
-        cursor: "pointer",
-        fontFamily: "var(--font-display)",
-        fontSize: "var(--text-lg)",
-        fontWeight: "var(--weight-semibold)",
-        color: isOpen ? "var(--color-brand)" : "var(--text-strong)"
-      }
-    }, /*#__PURE__*/React.createElement("span", null, it.q), /*#__PURE__*/React.createElement("span", {
-      style: {
-        flex: "0 0 auto",
-        width: "24px",
-        height: "24px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        color: "var(--color-brand)",
-        transform: isOpen ? "rotate(45deg)" : "rotate(0deg)",
-        transition: "transform var(--duration-base) var(--ease-standard)",
-        fontSize: "22px",
-        lineHeight: 1
-      }
-    }, "+")), /*#__PURE__*/React.createElement("div", {
-      style: {
-        maxHeight: isOpen ? "600px" : "0",
-        opacity: isOpen ? 1 : 0,
-        overflow: "hidden",
-        transition: "max-height var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard)"
-      }
-    }, /*#__PURE__*/React.createElement("div", {
-      style: {
-        padding: "0 var(--space-6) var(--space-6)",
-        fontSize: "var(--text-base)",
-        lineHeight: "var(--leading-normal)",
-        color: "var(--text-body)"
-      }
-    }, it.a)));
-  }));
+  return (
+    <div className="flex flex-col gap-3 font-body">
+      {items.map((it, i) => {
+        const isOpen = open.has(i);
+        return (
+          <div key={i} className="bg-surface border border-border rounded-md overflow-hidden">
+            <button
+              onClick={() => toggle(i)}
+              aria-expanded={isOpen}
+              className={cx(
+                'w-full flex items-center justify-between gap-[16px] text-left py-4 px-6 bg-transparent border-none cursor-pointer font-display text-lg font-semibold',
+                isOpen ? 'text-brand' : 'text-strong'
+              )}
+            >
+              <span>{it.q}</span>
+              <span
+                className={cx(
+                  'flex-none w-[24px] h-[24px] flex items-center justify-center text-brand text-[22px] leading-none transition-transform duration-base ease-standard',
+                  isOpen ? 'rotate-45' : 'rotate-0'
+                )}
+              >+</span>
+            </button>
+            <div
+              className="overflow-hidden"
+              style={{
+                maxHeight: isOpen ? "600px" : "0",
+                opacity: isOpen ? 1 : 0,
+                transition: "max-height var(--duration-base) var(--ease-standard), opacity var(--duration-base) var(--ease-standard)"
+              }}
+            >
+              <div className="pt-0 px-6 pb-6 text-base leading-normal text-body">{it.a}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export { Accordion };
