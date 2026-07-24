@@ -35,8 +35,10 @@ function resolveSede(sede) {
   return null;
 }
 function courseHora(id) {
-  const D = D || {};
-  const c = (D.courses || []).find((x) => x.id === id);
+  // Usa el DATA importado (alias D). Ojo: no redeclarar `const D` aquí —
+  // sombrear el import provoca un ReferenceError (TDZ) que dejaba la página
+  // de confirmación en blanco al pulsar «Confirmar reserva».
+  const c = (D?.courses || []).find((x) => x.id === id);
   return (c && c.hora) || "08:00"; // hora por defecto de cada formación
 }
 
