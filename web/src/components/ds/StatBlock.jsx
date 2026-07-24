@@ -1,34 +1,28 @@
 import React from 'react';
+import { cx } from '../../lib/cx.js';
 
 /** Big figure + label — hero / proof metrics. */
-function StatBlock({
-  value,
-  label,
-  onDark = false
-}) {
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      gap: "4px",
-      fontFamily: "var(--font-body)"
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: "var(--font-display)",
-      fontSize: "clamp(1.6rem, 2.6vw, 2.25rem)",
-      fontWeight: "var(--weight-extrabold)",
-      lineHeight: 1,
-      letterSpacing: "var(--tracking-display)",
-      color: onDark ? "#fff" : "var(--color-ink)"
-    }
-  }, value), /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontSize: "var(--text-sm)",
-      lineHeight: 1.3,
-      color: onDark ? "var(--text-on-dark-muted)" : "var(--text-subtle)"
-    }
-  }, label));
+function StatBlock({ value, label, onDark = false }) {
+  return (
+    <div className="flex flex-col gap-1 font-body">
+      <span
+        className={cx(
+          'font-display text-[clamp(1.6rem,2.6vw,2.25rem)] font-extrabold leading-none tracking-display',
+          onDark ? 'text-white' : 'text-ink',
+        )}
+      >
+        {value}
+      </span>
+      <span
+        className={cx(
+          'text-sm leading-[1.3]',
+          onDark ? 'text-on-dark-muted' : 'text-subtle',
+        )}
+      >
+        {label}
+      </span>
+    </div>
+  );
 }
 
 export { StatBlock };

@@ -1,68 +1,53 @@
 import React from 'react';
+import { cx } from '../../lib/cx.js';
 
 function SectionHeading({
   eyebrow,
   title,
   description,
   actions,
-  align = "left",
-  onDark = false
+  align = 'left',
+  onDark = false,
 }) {
-  const center = align === "center";
-  return /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      alignItems: center ? "center" : "flex-end",
-      justifyContent: "space-between",
-      gap: "var(--space-6)",
-      flexWrap: "wrap",
-      flexDirection: center ? "column" : "row",
-      textAlign: center ? "center" : "left",
-      fontFamily: "var(--font-body)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      maxWidth: center ? "620px" : "700px"
-    }
-  }, eyebrow && /*#__PURE__*/React.createElement("span", {
-    style: {
-      display: "block",
-      marginBottom: "12px",
-      fontSize: "var(--text-sm)",
-      fontWeight: "var(--weight-bold)",
-      letterSpacing: "var(--tracking-eyebrow)",
-      textTransform: "uppercase",
-      color: "var(--color-brand)"
-    }
-  }, eyebrow), /*#__PURE__*/React.createElement("h2", {
-    style: {
-      margin: 0,
-      fontFamily: "var(--font-display)",
-      fontSize: "clamp(1.875rem, 3.6vw, 2.5rem)",
-      fontWeight: "var(--weight-extrabold)",
-      lineHeight: "var(--leading-snug)",
-      letterSpacing: "var(--tracking-display)",
-      color: onDark ? "#fff" : "var(--text-strong)"
-    }
-  }, title, /*#__PURE__*/React.createElement("span", {
-    style: {
-      color: "var(--color-brand)"
-    }
-  }, ".")), description && /*#__PURE__*/React.createElement("p", {
-    style: {
-      margin: "14px 0 0",
-      fontSize: "var(--text-lg)",
-      lineHeight: "var(--leading-normal)",
-      color: onDark ? "var(--text-on-dark-muted)" : "var(--text-body)"
-    }
-  }, description)), actions && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      gap: "10px",
-      alignItems: "center",
-      flexShrink: 0
-    }
-  }, actions));
+  const center = align === 'center';
+  return (
+    <div
+      className={cx(
+        'flex justify-between gap-6 flex-wrap font-body',
+        center ? 'items-center flex-col text-center' : 'items-end flex-row text-left',
+      )}
+    >
+      <div className={center ? 'max-w-[620px]' : 'max-w-[700px]'}>
+        {eyebrow && (
+          <span className="block mb-3 text-sm font-bold tracking-eyebrow uppercase text-brand">
+            {eyebrow}
+          </span>
+        )}
+        <h2
+          className={cx(
+            'm-0 font-display text-[clamp(1.875rem,3.6vw,2.5rem)] font-extrabold leading-snug tracking-display',
+            onDark ? 'text-white' : 'text-strong',
+          )}
+        >
+          {title}
+          <span className="text-brand">.</span>
+        </h2>
+        {description && (
+          <p
+            className={cx(
+              'm-[14px_0_0] text-lg leading-normal',
+              onDark ? 'text-on-dark-muted' : 'text-body',
+            )}
+          >
+            {description}
+          </p>
+        )}
+      </div>
+      {actions && (
+        <div className="flex gap-[10px] items-center shrink-0">{actions}</div>
+      )}
+    </div>
+  );
 }
 
 export { SectionHeading };

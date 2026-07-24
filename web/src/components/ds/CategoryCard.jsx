@@ -1,4 +1,5 @@
 import React from 'react';
+import { cx } from '../../lib/cx.js';
 import { IconButton } from './IconButton.jsx';
 
 function CategoryCard({
@@ -7,91 +8,59 @@ function CategoryCard({
   count,
   subcount,
   thumbs = [],
-  href = "#",
-  onClick
+  href = '#',
+  onClick,
 }) {
-  const [hover, setHover] = React.useState(false);
-  const meta = [count != null ? `${count} cursos` : null, subcount != null ? `${subcount} subcategorías` : null].filter(Boolean).join(" · ");
+  const meta = [
+    count != null ? `${count} cursos` : null,
+    subcount != null ? `${subcount} subcategorías` : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
   const hasThumbs = thumbs.filter(Boolean).length > 0;
-  return /*#__PURE__*/React.createElement("a", {
-    href: href,
-    onClick: onClick,
-    onMouseEnter: () => setHover(true),
-    onMouseLeave: () => setHover(false),
-    style: {
-      display: "flex",
-      flexDirection: "column",
-      textDecoration: "none",
-      background: hover ? "var(--surface-card)" : "var(--surface-sunken)",
-      border: "1px solid var(--border-default)",
-      borderRadius: "var(--radius-lg)",
-      padding: "var(--space-6)",
-      gap: "var(--space-5)",
-      boxShadow: hover ? "var(--shadow-md)" : "none",
-      transform: hover ? "translateY(-4px)" : "none",
-      transition: "transform var(--duration-base) var(--ease-standard), box-shadow var(--duration-base) var(--ease-standard), background var(--duration-base) var(--ease-standard)",
-      fontFamily: "var(--font-body)"
-    }
-  }, /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "flex-start"
-    }
-  }, /*#__PURE__*/React.createElement("span", {
-    style: {
-      fontFamily: "var(--font-mono)",
-      fontSize: "var(--text-sm)",
-      color: "var(--color-brand)"
-    }
-  }, String(index).padStart(2, "0")), /*#__PURE__*/React.createElement(IconButton, {
-    tone: "dark",
-    size: "sm",
-    label: `Ver ${name}`
-  }, "\u2192")), /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement("h3", {
-    style: {
-      margin: "0 0 4px",
-      fontFamily: "var(--font-display)",
-      fontSize: "var(--text-lg)",
-      fontWeight: "var(--weight-bold)",
-      letterSpacing: "var(--tracking-heading)",
-      lineHeight: "var(--leading-snug)",
-      color: "var(--text-strong)"
-    }
-  }, name), meta && /*#__PURE__*/React.createElement("p", {
-    style: {
-      margin: 0,
-      fontSize: "var(--text-sm)",
-      color: "var(--text-subtle)"
-    }
-  }, meta)), hasThumbs && /*#__PURE__*/React.createElement("div", {
-    style: {
-      display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)",
-      gap: "8px",
-      marginTop: "auto"
-    }
-  }, [0, 1, 2].map(i => {
-    const t = thumbs.filter(Boolean)[i];
-    return /*#__PURE__*/React.createElement("div", {
-      key: i,
-      style: {
-        height: "58px",
-        background: "var(--surface-tile)",
-        border: "1px solid var(--border-default)",
-        borderRadius: "var(--radius-md)",
-        overflow: "hidden"
-      }
-    }, t && /*#__PURE__*/React.createElement("img", {
-      src: t,
-      alt: "",
-      style: {
-        width: "100%",
-        height: "100%",
-        objectFit: "cover"
-      }
-    }));
-  })));
+  return (
+    <a
+      href={href}
+      onClick={onClick}
+      className={cx(
+        'flex flex-col no-underline font-body',
+        'border border-[color:var(--border-default)] rounded-lg p-6 gap-5',
+        'bg-surface-muted hover:bg-surface',
+        'shadow-none hover:shadow-md hover:-translate-y-1',
+        'transition duration-base ease-standard',
+      )}
+    >
+      <div className="flex justify-between items-start">
+        <span className="font-mono text-sm text-brand">
+          {String(index).padStart(2, '0')}
+        </span>
+        <IconButton tone="dark" size="sm" label={`Ver ${name}`}>
+          →
+        </IconButton>
+      </div>
+      <div>
+        <h3 className="m-[0_0_4px] font-display text-lg font-bold tracking-heading leading-snug text-strong">
+          {name}
+        </h3>
+        {meta && <p className="m-0 text-sm text-subtle">{meta}</p>}
+      </div>
+      {hasThumbs && (
+        <div className="grid grid-cols-[repeat(3,1fr)] gap-2 mt-auto">
+          {[0, 1, 2].map((i) => {
+            const t = thumbs.filter(Boolean)[i];
+            return (
+              <div
+                key={i}
+                className="h-[58px] bg-surface-tile border border-[color:var(--border-default)] rounded-md overflow-hidden"
+              >
+                {t && <img src={t} alt="" className="w-full h-full object-cover" />}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </a>
+  );
 }
 
 export { CategoryCard };

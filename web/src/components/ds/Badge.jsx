@@ -1,101 +1,45 @@
 import React from 'react';
+import { cx } from '../../lib/cx.js';
 
-const tones = {
-  brand: {
-    bg: "var(--color-brand)",
-    fg: "#fff",
-    bd: "transparent"
-  },
-  dark: {
-    bg: "var(--color-ink)",
-    fg: "#fff",
-    bd: "transparent"
-  },
-  soft: {
-    bg: "var(--color-surface-muted)",
-    fg: "var(--color-ink)",
-    bd: "transparent"
-  },
-  outline: {
-    bg: "transparent",
-    fg: "var(--color-ink)",
-    bd: "var(--border-strong, var(--border-hover))"
-  },
-  onDark: {
-    bg: "rgba(255,255,255,0.12)",
-    fg: "#fff",
-    bd: "rgba(255,255,255,0.20)"
-  },
-  success: {
-    bg: "var(--color-success)",
-    fg: "#fff",
-    bd: "transparent"
-  },
-  outStock: {
-    bg: "var(--color-stock-out)",
-    fg: "#fff",
-    bd: "transparent"
-  }
+const toneCls = {
+  brand: 'bg-brand text-white border-transparent',
+  dark: 'bg-ink text-white border-transparent',
+  soft: 'bg-surface-muted text-ink border-transparent',
+  outline: 'bg-transparent text-ink border-[color:var(--border-strong,var(--border-hover))]',
+  onDark: 'bg-white/[0.12] text-white border-white/20',
+  success: 'bg-success text-white border-transparent',
+  outStock: 'bg-[var(--color-stock-out)] text-white border-transparent',
 };
 
 /** Small status / category pill (uppercase, tracked). */
-function Badge({
-  children,
-  tone = "soft",
-  dot = false
-}) {
-  const t = tones[tone] || tones.soft;
-  return /*#__PURE__*/React.createElement("span", {
-    style: {
-      display: "inline-flex",
-      alignItems: "center",
-      gap: "7px",
-      fontFamily: "var(--font-body)",
-      fontSize: "var(--text-xs)",
-      fontWeight: "var(--weight-semibold)",
-      letterSpacing: "0.10em",
-      textTransform: "uppercase",
-      lineHeight: 1,
-      padding: "7px 11px",
-      borderRadius: "var(--radius-sm)",
-      background: t.bg,
-      color: t.fg,
-      border: `1px solid ${t.bd}`,
-      whiteSpace: "nowrap"
-    }
-  }, dot && /*#__PURE__*/React.createElement("span", {
-    style: {
-      width: "7px",
-      height: "7px",
-      borderRadius: "50%",
-      background: "currentColor",
-      flex: "0 0 auto"
-    }
-  }), children);
+function Badge({ children, tone = 'soft', dot = false }) {
+  return (
+    <span
+      className={cx(
+        'inline-flex items-center gap-[7px] font-body text-xs font-semibold tracking-[0.10em] uppercase leading-none py-[7px] px-[11px] rounded-sm border whitespace-nowrap',
+        toneCls[tone] || toneCls.soft,
+      )}
+    >
+      {dot && <span className="w-[7px] h-[7px] rounded-full bg-current flex-none" />}
+      {children}
+    </span>
+  );
 }
 
 /** Technical spec chip in mono — EN norms, CE directives, refs. */
-function NormBadge({
-  children,
-  onDark = false
-}) {
-  return /*#__PURE__*/React.createElement("span", {
-    style: {
-      display: "inline-flex",
-      alignItems: "center",
-      fontFamily: "var(--font-mono)",
-      fontSize: "11px",
-      fontWeight: "var(--weight-regular)",
-      letterSpacing: "var(--tracking-mono)",
-      lineHeight: 1,
-      padding: "6px 9px",
-      borderRadius: "6px",
-      background: onDark ? "rgba(255,255,255,0.08)" : "var(--color-surface)",
-      color: onDark ? "rgba(255,255,255,0.86)" : "var(--color-ink)",
-      border: `1px solid ${onDark ? "rgba(255,255,255,0.18)" : "var(--border-default)"}`,
-      whiteSpace: "nowrap"
-    }
-  }, children);
+function NormBadge({ children, onDark = false }) {
+  return (
+    <span
+      className={cx(
+        'inline-flex items-center font-mono text-[11px] font-normal tracking-mono leading-none py-[6px] px-[9px] rounded-[6px] border whitespace-nowrap',
+        onDark
+          ? 'bg-white/[0.08] text-white/[0.86] border-white/[0.18]'
+          : 'bg-surface text-ink border-[color:var(--border-default)]',
+      )}
+    >
+      {children}
+    </span>
+  );
 }
 
 export { Badge, NormBadge };
