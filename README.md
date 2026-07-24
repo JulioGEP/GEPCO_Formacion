@@ -4,7 +4,10 @@ Base de design system para reconstruir una web nueva a partir de la identidad vi
 
 ## Estado actual
 
-Esta iteración implementa únicamente la **Tarea 0 — Extracción de tokens**. La fuente de verdad está en [`src/styles/tokens.css`](src/styles/tokens.css); los componentes Astro y la ruta `/design-system` deben construirse después de validar estos tokens.
+- **Tarea 0 — Extracción de tokens.** La fuente de verdad de la identidad visual está en [`src/styles/tokens.css`](src/styles/tokens.css).
+- **Sitio web (frontend).** En [`web/`](web/) vive la web en **Astro estático (SSG) + Tailwind**, con los tokens del design system mapeados al `theme` de Tailwind. Es solo el front (sin lógica de negocio todavía). Ver [`web/README.md`](web/README.md) para arrancar el proyecto (`npm install && npm run dev`), la estructura y los pendientes.
+
+El resto de este documento describe la intención de los tokens de identidad visual.
 
 ## Cómo se usa la identidad visual
 
