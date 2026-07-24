@@ -1,10 +1,10 @@
 /* GEP · Typography tokens
- * Display grotesque + neutral body + technical mono. */
+ * Poppins en todo (titulares, cuerpo y refs técnicos/eyebrows). */
 :root {
   /* Families */
-  --font-display: "Sora", system-ui, -apple-system, sans-serif;
-  --font-body: "Hanken Grotesk", system-ui, -apple-system, sans-serif;
-  --font-mono: "Space Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-display: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-body: "Poppins", system-ui, -apple-system, sans-serif;
+  --font-mono: "Poppins", system-ui, -apple-system, sans-serif;
 
   /* Type scale */
   --text-xs: 0.75rem;      /* 12px */
